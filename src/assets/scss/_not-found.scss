@@ -1,0 +1,48 @@
+.lamas-not-found {
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  min-height:  calc(100vh - 64px);
+  padding-top: 6.9375rem;
+  padding-bottom: 6rem;
+  position: relative;
+  box-sizing: border-box;
+  &__body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    img {
+      width: 15.375rem;
+      mix-blend-mode: lighten;
+      margin-bottom: 0.75rem;
+    }
+    &__text {
+      font-family: Nunito;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.375rem;
+      letter-spacing: 0em;
+      text-align: center;
+      color: color("white", "540");
+      margin-bottom: 2.1875rem;
+    }
+    &__button {
+      text-decoration: none;
+      padding: 0.625rem 1.25rem;
+      background: color("purple", "200");
+      box-shadow: 0px 0px 40px 0px #9945FF80;
+      border-radius: 0.3125rem;
+      color: color("white", "300");
+      font-family: Nunito;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.375rem;
+      letter-spacing: 0em;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}

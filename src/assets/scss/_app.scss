@@ -1,0 +1,213 @@
+@import "color";
+@import "media-queries";
+@import "normalize";
+@import "login";
+@import "nav";
+@import "intro";
+@import "game";
+@import "price-prediction";
+@import "lucky-spinner";
+@import "jackpot-lottery";
+@import "binary-option";
+@import "defi";
+@import "not-found";
+@import "coming-soon";
+
+body {
+  background: color("black", "100");
+  color: color("white", "base");
+  font-family: Raleway, sans-serif;
+  overflow-x: hidden;
+  font-weight: 300;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  flex-grow: 1;
+}
+
+header,
+main,
+footer {
+  flex-shrink: 0;
+}
+
+/* common */
+.relative {
+  position: relative;
+}
+
+/* -------- app ------- */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* -------- app ------- */
+
+.lamas-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: -100;
+}
+
+/* -------- content -------
+.lamas-content {
+  margin-left: 5rem;
+}*/
+
+/* -------- header ------- */
+.lamas-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  &__body {
+    padding-left: 6.4375rem;
+    padding-right: 0.9375rem;
+    height: 4.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__logo {
+    a {
+      text-decoration: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-family: Raleway;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+      letter-spacing: 0em;
+      text-align: left;
+      color: color("white", "base");
+      b {
+        font-weight: 900;
+        margin-left: 0.3125rem;
+        margin-right: 0.3rem;
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+      img {
+        height: 1.75rem;
+        width: 1.75rem;
+        @include responsiveMax(SM) {
+          height: 1.5rem;
+        }
+      }
+    }
+  }
+
+  &__connect {
+    a {
+      border-radius: 0.416rem;
+      background: color("green", "200");
+      text-decoration: none;
+      color: color("black", "100");
+      padding: 0.5rem 0.9375rem;
+      cursor: pointer;
+      font-family: Nunito;
+      font-size: 0.875rem;
+      font-style: normal;
+      text-align: center;
+      font-weight: 700;
+      line-height: 1.375rem;
+      letter-spacing: 0rem;
+      margin-right: 0.5rem;
+      @include responsiveMax(SM) {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+        padding: auto;
+      }
+    }
+  }
+}
+
+/* -------- main ------- */
+.lamas-main {
+  margin-top: 0rem;
+  font-feature-settings: 'pnum'on, 'lnum'on;
+  &__nav-open {
+    margin-left: 14.5rem;
+  }
+  &__nav-close {
+    margin-left: 5rem;
+  }
+}
+
+/* -------- footer ------- */
+.lamas-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Nunito;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.125rem;
+    letter-spacing: 0em;
+    color: color("white", "600");
+    margin: 0;
+    width: 66.25rem;
+    padding: 1.25rem 0.625rem;
+    @include responsiveMax(SM) {
+      flex-direction: column-reverse;
+    }
+    &__credit {
+      min-width: 10rem;
+      @include responsiveMax(SM) {
+        margin-top: 1.5625rem;
+      }
+    }
+    &__contact-container {
+      display: flex;
+      flex-direction: row;
+      @include responsiveMax(SM) {
+        flex-direction: column;
+      }
+      img {
+        width: 1.25rem;
+        cursor: pointer;
+        @include responsiveMax(SM) {
+          margin-top: 0.625rem !important;
+        }
+      }
+      &__item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        @include responsiveMax(SM) {
+          margin-top: 1.5625rem;
+          flex-direction: column;
+        }
+      }
+      &__icons-container {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        column-gap: 1.25rem;
+      }
+    }
+  }
+}

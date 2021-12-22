@@ -1,0 +1,58 @@
+html {
+  background-color: #101010;
+  font-family: 'SVN-Gilroy', Courier, monospace;
+}
+.rvn-login {
+  &__body {
+    height: 100vh;
+    background-color: #101010;
+    img {
+      margin-top: 15vh !important;
+      width: 50%;
+      @include responsiveMax(XS) {
+        margin-top: 10vh !important;
+      }
+    }
+  }
+  &__visual {
+    width: 23%;
+    @include responsiveMax(MD) {
+      width: 50%;
+    }
+    @include responsiveMax(XS) {
+      width: 75%;
+    }
+  }
+  &__content {
+    width: 100%;
+  }
+  &__password-field {
+    display: flex;
+    align-items: center;
+    position: relative;
+    i {
+      right: 2px;
+      position: absolute;
+      color: gray;
+    }
+  }
+  &__anchor {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    span {
+      margin: 5px;
+    }
+  }
+  &__last-child {
+    // position: absolute;
+    // bottom: 2rem;
+    margin-top: auto;
+    margin-bottom: 2rem;
+    background-color: #101010;
+    font-size:12px;
+  }
+}
+
+.form-input {
+  height: 48px;
+}

@@ -1,0 +1,197 @@
+// BASIC COLOR
+
+$light-gray: (
+  "700": #fbfbfd,
+  "600": #828792,
+  "500": #eeeff2,
+  "400": #e8eaef,
+  "300": #e1e4ea,
+  "200": #e6e5e6,
+  "base": #e1e4ea,
+);
+
+$dark-gray: (
+  "700": #060707,
+  "680": #ffffff1a,
+  "650": #ffffff05,
+  "600": #ffffff08,
+  "550": #ffffff14,
+  "500": #363b3e,
+  "450": #4d4d4d,
+  "400": #666f76,
+  "300": #96a3ad,
+  "base": #96a3ad,
+);
+
+$neutral: (
+  "700": #e5e7eb,
+  "600": #abb4bc,
+  "500": #72808e,
+  "400": #394e60,
+  "300": #001a33,
+  "200": #081020,
+  "100": #050a19,
+  "base": #001a33,
+);
+
+$white: (
+  "800": rgba(255, 255, 255, 0.03),
+  "700": rgba(255, 255, 255, 0.1),
+  "600": rgba(255, 255, 255, 0.25),
+  "550": #676667,
+  "540": #808080,
+   "530": #999999,
+   "500": rgba(255, 255, 255, 0.5),
+  "400": rgba(255, 255, 255, 0.75),
+  "300": rgba(243, 242, 245, 1),
+  "100": white,
+  "base": white,
+);
+
+$black: (
+  "800": rgba(255, 255, 255, 0.02),
+  "750": rgba(52, 51, 52, 1),
+  "700": rgba(0, 0, 0, 0.1),
+  "650": #01000126,
+  "600": rgba(0, 0, 0, 0.25),
+  "500": rgba(0, 0, 0, 0.5),
+  "400": rgba(0, 0, 0, 0.75),
+  "300": #111101,
+  "100": #010001,
+  "base": black,
+);
+
+$purple: (
+  "800": #16022e,
+  "500": #453558,
+  "400": #8a50e680,
+  "300": #9945ff80,
+  "250": rgba(138, 80, 230, 0.5),
+  "200": #9945ff,
+  "100": #968DA1,
+);
+
+$green: (
+  "600": #14f19573,
+  "201": #2cf2a0,
+  "200": #14f195,
+  "100": #4fffd0,
+);
+
+
+$green-600: #14f19573;
+
+$red: (
+  "200": #e23939,
+);
+
+//ADVANCED
+
+$linear-gradient: (
+  "blue": linear-gradient(45deg, #408dfd, #0068ff),
+  "sky-blue": linear-gradient(225deg, #00bac0, #72abff),
+  "pink": linear-gradient(225deg, #ea87ff, #f2bdff),
+  "orange": linear-gradient(225deg, #db342e 100%, #f5832f 2%),
+  "green": linear-gradient(225deg, #ffda39, #49bb82),
+  "red-pink": linear-gradient(199deg, #eb8e8b, #f2bdff),
+  "light-pink": linear-gradient(199deg, #ea87ff, #f2bdff),
+  "purple-pink": linear-gradient(199deg, #b3a8e9, #f2bdff),
+  "light-purple": linear-gradient(199deg, #7562d8, #b3a8e9),
+  "purple-black":
+    linear-gradient(126.42deg, #9945ff 2.86%, rgba(153, 69, 255, 0) 207.33%),
+  "teal-blue": linear-gradient(199deg, #00bac0, #0068ff),
+  "teal-green": linear-gradient(199deg, #00bac0, #15a85f),
+  "light-green": linear-gradient(199deg, #15a85f, #49bb82),
+  "yellow-green": linear-gradient(199deg, #ffda39, #49bb82),
+  "orange-yellow": linear-gradient(199deg, #f5832f, #ffd000),
+  "red-orange": linear-gradient(199deg, #db342e, #f5832f),
+);
+
+//background: radial-gradient(244.78% 754.7% at 50% -4.81%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%),
+//radial-gradient(94.6% 94.6% at 115.68% 13.81%, #14F195 0%, rgba(20, 241, 149, 0) 100%),
+//linear-gradient(126.42deg, #9945FF 2.86%, rgba(153, 69, 255, 0) 207.33%);
+$radial-gradient: (
+  "black-gray":
+    radial-gradient(
+      222.63% 192.31% at 20.19% -4.81%,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+  "dark-gray":
+    radial-gradient(
+      244.78% 754.7% at 50% -4.81%,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+  "green-dark":
+    radial-gradient(
+      94.6% 94.6% at 115.68% 13.81%,
+      #14f195 0%,
+      rgba(20, 241, 149, 0) 100%
+    ),
+);
+
+$box-shadow: (
+  "input": rgba(0, 133, 255, 0.25),
+  "input2": rgba(24, 144, 255, 0.2),
+  "grey": rgba(0, 0, 0, 0.02),
+  "notif": rgba(0, 26, 51, 0.1),
+  "popover": rgba(0, 0, 0, 0.18),
+);
+
+$colors: (
+  "linear-gradient": $linear-gradient,
+  "radial-gradient": $radial-gradient,
+  "box": $box-shadow,
+  "white": $white,
+  "black": $black,
+  "light-gray": $light-gray,
+  "dark-gray": $dark-gray,
+  "neutral": $neutral,
+  "green": $green,
+  "purple": $purple,
+  "red": $red,
+) !default;
+
+@function color($color, $key) {
+  @return var(#{--#{$color}}-#{$key});
+}
+
+@function colorOrg($color, $key) {
+  $content: map-get($colors, $color);
+  @if (map-has-key($content, $key)) {
+    $result: map-get($content, $key);
+    @return $result;
+  }
+  @return "";
+}
+
+@function colorTheme($theme, $color, $key) {
+  $col: #{$theme}-#{$color};
+  $content: map-get($themeColors, $col);
+  @if (map-has-key($content, $key)) {
+    $result: map-get($content, $key);
+    @return $result;
+  }
+  @return "";
+}
+
+:root {
+  @each $color, $value in $colors {
+    @each $shade, $value in map-get($colors, $color) {
+      $jo: --#{$color};
+      #{$jo}-#{$shade}: #{colorOrg($color, $shade)};
+    }
+  }
+}
+
+@each $color, $value in $colors {
+  @each $shade, $value in map-get($colors, $color) {
+    .text-#{$color}-#{$shade} {
+      color: #{color($color, $shade)};
+    }
+    .bg-#{$color}-#{$shade} {
+      background-color: #{color($color, $shade)};
+    }
+  }
+}

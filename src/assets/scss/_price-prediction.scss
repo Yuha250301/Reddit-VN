@@ -1,0 +1,737 @@
+.lamas-content-price-prediction {
+  .lamas-game-intro__content {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    @include responsiveMax(XL) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @include responsiveMax(SM) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+  .lamas-game-intro__content__card {
+    min-height: 14.125rem;
+  }
+}
+.lamas-price-prediction {
+  position: relative;
+  /* -------- result section ------- */
+  &__result-section {
+    &__body {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-bottom: 3.75rem;
+    }
+    &__title {
+      font-family: Raleway;
+      font-size: 1.25rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.4375rem;
+      letter-spacing: 0em;
+      text-align: left;
+      color: color("white", "base");
+      margin-bottom: 2.25rem;
+    }
+    &__container {
+      background: color("dark-gray", "650");
+      border: 0.09375rem solid color("white", "700");
+      border-radius: 0.625rem;
+      padding: 2.625rem 3.4375rem 1.625rem 3.4375rem;
+      position: relative;
+    }
+    &__options {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      right: 0;
+      &__wrapper {
+        background: color("black", "300");
+        padding: 0.3125rem;
+        border-radius: 0.3125rem;
+        border: 0.09375rem solid color("black", "750");
+        transform: translateY(-50%);
+        div {
+          cursor: pointer;
+          padding: 0.4375rem 0;
+          border-radius: 0.1875rem;
+          width: 5.875rem;
+          font-family: Nunito;
+          font-size: 0.875rem;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 1.125rem;
+          letter-spacing: 0em;
+          text-align: center;
+          display: inline-block;
+        }
+        div.active {
+          background: color("purple", "200");
+        }
+      }
+    }
+    &__prices {
+      display: flex;
+      flex-direction: row;
+      grid-gap: 3.75rem;
+      .title {
+        font-family: Nunito;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.125rem;
+        letter-spacing: 0em;
+        text-align: center;
+        color: color("white", "100");
+        margin-bottom: 0.3125rem;
+      }
+      .value {
+        font-family: Raleway;
+        font-size: 1.5rem;
+        font-style: normal;
+        font-weight: 900;
+        line-height: 1.75rem;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+      hr {
+        border-right: 1px solid color("white", "700");
+        border-top: 0;
+        height: 3.75rem;
+        margin: 0;
+      }
+      &__current {
+        color: color("green", "200");
+      }
+      @include responsiveMax(SM) {
+        flex-direction: column;
+        grid-gap: 1rem;
+        hr {
+          height: 0;
+          width: 100%;
+          border-top: 1px solid color("white", "700");
+        }
+      }
+    }
+  }
+  /* -------- game section ------- */
+  &__play-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__body {
+      width: 55rem;
+      padding: 0 0.625rem 11.375rem 0.625rem;
+      @include responsiveMax(MD) {
+        width: 35rem;
+      }
+    }
+    &__title {
+      font-family: Raleway;
+      font-size: 1.25rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.4375rem;
+      letter-spacing: 0em;
+      text-align: center;
+      color: color("white", "base");
+      margin-bottom: 1.25rem;
+    }
+    &__content {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      grid-gap: 1.25rem;
+      font-family: Nunito;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.125rem;
+      letter-spacing: 0em;
+      color: color("white", "base");
+      padding: 2.1875rem 3.75rem;
+      border: 0.09375rem solid color("white", "700");
+      border-radius: 0.625rem;
+      background: color("dark-gray", "650");
+      width: 100%;
+      box-sizing: border-box;
+      &__container {
+        display: flex;
+        flex: 1;
+        align-items: flex-end;
+      }
+      &__form {
+        display: flex;
+        flex-direction: row;
+        p {
+          padding: 0.8125rem 0.6875rem 0.6875rem 0.6875rem;
+          text-align: right;
+          border-radius: 0.3125rem;
+          background: color("dark-gray", "650");
+          min-width: 4.25rem;
+          max-width: 5.9375rem;
+          width: 100%;
+          box-sizing: border-box;
+        }
+      }
+      &__subtitle {
+        display: flex;
+        justify-content: space-between;
+        font-family: Nunito;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.125rem;
+        letter-spacing: 0em;
+        text-align: left;
+        margin-bottom: 0.5625rem;
+        p {
+          font-weight: 700;
+          color: color("white", "700");
+        }
+      }
+      input {
+        width: 100%;
+        padding: 0.8125rem 2.4375rem 0.6875rem 2.4375rem;
+        box-sizing: border-box;
+        color: color("white", "base");
+        background: color("dark-gray", "650");
+        border: 0;
+        border-radius: 0.3125rem;
+        font-family: Nunito;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.125rem;
+        letter-spacing: 0em;
+        text-align: left;
+        &:focus {
+          outline: none !important;
+        }
+      }
+      &__prediction {
+        max-width: 18.4375rem;
+        width: 100%;
+        &__input {
+          position: relative;
+          width: 100%;
+          color: color("white", "base");
+          margin-right: 0.625rem;
+          span {
+            position: absolute;
+            bottom: 0.8rem;
+            left: 1.25rem;
+          }
+          input {
+            padding: 0.8125rem 2.4375rem 0.6875rem 2.4375rem;
+          }
+        }
+      }
+      &__amount {
+        flex: 1;
+        width: 100%;
+        &__input {
+          position: relative;
+          flex: 1;
+          color: color("white", "base");
+          span {
+            position: absolute;
+            bottom: 0.8rem;
+            right: 1.125rem;
+          }
+          input {
+            padding: 0.8125rem 4rem 0.6875rem 1.125rem;
+          }
+        }
+      }
+      hr {
+        height: 2.625rem;
+        margin: 0 1.25rem;
+        border-left: 1px solid color("white", "700");
+        border-top: 0;
+      }
+      &__submit {
+        background: color("green", "200");
+        padding: 0.625rem 1.25rem;
+        font-family: Nunito;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.375rem;
+        letter-spacing: 0em;
+        text-align: center;
+        color: color("purple", "800");
+        border-radius: 0.3125rem;
+        cursor: pointer;
+      }
+
+      @include responsiveMax(MD) {
+        flex-direction: column;
+        align-items: flex-start;
+        hr {
+          display: none;
+        }
+        &__container {
+          flex-direction: column;
+          width: 100%;
+          align-items: flex-start;
+          grid-gap: 1.25rem;
+        }
+        &__prediction {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+.lamas-price-prediction-history {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    display: flex;
+    max-width: 71.375rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top: 0.0625rem solid color("white", "700");
+    padding-top: 3.75rem;
+    padding: 3.75rem 2.0625rem 0;
+  }
+  &__title {
+    font-family: Raleway;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1.4375rem;
+    letter-spacing: 0em;
+    text-align: center;
+    color: color("white", "base");
+    margin-bottom: 0.9375rem;
+  }
+  &__options {
+    background: color("black", "300");
+    border: 0.0625rem solid color("white", "700");
+    border-radius: 0.3125rem;
+    padding: 0.3125rem;
+    margin-bottom: 3.125rem;
+    div {
+      cursor: pointer;
+      width: 5.8125rem;
+      padding: 0.5625rem 0;
+      font-family: Nunito;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.125rem;
+      letter-spacing: 0em;
+      text-align: center;
+      display: inline-block;
+      border-radius: 0.1875rem;
+      color: color("white", "base");
+      &.active {
+        background: color("purple", "200");
+      }
+    }
+  }
+  &__table {
+    font-family: Nunito;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.125rem;
+    letter-spacing: 0em;
+    text-align: left;
+    color: color("white", "550");
+    width: 100%;
+    overflow-x: scroll;
+    /* width */
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      //background-color: color("white", "400");
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: color("white", "700");
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-track:hover {
+      background-color: color("white", "700");
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      //background: #555;
+    }
+    &__container {
+      min-width: 56.875rem;
+      width: 100%;
+      padding: 0 0.625rem;
+      box-sizing: border-box;
+    }
+    &__header {
+      display: flex;
+      padding: 0 0.9375rem;
+      margin-bottom: 0.625rem;
+    }
+    &__row {
+      overflow: hidden;
+      position: relative;
+      height: 3.8125rem;
+      &.active {
+        background: color("dark-gray", "650");
+        height: 100%;
+        border-radius: 0.3125rem;
+        margin-bottom: 0.9375rem;
+      }
+      &.active > &__main,
+      &__main:hover {
+        color: color("light-gray", "200");
+        background: color("dark-gray", "550");
+        cursor: pointer;
+      }
+      &__main {
+        display: flex;
+        line-height: 3.5rem;
+        border-radius: 0.3125rem;
+        background: color("dark-gray", "600");
+        margin-bottom: 0.3125rem;
+        padding: 0 0.9375rem;
+      }
+      &__info {
+        padding: 0.9375rem 1.25rem 1.5625rem 1.25rem;
+        &__title {
+          padding: 0.625rem 0.9375rem;
+          background: color("dark-gray", "600");
+          border-radius: 0.1875rem;
+          font-family: Nunito;
+          font-size: 0.875rem;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 1.125rem;
+          letter-spacing: 0em;
+          text-align: left;
+          color: color("light-gray", "200");
+          margin-bottom: 1.25rem;
+        }
+        &__data {
+          display: flex;
+          flex-direction: row;
+          margin-left: 0.9375rem;
+          margin-bottom: 0.625rem;
+          &__title {
+            width: 6rem;
+          }
+          &__hash {
+            font-family: Nunito;
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.125rem;
+            letter-spacing: 0em;
+            text-align: left;
+            color: color("dark-gray", "400");
+            margin-right: 1.25rem;
+          }
+          &__link {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            svg {
+              margin-right: 0.375rem;
+            }
+          }
+          &__amount {
+            font-family: Nunito;
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.125rem;
+            letter-spacing: 0em;
+            text-align: left;
+            color: color("purple", "200");
+          }
+        }
+      }
+    }
+    &__column {
+      display: inline-block;
+    }
+    &__column-id {
+      flex: 1 1 5.5625rem;
+    }
+    &__column-time {
+      flex: 1 1 8.625rem;
+    }
+    &__column-bet {
+      flex: 1 1 3.6875rem;
+    }
+    &__column-predict {
+      flex: 1 1 6.3125rem;
+    }
+    &__column-change {
+      flex: 1 1 7.75rem;
+      text-align: center;
+    }
+    &__column-price {
+      flex: 1 1 8rem;
+      text-align: left;
+    }
+    &__column-score {
+      flex: 1 1 4.0625rem;
+      text-align: right;
+    }
+    &__column-bonus {
+      flex: 1 1 3.8125rem;
+      text-align: right;
+    }
+    &__column-final {
+      flex: 1 1 6.5625rem;
+      text-align: right;
+      &.win {
+        color: color("green", "201");
+      }
+      &.lose {
+        color: color("red", "200");
+      }
+    }
+    &__column-result {
+      flex: 1 1 4.125rem;
+      text-align: right;
+    }
+    &__column-status {
+      flex: 1 1 6.9375rem;
+      text-align: right;
+      position: relative;
+      &.pending {
+        color: color("white", "base");
+      }
+      &.win {
+        color: color("dark-gray", "450");
+      }
+      &.claimable {
+        .btn {
+          position: absolute;
+          right: 0;
+          bottom: 0.4375rem;
+          width: 5.625rem;
+          padding: 0.75rem 0;
+          font-family: Nunito;
+          font-size: 0.875rem;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 1.125rem;
+          letter-spacing: 0em;
+          text-align: center;
+          color: color("white", "base");
+          background: color("radial-gradient", "black-gray"),
+            color("radial-gradient", "green-dark"),
+            color("linear-gradient", "purple-black");
+          border-radius: 0.3125rem;
+          box-shadow: 0px 0px 1.875rem 0.125rem color("purple", "400");
+        }
+      }
+    }
+  }
+}
+.lamas-content-price-prediction-explain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    width: 66.25rem;
+    margin-bottom: 12.0625rem;
+    padding: 0 0.625rem;
+  }
+  &__title {
+    font-family: Raleway;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1.75rem;
+    letter-spacing: 0em;
+    text-align: center;
+    color: color("white", "base");
+  }
+  &__subtitle {
+    color: color("white", "540");
+    margin-top: 0.25rem;
+    font-family: Nunito;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.375rem;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-bottom: 1.875rem;
+  }
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    @include responsiveMax(MD) {
+      flex-direction: column;
+    }
+  }
+  &__content-row2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    @include responsiveMax(MD) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+  &__box {
+    background: color("dark-gray", "650");
+    border-radius: 0.9375rem;
+    padding: 0.9375rem;
+    &__title {
+      font-family: Raleway;
+      font-size: 1.25rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.4375rem;
+      letter-spacing: 0em;
+      text-align: left;
+      color: color("white", "base");
+      margin: 0.9375rem 0;
+      padding-left: 0.9375rem;
+      padding-right: 0.9375rem;
+    }
+    &__text {
+      font-family: Nunito;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.125rem;
+      letter-spacing: 0em;
+      color: color("light-gray", "500");
+      opacity: 0.5;
+      text-align: justify;
+      text-justify: inter-word;
+      padding-left: 0.9375rem;
+      padding-right: 0.9375rem;
+    }
+  }
+  &__explain-box {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    &__desc {
+      max-width: 16.3125rem;
+      min-width: 12.5rem;
+      margin-right: 1.5625rem;
+    }
+    &__img {
+      max-width: 24.625rem;
+      min-width: 20rem;
+      img {
+        width: 100%;
+      }
+    }
+    @include responsiveMax(MD) {
+      flex-direction: column;
+      align-items: center;
+      &__desc {
+        max-width: 100%;
+      }
+      &__img {
+        min-width: 3rem;
+      }
+    }
+  }
+  &__bonus-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.9375rem;
+    max-width: 18.75rem;
+    min-width: 12.5rem;
+    @include responsiveMax(MD) {
+      max-width: 100%;
+    }
+  }
+  &__table {
+    background: color("dark-gray", "650");
+    border-radius: 0.3125rem;
+    padding: 0.9375rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 1.5625rem;
+    font-family: Nunito;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.125rem;
+    letter-spacing: 0em;
+    &__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.5rem;
+      border-bottom: 0.0625rem solid color("neutral", "100");
+      margin-bottom: 0.625rem;
+    }
+    &__header {
+      color: color("dark-gray", "450");
+      padding-bottom: 0.5rem;
+      border-bottom: 0.0625rem solid color("black", "750");
+      margin-bottom: 0.625rem;
+    }
+    &__row1 > &__column-bet {
+      color: #cccccc;
+    }
+    &__row1 > &__column-bonus {
+      color: #2cf2a0;
+    }
+    &__row2 > &__column-bet {
+      color: #b3b3b3;
+    }
+    &__row2 > &__column-bonus {
+      color: #89f8ca;
+    }
+    &__row3 > &__column-bet {
+      color: #999999;
+    }
+    &__row3 > &__column-bonus {
+      color: #d0fcea;
+    }
+    &__row4 > &__column-bet {
+      color: #808080;
+    }
+    &__row4 > &__column-bonus {
+      color: #808080;
+    }
+    &__row4 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  &__reward-box {
+    img {
+      margin-top: 1rem;
+      width: 100%;
+    }
+  }
+  &__fee-box {
+    img {
+      margin-top: 3.2rem;
+      width: 100%;
+    }
+  }
+}
