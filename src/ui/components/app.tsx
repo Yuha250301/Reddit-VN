@@ -1,13 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import Login from "./login/login";
+import Translate from "./translate/translate";
+import Login from "./login/login"
 
 import "assets/scss/_app.scss";
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Login/>
+      <Translate/>
     </div>
   );
 };

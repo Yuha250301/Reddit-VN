@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from "react";
-import { Container, Form, Row, Col } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import OrangeButton from "../common/orange-button";
 import PasswordField from "./password-field";
 import clsx from "clsx";

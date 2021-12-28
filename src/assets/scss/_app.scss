@@ -2,6 +2,7 @@
 @import "media-queries";
 @import "normalize";
 @import "login";
+@import "translation";
 @import "nav";
 @import "intro";
 @import "game";
@@ -16,7 +17,7 @@
 body {
   background: color("black", "100");
   color: color("white", "base");
-  font-family: Raleway, sans-serif;
+  font-family: SVN-Gilroy, sans-serif;
   overflow-x: hidden;
   font-weight: 300;
   position: relative;
@@ -68,72 +69,45 @@ footer {
 }*/
 
 /* -------- header ------- */
-.lamas-header {
+.rvn-header {
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
+  padding: 0 10vh 0 10vh;
   z-index: 100;
-  &__body {
-    padding-left: 6.4375rem;
-    padding-right: 0.9375rem;
-    height: 4.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background-color: #101010;
+  border: 1px;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+  .nav-link {
+    color: #fff !important;
   }
-  &__logo {
-    a {
-      text-decoration: none;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      font-family: Raleway;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 1.125rem;
-      line-height: 1.5rem;
-      letter-spacing: 0em;
-      text-align: left;
-      color: color("white", "base");
-      b {
-        font-weight: 900;
-        margin-left: 0.3125rem;
-        margin-right: 0.3rem;
-      }
-      &:hover {
-        opacity: 0.8;
-      }
-      img {
-        height: 1.75rem;
-        width: 1.75rem;
-        @include responsiveMax(SM) {
-          height: 1.5rem;
-        }
-      }
-    }
+  &__brand {
   }
 
-  &__connect {
-    a {
-      border-radius: 0.416rem;
-      background: color("green", "200");
-      text-decoration: none;
-      color: color("black", "100");
-      padding: 0.5rem 0.9375rem;
-      cursor: pointer;
-      font-family: Nunito;
-      font-size: 0.875rem;
-      font-style: normal;
+  &__right {
+     width: 25%;
+    &__search {
+      padding: 0 0 0 0.5rem;
+      height: auto;
+      width: 100%;
+      background-color: #343434;
+      border-color: #343434;
+    }
+    &__translate-button {
+      box-sizing: border-box;
+      height: auto;
+      width: auto;
       text-align: center;
-      font-weight: 700;
-      line-height: 1.375rem;
-      letter-spacing: 0rem;
-      margin-right: 0.5rem;
-      @include responsiveMax(SM) {
-        font-size: 0.8rem;
-        padding: 0.25rem 0.5rem;
-        padding: auto;
+      padding: 5px 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e85b25;
+      font-size: 0.9rem;
+      img {
+        width: auto;
+        height: auto;
       }
     }
   }
@@ -142,7 +116,7 @@ footer {
 /* -------- main ------- */
 .lamas-main {
   margin-top: 0rem;
-  font-feature-settings: 'pnum'on, 'lnum'on;
+  font-feature-settings: "pnum" on, "lnum" on;
   &__nav-open {
     margin-left: 14.5rem;
   }

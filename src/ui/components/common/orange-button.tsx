@@ -4,8 +4,8 @@ import { Button } from "react-bootstrap";
 
 interface OrangeButtonProps {
     img?: any;
-    content: string;
-    onClick: () => void;   
+    content?: string;
+    onClick: () => void;
 }
 
 const OrangeButton: React.FC<OrangeButtonProps> = ({ img, content, onClick, ...other  }) => {
@@ -17,7 +17,7 @@ const OrangeButton: React.FC<OrangeButtonProps> = ({ img, content, onClick, ...o
             onClick = {onClick}
             {...other}
           >
-            {img && <img src={img}/>}
+            {img && <img src={img} className={ content && "me-1"}/>}
             <strong>{content}</strong>
           </Button>
   );
