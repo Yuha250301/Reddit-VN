@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React from "react";
 import Header from "../common/header";
 import { FormControl } from "react-bootstrap";
 import NavbarRvn from "../common/nav";
 import ToolCus from "./tool-custom";
+import ScrollButton from "../common/scroll-button";
 import clsx from "clsx";
 import Post from "./post";
 
@@ -49,7 +50,7 @@ const Translate: React.FC = () => {
             width="144px"
           />
         </div>
-        <div className={clsx("d-flex", "justify-content-between","pb-4")}>
+        <div className={clsx("d-flex", "justify-content-between", "pb-4")}>
           <div
             className={clsx("d-flex", "justify-content-between")}
             style={{ width: "810px" }}
@@ -102,8 +103,9 @@ const Translate: React.FC = () => {
             width="144px"
           />
         </div>
-        <Post/>
+        <Post />
       </div>
+      <ScrollButton/>
     </div>
   );
 };

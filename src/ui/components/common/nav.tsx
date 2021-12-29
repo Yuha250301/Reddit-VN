@@ -1,15 +1,6 @@
 /* eslint-disable prettier/prettier */
 import clsx from "clsx";
-import React, { useState } from "react";
-// import {
-//   Container,
-//   Navbar,
-//   Nav,
-//   Form,
-//   FormControl,
-//   Button,
-// } from "react-bootstrap";
-// import clsx from "clsx";
+import React from "react";
 import NavItem from "./nav-item";
 
 const translationIcon = require("assets/img/translation_icon.svg").default;

@@ -1,25 +1,27 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React from "react";
 import { FormControl } from "react-bootstrap";
 import clsx from "clsx";
 
 interface P2TProps {
   content: string;
+  isHidden?: boolean;
 }
 
-const P2T: React.FC<P2TProps> = ({content}) => {
+const P2T: React.FC<P2TProps> = ({ content, isHidden }) => {
   return (
     <div
       className={clsx(
         "d-flex",
         "align-content-stretch",
         "justify-content-between",
+        !isHidden && "disable",
       )}
     >
       <div
         className="rounded"
         style={{
-          width: "45%",
+          width: "calc(100% - 48vw)",
           padding: "16px",
           backgroundColor: "#101010",
           color: "#fff",
@@ -27,7 +29,10 @@ const P2T: React.FC<P2TProps> = ({content}) => {
       >
         {content}
       </div>
-      <div className="input-box" style={{ width: "45%", position: "relative" }}>
+      <div
+        className="input-box"
+        style={{ marginLeft: "8vw", width: "40vw", position: "relative" }}
+      >
         <FormControl
           as="textarea"
           placeholder="Vietnamese translation."

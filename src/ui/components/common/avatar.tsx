@@ -8,7 +8,7 @@ interface AvatarProps {
 }
 
 const Avatar: React.FC<AvatarProps> = ({ square }) => {
-  return <img src={avatar} alt="avatar" width={square} height={square} className="rounded-circle"/>;
+  return <img src={avatar} alt="avatar" style={{width: square, height: square }} /*width={square} height={square}*/ className="rounded-circle"/>;
 };
 
 export default Avatar;

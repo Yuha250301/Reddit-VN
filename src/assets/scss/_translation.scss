@@ -24,6 +24,7 @@
     height: 100%;
     margin-top: 3vh;
     padding: 0;
+    padding-bottom: 5vh;
     h6 {
       margin: 8px 0;
       color: #e85b25;
@@ -32,6 +33,7 @@
     }
     &__comment {
       margin-top: 1vh;
+      position: relative;
       h5 {
         margin: 1vh;
         font-size: 18px;
@@ -43,20 +45,46 @@
         display: flex;
         justify-content: space-between;
       }
+      &__content {
+        padding-left: 10px;
+        border-left: 0.2px solid rgba(255, 255, 255, 0.5);
+      }
+      &__node {
+        position: absolute;
+        left: -13px;
+        top: 1.5vh;
+      }
+      .checkbox-label {
+        position: absolute;
+        right: 48vw;
+      }
     }
   }
 }
 
-.input-box::before{
+.input-box::before {
   content: "";
   position: absolute;
   top: 50%;
-  transform: translateY(-25%);
+  transform: translateY(-35%);
   right: 100%;
   margin-top: -5px;
   border-width: 20px;
   border-style: solid;
-  border-color: transparent #101010 transparent transparent ;
-
+  border-color: transparent #101010 transparent transparent;
 }
 
+.disable {
+  display: none !important;
+}
+
+.scroll-button {
+  position: fixed;
+  // width: 100%;
+  right: 0.5vw;
+  bottom: 2vh;
+  font-size: 3rem;
+  z-index: 5000;
+  cursor: pointer;
+  color: #fff;
+}

@@ -6,7 +6,6 @@ import {
   Nav,
   Form,
   FormControl,
-  Button,
 } from "react-bootstrap";
 import { AiOutlineSearch, AiOutlineBell } from "react-icons/ai";
 import Avatar from "./avatar";
@@ -31,10 +30,10 @@ const ClassNames = {
 const Header: React.FC = () => {
   const [isSearching, setIsSearching] = useState(true);
 
-  const setSearchingOn = (e: any) => {
+  const setSearchingOn = () => {
     setIsSearching(true);
   };
-  const setSearchingOff = (e: any) => {
+  const setSearchingOff = () => {
     setIsSearching(false);
   };
 
@@ -114,7 +113,7 @@ const Header: React.FC = () => {
               <AiOutlineBell size={30} />
             </div>
 
-            <Avatar square={60} />
+            <Avatar square={50} />
           </Nav>
         </Container>
       </Navbar>
