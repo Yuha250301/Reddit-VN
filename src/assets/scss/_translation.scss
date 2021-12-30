@@ -6,8 +6,12 @@
     width: 70vw;
     font-size: 16px;
     height: 6vh;
+    color: #fff;
     @include responsiveMax(MD) {
       width: 810px;
+    }
+    :focus {
+      color: #fff;
     }
   }
   &__content {
@@ -43,7 +47,7 @@
       &__title {
         width: 45%;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
       }
       &__content {
         padding-left: 10px;

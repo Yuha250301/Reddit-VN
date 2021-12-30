@@ -7,6 +7,13 @@ import ToolCus from "./tool-custom";
 import ScrollButton from "../common/scroll-button";
 import clsx from "clsx";
 import Post from "./post";
+import NoteModal from "./note-modal";
+import NameModal from "./name-modal";
+import DeleteModal from "./delete-modal";
+import PreviewModal from "./preview-modal";
+
+
+
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -27,6 +34,44 @@ const ClassNames = {
 };
 
 const Translate: React.FC = () => {
+  const [openNote, setOpenNote] = React.useState(false);
+  const [openName, setOpenName] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [openPreview, setOpenPreview] = React.useState(false);
+
+  const handleOpen = (type: string) => {
+    switch (type) {
+      case "note":
+        setOpenNote(true);
+        break;
+      case "name":
+        setOpenName(true);
+        break;
+      case "delete":
+        setOpenDelete(true);
+        break;
+      case "preview":
+        setOpenPreview(true);
+        break;
+    }
+  };
+  const handleClose = (type: string) => {
+    switch (type) {
+      case "note":
+        setOpenNote(false);
+        break;
+      case "name":
+        setOpenName(false);
+        break;
+      case "delete":
+        setOpenDelete(false);
+        break;
+      case "preview":
+        setOpenPreview(false);
+        break;
+    }
+  };
+
   return (
     <div className={Root}>
       <Header />
@@ -42,6 +87,7 @@ const Translate: React.FC = () => {
           <FormControl
             placeholder="Paste the Reddit link to translate"
             className={clsx(ClassNames.FormControl)}
+            style={{backgroundColor: "#101010",border: "16px solid #101010", color: "#fff"}}
           />
           <ToolCus
             content="Go ahead"
@@ -60,18 +106,21 @@ const Translate: React.FC = () => {
               content="Name"
               bgColor="#101010"
               height="4.8vh"
+              onClick={()=>handleOpen("name")}
             />
             <ToolCus
               icon={noteIcon}
               content="Notes"
               bgColor="#101010"
               height="4.8vh"
+              onClick={()=>handleOpen("note")}
             />
             <ToolCus
               icon={deleteIcon}
               content="Delete"
               bgColor="#101010"
               height="4.8vh"
+              onClick={()=>handleOpen("delete")}
             />
             <ToolCus
               icon={downloadImgIcon}
@@ -92,6 +141,7 @@ const Translate: React.FC = () => {
               content="Preview"
               bgColor="#101010"
               height="4.8vh"
+              onClick={()=>handleOpen("preview")}
             />
           </div>
 
@@ -105,7 +155,12 @@ const Translate: React.FC = () => {
         </div>
         <Post />
       </div>
-      <ScrollButton/>
+      <ScrollButton />
+      <NoteModal open={openNote} handleClose={()=> handleClose("note")}/>
+      <NameModal open={openName} handleClose={()=> handleClose("name")}/>
+      <DeleteModal open={openDelete} handleClose={()=> handleClose("delete")}/>
+      <PreviewModal open={openPreview} handleClose={()=> handleClose("preview")} content=''/>
+      
     </div>
   );
 };

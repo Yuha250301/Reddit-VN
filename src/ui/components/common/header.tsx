@@ -18,6 +18,7 @@ const Root = "rvn-header";
 const ClassNames = {
   Root,
   Brand: `${Root}__brand`,
+  Nav: `${Root}__nav`,
   Right: `${Root}__right`,
   Search: `${Root}__right__search`,
   TranslateButton: `${Root}__right__translate-button`,
@@ -51,7 +52,7 @@ const Header: React.FC = () => {
             />
           </Navbar.Brand>
 
-          <Nav>
+          <Nav className={ClassNames.Nav}>
             <Nav.Link href="#home">Forum</Nav.Link>
             <Nav.Link className="ms-4" href="#features">
               Mission
@@ -101,10 +102,11 @@ const Header: React.FC = () => {
               <div
                 className={clsx(
                   !isSearching ? "rounded-pill" : "rounded-circle",
+                  !isSearching && "pe-3 ps-3",
                   ClassNames.TranslateButton,
                 )}
                 onClick={setSearchingOff}
-              >
+              >  
                 <img src={listIcon} />
                 {!isSearching && "Translate now"}
               </div>

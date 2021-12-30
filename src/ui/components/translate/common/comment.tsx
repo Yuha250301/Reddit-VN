@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import DetailUser from "./detail-user";
 import P2T from "./preview-to-translate";
 import clsx from "clsx";
+import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
+import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 
 const nodeIcon = require("assets/img/node_icon.svg").default;
 
@@ -29,14 +31,33 @@ const Comment: React.FC<CommentProps> = ({
   comment,
 }) => {
   const [isHidden, setIsHidden] = useState(false);
+  const [childComment, setChildComment] = useState(false);
 
   const handleHidden = () => {
     setIsHidden(!isHidden);
   };
+
+  const handleChildComment = () => {
+    setChildComment(!childComment);
+  };
+
   return (
     <div className={ClassNames.Root}>
       <div className={ClassNames.Title}>
-        <DetailUser user={user} reward={reward} />
+        <div style={{position: "relative", left: "-9px", display: "flex", alignItems: "center"}}>
+          {!childComment ? (
+            <ArrowRightRoundedIcon
+              onClick={ (comment.length !== 0) ? handleChildComment : () => this}
+              sx={{cursor: (comment.length !== 0) ? "pointer" : "auto", color: (comment.length !== 0) ? "white" : "rgba(255, 255, 255, 0.5)"}}
+            />
+          ) : (
+            <ArrowDropDownRoundedIcon
+              onClick={handleChildComment}
+              sx={{cursor: "pointer", color: "#fff"}}
+            />
+          )}
+          <DetailUser user={user} reward={reward} />
+        </div>
 
         <label className="checkbox-label">
           <input
@@ -49,7 +70,7 @@ const Comment: React.FC<CommentProps> = ({
       </div>
       <div className={clsx(ClassNames.Content)}>
         <P2T content={content} isHidden={isHidden} />
-        <div>
+        <div className={clsx(!childComment && "disable")}>
           {comment.map((comment, index) => (
             <div key={index} className="position-relative">
               <img src={nodeIcon} className={ClassNames.Node} />

@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import { GoArrowUp } from "react-icons/go";
 
 const upIcon = require("assets/img/uparrow_icon.svg").default;
 

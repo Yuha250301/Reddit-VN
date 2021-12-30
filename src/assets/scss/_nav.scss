@@ -22,10 +22,15 @@
 
 .tooltip-arrow::before{
   border-right-color: #FFFFFF !important;
+
 }
 .tooltip-inner{
   background-color: #FFFFFF;
   color: black;
   font-family: SVN-Gilroy, sans-serif;
   font-weight: 600;
+}
+.tooltip.show {
+  opacity: 1 !important;
+
 }

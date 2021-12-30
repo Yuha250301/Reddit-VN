@@ -29,6 +29,7 @@ const P2T: React.FC<P2TProps> = ({ content, isHidden }) => {
       >
         {content}
       </div>
+
       <div
         className="input-box"
         style={{ marginLeft: "8vw", width: "40vw", position: "relative" }}
