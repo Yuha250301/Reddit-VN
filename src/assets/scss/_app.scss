@@ -75,7 +75,6 @@ footer {
   }
   &__right {
     max-width: 35%;
-
     &__search {
       padding: 0 0 0 0.5rem;
       height: auto;
@@ -98,6 +97,21 @@ footer {
         width: auto;
         height: auto;
       }
+    }
+    .announcements {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      font-size: 8px;
+      font-weight: 900;
+      border: 2px solid #101010;
+      border-radius: 100%;
+      background-color: #E85B25;
+      z-index: 10000;
+      padding-top: 2px;
+      text-align: center;
     }
   }
 }

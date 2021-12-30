@@ -111,8 +111,9 @@ const Header: React.FC = () => {
                 {!isSearching && "Translate now"}
               </div>
             </div>
-            <div className={clsx("d-flex", "align-items-center", "me-4")}>
-              <AiOutlineBell size={30} />
+            <div className={clsx("d-flex", "align-items-center", "me-4","position-relative")}>
+              <div className="announcements">88</div>
+              <AiOutlineBell size={28} />
             </div>
 
             <Avatar square={50} />
