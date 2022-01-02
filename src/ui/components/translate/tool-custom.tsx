@@ -32,28 +32,28 @@ const ToolCus: React.FC<ToolCusProps> = ({
     fontSize: "16px",
   };
 
-  const [animation, setAnimation] = useState(ToolCusStyle);
+  // const [animation, setAnimation] = useState(ToolCusStyle);
 
-  const animationStyle = {
-    color: "#FFFFFF",
-    padding: "12px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: "700",
-    fontSize: "16px",
-    boxShadow: !dis ? "1px 1px 1px 0 #DBEDF3" : "0",
-    opacity: !dis ? 0.8 : 1,
-  };
+  // const animationStyle = {
+  //   color: "#FFFFFF",
+  //   padding: "12px",
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   fontWeight: "700",
+  //   fontSize: "16px",
+  //   boxShadow: !dis ? "1px 1px 1px 0 #DBEDF3" : "0",
+  //   opacity: !dis ? 0.8 : 1,
+  // };
 
   
-  const onMouseOver = () => {
-    setAnimation(animationStyle);
-  }
+  // const onMouseOver = () => {
+  //   setAnimation(animationStyle);
+  // }
 
-  const onMouseOut = () => {
-    setAnimation(ToolCusStyle);
-  }
+  // const onMouseOut = () => {
+  //   setAnimation(ToolCusStyle);
+  // }
 
 
   return (
@@ -61,10 +61,10 @@ const ToolCus: React.FC<ToolCusProps> = ({
       typeof="button"
       onClick={onClick}
       className="btn rounded"
-      onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
+      // onMouseOver={onMouseOver}
+      // onMouseOut={onMouseOut}
       style={{
-        ...animation,
+        ...ToolCusStyle,
         backgroundColor: bgColor,
         height: height,
         width: width,

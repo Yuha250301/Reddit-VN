@@ -6,14 +6,8 @@
 @import "nav";
 @import "checkbox";
 @import "intro";
-@import "game";
-@import "price-prediction";
-@import "lucky-spinner";
-@import "jackpot-lottery";
-@import "binary-option";
-@import "defi";
 @import "not-found";
-@import "coming-soon";
+@import "season";
 
 body {
   background: #1c1c1c;
@@ -51,14 +45,13 @@ footer {
   align-items: stretch;
 }
 
-
 /* -------- header ------- */
 .rvn-header {
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  padding: 0 10vh 0 10vh;
+  padding: 0 5vw 0 5vw;
   z-index: 100;
   background-color: #101010;
   border: 1px;
@@ -69,14 +62,24 @@ footer {
     // left: calc(50% - translateX(50%));
     left: 50%;
     transform: translateX(-55%);
-    .nav-link {
-      color: #fff !important;
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      line-height: 18.9px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    &__active {
+      text-decoration: underline !important;
+      text-underline-offset: 0.5rem;
+      color: #E85B25 !important;
     }
   }
   &__right {
     max-width: 35%;
     &__search {
-      padding: 0 0 0 0.5rem;
+      padding: 0.5px 0 0.5px 0.5rem;
       height: auto;
       width: 100%;
       background-color: #343434;
@@ -93,6 +96,7 @@ footer {
       justify-content: center;
       background-color: #e85b25;
       font-size: 0.9rem;
+      cursor: pointer;
       img {
         width: auto;
         height: auto;
@@ -108,7 +112,7 @@ footer {
       font-weight: 900;
       border: 2px solid #101010;
       border-radius: 100%;
-      background-color: #E85B25;
+      background-color: #e85b25;
       z-index: 10000;
       padding-top: 2px;
       text-align: center;
@@ -117,19 +121,9 @@ footer {
 }
 
 /* -------- main ------- */
-.lamas-main {
-  margin-top: 0rem;
-  font-feature-settings: "pnum" on, "lnum" on;
-  &__nav-open {
-    margin-left: 14.5rem;
-  }
-  &__nav-close {
-    margin-left: 5rem;
-  }
-}
 
 /* -------- footer ------- */
-.lamas-footer {
+.rvn-footer {
   display: flex;
   align-items: center;
   justify-content: center;

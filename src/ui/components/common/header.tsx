@@ -1,24 +1,23 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
-import {
-  Container,
-  Navbar,
-  Nav,
-  Form,
-  FormControl,
-} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
+import { Container, Navbar, Nav, Form, FormControl } from "react-bootstrap";
 import { AiOutlineSearch, AiOutlineBell } from "react-icons/ai";
 import Avatar from "./avatar";
 import clsx from "clsx";
+import { Section, MENU, HEADER } from "../main/const";
 
 const brand = require("assets/img/logo_brand.svg").default;
 const listIcon = require("assets/img/list_icon.svg").default;
+const avatar = require("assets/img/logo.svg").default;
 
 const Root = "rvn-header";
 const ClassNames = {
   Root,
   Brand: `${Root}__brand`,
   Nav: `${Root}__nav`,
+  ActiveNav: `${Root}__nav__active`,
   Right: `${Root}__right`,
   Search: `${Root}__right__search`,
   TranslateButton: `${Root}__right__translate-button`,
@@ -29,8 +28,30 @@ const ClassNames = {
 // }
 
 const Header: React.FC = () => {
-  const [isSearching, setIsSearching] = useState(true);
+  const location = useLocation();
+  const [active, setActive] = useState<Section>(Section.HOME);
+  const navigate = useNavigate();
 
+  const handleActive = (section: Section) => {
+    if (MENU.includes(section)) setActive(section);
+  };
+
+  const selectSection = (key: Section) => {
+    handleActive(key);
+    if (HEADER.includes(key)) {
+      navigate(`/${key}`);
+    }
+  };
+
+  useEffect(() => {
+    const pathname = location.pathname.substr(1);
+    handleActive(pathname);
+    console.log(pathname);
+    if (pathname === Section.TRANSLATE) setSearchingOn();
+    else setSearchingOff();
+  }, [location.pathname]);
+
+  const [isSearching, setIsSearching] = useState(false);
   const setSearchingOn = () => {
     setIsSearching(true);
   };
@@ -38,11 +59,21 @@ const Header: React.FC = () => {
     setIsSearching(false);
   };
 
+  const checkActive = (section: Section) => {
+    if (active === section) return true;
+    return false;
+  };
+
+  const onClick = (e: any, section: Section) => {
+    e && e.preventDefault();
+    selectSection(section);
+  };
+
   return (
     <header className={Root}>
       <Navbar className="m-2">
         <Container fluid>
-          <Navbar.Brand href="#home" className={ClassNames.Brand}>
+          <Navbar.Brand href="home" className={ClassNames.Brand}>
             <img
               src={brand}
               width="150"
@@ -53,13 +84,32 @@ const Header: React.FC = () => {
           </Navbar.Brand>
 
           <Nav className={ClassNames.Nav}>
-            <Nav.Link href="#home">Forum</Nav.Link>
-            <Nav.Link className="ms-4" href="#features">
+            <a
+              className={clsx(
+                checkActive(Section.FORUM) ? ClassNames.ActiveNav : "",
+              )}
+              onClick={(e: any) => onClick(e, Section.FORUM)}
+            >
+              Forum
+            </a>
+            <a
+              className={clsx(
+                checkActive(Section.MISSION) && ClassNames.ActiveNav,
+                "ms-5",
+              )}
+              onClick={(e: any) => onClick(e, Section.MISSION)}
+            >
               Mission
-            </Nav.Link>
-            <Nav.Link className="ms-4" href="#pricing">
+            </a>
+            <a
+              className={clsx(
+                checkActive(Section.SEASON) && ClassNames.ActiveNav,
+                "ms-5",
+              )}
+              onClick={(e: any) => onClick(e, Section.SEASON)}
+            >
               Season
-            </Nav.Link>
+            </a>
           </Nav>
 
           <Nav
@@ -105,18 +155,28 @@ const Header: React.FC = () => {
                   !isSearching && "pe-3 ps-3",
                   ClassNames.TranslateButton,
                 )}
-                onClick={setSearchingOff}
-              >  
+                onClick={() => {
+                  onClick(null, Section.TRANSLATE);
+                  setSearchingOff();
+                }}
+              >
                 <img src={listIcon} />
                 {!isSearching && "Translate now"}
               </div>
             </div>
-            <div className={clsx("d-flex", "align-items-center", "me-4","position-relative")}>
+            <div
+              className={clsx(
+                "d-flex",
+                "align-items-center",
+                "me-4",
+                "position-relative",
+              )}
+            >
               <div className="announcements">88</div>
               <AiOutlineBell size={28} />
             </div>
 
-            <Avatar square={50} />
+            <Avatar avatar={avatar} square={50} isCircle={true} />
           </Nav>
         </Container>
       </Navbar>

@@ -1,16 +1,23 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import Translate from "./translate/translate";
-import Login from "./login/login"
-
+import { BrowserRouter } from "react-router-dom";
+import Main from "./main/main"
 import "assets/scss/_app.scss";
+import { RecoilRoot } from "recoil";
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <Translate/>
-    </div>
-  );
-};
+
+class App extends React.Component<Record<string, unknown>, undefined> {
+  public render() {
+    return (
+      <RecoilRoot>
+        <BrowserRouter>
+          <div className="app">
+            <Main />
+          </div>
+        </BrowserRouter>
+      </RecoilRoot>
+    );
+  }
+}
 
 export default App;

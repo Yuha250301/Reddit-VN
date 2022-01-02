@@ -18,6 +18,9 @@
   &__content {
     height: 40%;
   }
+  img {
+    cursor: pointer;
+  }
 }
 
 .tooltip-arrow::before{
