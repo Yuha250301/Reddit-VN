@@ -2,15 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { Container, Navbar, Nav, Form, FormControl } from "react-bootstrap";
+// import { Container, Navbar, Nav, Form, FormControl } from "react-bootstrap";
 import { AiOutlineSearch, AiOutlineBell } from "react-icons/ai";
 import Avatar from "./avatar";
 import clsx from "clsx";
 import { Section, MENU, HEADER } from "../main/const";
+import ProfileTooltip from "./profile-menu"
 
 const brand = require("assets/img/logo_brand.svg").default;
 const listIcon = require("assets/img/list_icon.svg").default;
 const avatar = require("assets/img/logo.svg").default;
+const noneBanner = require("assets/img/none_banner.svg").default;
 
 const Root = "rvn-header";
 const ClassNames = {
@@ -46,7 +48,6 @@ const Header: React.FC = () => {
   useEffect(() => {
     const pathname = location.pathname.substr(1);
     handleActive(pathname);
-    console.log(pathname);
     if (pathname === Section.TRANSLATE) setSearchingOn();
     else setSearchingOff();
   }, [location.pathname]);
@@ -71,9 +72,8 @@ const Header: React.FC = () => {
 
   return (
     <header className={Root}>
-      <Navbar className="m-2">
-        <Container fluid>
-          <Navbar.Brand href="home" className={ClassNames.Brand}>
+      <nav className="m-2">
+          <nav className={ClassNames.Brand}>
             <img
               src={brand}
               width="150"
@@ -81,9 +81,9 @@ const Header: React.FC = () => {
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
-          </Navbar.Brand>
+          </nav>
 
-          <Nav className={ClassNames.Nav}>
+          <nav className={ClassNames.Nav}>
             <a
               className={clsx(
                 checkActive(Section.FORUM) ? ClassNames.ActiveNav : "",
@@ -110,9 +110,9 @@ const Header: React.FC = () => {
             >
               Season
             </a>
-          </Nav>
+          </nav>
 
-          <Nav
+          <nav
             className={clsx(
               "d-flex",
               "align-items-center",
@@ -136,17 +136,16 @@ const Header: React.FC = () => {
                 <AiOutlineSearch size={15} />
               </div>
             ) : (
-              <Form
+              <form
                 className={clsx("d-flex", "align-items-center", "me-4")}
                 onClick={setSearchingOn}
               >
-                <FormControl
-                  type="search"
+                <input
                   placeholder="🔎︎ Search"
                   className={clsx("rounded-pill", ClassNames.Search)}
                   aria-label="Search"
                 />
-              </Form>
+              </form>
             )}
             <div className={clsx("d-flex", "align-items-center", "me-4")}>
               <div
@@ -175,11 +174,9 @@ const Header: React.FC = () => {
               <div className="announcements">88</div>
               <AiOutlineBell size={28} />
             </div>
-
-            <Avatar avatar={avatar} square={50} isCircle={true} />
-          </Nav>
-        </Container>
-      </Navbar>
+            <ProfileTooltip imgBanner={noneBanner} name="Username"><Avatar avatar={avatar} square={50} isCircle={true} /></ProfileTooltip>
+          </nav>
+      </nav>
     </header>
   );
 };

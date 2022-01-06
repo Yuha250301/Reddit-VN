@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from "react";
-import { Container, Form } from "react-bootstrap";
 import OrangeButton from "../common/orange-button";
 import PasswordField from "./password-field";
+import Footer from "../common/footer";
 import clsx from "clsx";
 
 const logo = require("assets/img/logo.svg").default;
@@ -27,8 +27,7 @@ const Login: React.FC = () => {
 
   return (
     <div className={Root}>
-      <Container
-        fluid
+      <div
         className={clsx(
           "text-center",
           "d-flex",
@@ -48,18 +47,18 @@ const Login: React.FC = () => {
         >
           <img src={logo} alt="logo-login" className="m-5" />
           <div className={ClassNames.Content}>
-            <Form>
-              <Form.Group className="mb-2" controlId="formBasicEmail">
-                <Form.Control className="form-input" type="text" placeholder="Username" />
-              </Form.Group>
-              <Form.Group className="mb-2" controlId="formBasicPassword">
-                <PasswordField />
-              </Form.Group>
+            <form>
+              <input
+                type="text"
+                placeholder="Username"
+                className={ClassNames.FormControl}
+              />
+              <PasswordField />
               <OrangeButton
                 content={!isSignUp ? "Log in" : "Sign up"}
                 onClick={() => this}
               />
-            </Form>
+            </form>
           </div>
           <div className={ClassNames.Anchor}>
             <span onClick={handleSignUp}>
@@ -69,8 +68,8 @@ const Login: React.FC = () => {
             <span>Ban log</span>
           </div>
         </div>
-        <div className={ClassNames.LastChild}>Copyright © RVN 2021.</div>
-      </Container>
+        <Footer />
+      </div>
     </div>
   );
 };

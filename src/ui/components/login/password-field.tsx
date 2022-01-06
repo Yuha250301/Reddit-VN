@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from "react";
-import { FormControl } from "react-bootstrap";
+// import { FormControl } from "react-bootstrap";
 import clsx from 'clsx';
 
 
@@ -16,8 +16,8 @@ const PasswordField: React.FC = () => {
   };
 
   return (
-    <div className={clsx("mb-3",Root)}>
-      <FormControl className="form-input"
+    <div className={clsx(Root)}>
+      <input className="rvn-login__form-control"
         type={!showPassword ? "password" : "text"}
         placeholder="Password"
       />

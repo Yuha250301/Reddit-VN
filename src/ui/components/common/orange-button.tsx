@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
+import clsx from "clsx";
 import React from "react";
-import { Button } from "react-bootstrap";
 
 interface OrangeButtonProps {
     img?: any;
@@ -10,16 +10,15 @@ interface OrangeButtonProps {
 
 const OrangeButton: React.FC<OrangeButtonProps> = ({ img, content, onClick, ...other  }) => {
   return (
-          <Button
-            variant="dark"
-            type="submit"
-            style={{ backgroundColor: "#E85B25", width: "100%"}}
+          <div
+            className={clsx("d-flex","align-items-center","justify-content-center")}
+            style={{ backgroundColor: "#E85B25", width: "100%", borderRadius:"5px", height: "36px", cursor:"pointer"}}
             onClick = {onClick}
             {...other}
           >
             {img && <img src={img} className={ content && "me-1"}/>}
             <strong>{content}</strong>
-          </Button>
+          </div>
   );
 };
 

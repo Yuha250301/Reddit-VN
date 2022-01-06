@@ -27,17 +27,47 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }));
 
-interface NavItemProps {
+interface GiftTooltipProps {
+  imgAward: any;
   content: string;
 }
 
-const NavItem: React.FC<NavItemProps> = ({content, children}) => {
+const GiftTooltip: React.FC<GiftTooltipProps> = ({
+  imgAward,
+  content,
+  children,
+}) => {
   return (
     <HtmlTooltip
       placement="right"
       title={
         <>
-          {content}
+          <div
+            className={clsx("d-flex", "align-items-center")}
+            style={{
+              backgroundColor: "#000",
+              padding: "10px",
+              marginBottom: "10px",
+              borderRadius: "8px",
+            }}
+          >
+            <div style={{ width: "auto", marginRight: "10px" }}>{imgAward}</div>
+            <h5 style={{ width: "auto", fontWeight: "700" }}>{content}</h5>
+          </div>
+          <ul
+            style={{
+              paddingLeft: "30px",
+              fontWeight: "400",
+              fontSize: "20px",
+              lineHeight: "25.6px",
+            }}
+          >
+            <li>Gift Name 1</li>
+            <li>Gift Name 2</li>
+            <li>Gift Name 3</li>
+            <li>Gift Name 4</li>
+            <li>Gift Name 5</li>
+          </ul>
         </>
       }
     >
@@ -46,4 +76,4 @@ const NavItem: React.FC<NavItemProps> = ({content, children}) => {
   );
 };
 
-export default NavItem;
+export default GiftTooltip;

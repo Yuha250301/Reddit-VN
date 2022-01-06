@@ -18,8 +18,8 @@ const ContentBoard: React.FC<ContentProps> = ({props}) => {
     <div>
       <Routes>
         <Route path="/" element={<Login/>} />
-        <Route path={Section.TRANSLATE} element={<Translate/>} />
-        <Route path={Section.SEASON} element={<Season/>} />
+        {/* <Route path={Section.TRANSLATE} element={<Translate/>} /> */}
+        {/* <Route path={Section.SEASON} element={<Season/>} /> */}
         {/* <Route path={Section.FORUM} element={<Defi />} />
         <Route path={Section.MISSION} element={<ComingSoon />} />
         <Route path={Section.PROFILE} element={<ComingSoon />} /> */}
