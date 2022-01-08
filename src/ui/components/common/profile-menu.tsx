@@ -181,8 +181,8 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
     setOpen(false);
   };
 
-  const handleTooltipOpen = () => {
-    setOpen(true);
+  const handleTooltipToggle = () => {
+    setOpen(!open);
   };
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -193,6 +193,7 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
           open={open}
           disableHoverListener
           className="profile-menu"
+          TransitionProps={{ timeout: 0 }}
           title={
             <>
               <div
@@ -262,7 +263,7 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
             </>
           }
         >
-          <div onClick={handleTooltipOpen} style={{ cursor: "pointer" }}>
+          <div onClick={handleTooltipToggle} style={{ cursor: "pointer" }}>
             {children}
           </div>
         </HtmlTooltip>

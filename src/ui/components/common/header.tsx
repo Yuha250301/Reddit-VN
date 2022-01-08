@@ -72,7 +72,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={Root}>
-      <nav className="m-2">
+      <nav className={clsx("d-flex","align-items-center", "justify-content-between","me-2","p-4")}>
           <nav className={ClassNames.Brand}>
             <img
               src={brand}

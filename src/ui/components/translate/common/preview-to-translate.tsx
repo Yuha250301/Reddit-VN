@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import { FormControl } from "react-bootstrap";
 import clsx from "clsx";
 
 interface P2TProps {
@@ -34,8 +33,7 @@ const P2T: React.FC<P2TProps> = ({ content, isHidden }) => {
         className="input-box"
         style={{ marginLeft: "8vw", width: "40vw", position: "relative" }}
       >
-        <FormControl
-          as="textarea"
+        <textarea
           placeholder="Vietnamese translation."
           className="rounded"
           rows={1}
@@ -46,6 +44,7 @@ const P2T: React.FC<P2TProps> = ({ content, isHidden }) => {
             backgroundColor: "#101010",
             color: "#fff",
             boxSizing: "border-box",
+            outline: "none",
           }}
         />
       </div>

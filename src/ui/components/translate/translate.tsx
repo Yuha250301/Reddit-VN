@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import Header from "../common/header";
-import { FormControl } from "react-bootstrap";
 import NavbarRvn from "../common/nav";
 import ToolCus from "./tool-custom";
 import ScrollButton from "../common/scroll-button";
@@ -11,9 +10,6 @@ import NoteModal from "./note-modal";
 import NameModal from "./name-modal";
 import DeleteModal from "./delete-modal";
 import PreviewModal from "./preview-modal";
-
-
-
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -84,7 +80,7 @@ const Translate: React.FC = () => {
           className={clsx("d-flex", "justify-content-between", "mb-4")}
           style={{ height: "6vh", width: "100%" }}
         >
-          <FormControl
+          <input
             placeholder="Paste the Reddit link to translate"
             className={clsx(ClassNames.FormControl)}
             style={{backgroundColor: "#101010",border: "16px solid #101010", color: "#fff"}}

@@ -23,9 +23,9 @@ const NavbarRvn: React.FC = () => {
     <div className={Root}>
           <div className={clsx("d-flex","flex-column","justify-content-around",ClassNames.Content)}>
             <NavItem content="Translation now"><img src={translationIcon} /> </NavItem>
-            <NavItem content="List Translation"><img src={listDoneIcon} /> </NavItem>
-            <NavItem content="Question"><img src={questionIcon} /> </NavItem>
-            <NavItem content="Guide"><img src={GuideIcon} /> </NavItem>
+            <NavItem content="Your Translations"><img src={listDoneIcon} /> </NavItem>
+            <NavItem content="Guide"><img src={questionIcon} /> </NavItem>
+            <NavItem content="Suggestions"><img src={GuideIcon} /> </NavItem>
           </div>
     </div>
   );

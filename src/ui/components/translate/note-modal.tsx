@@ -2,7 +2,6 @@
 import React from "react";
 import ToolCus from "./tool-custom";
 import CustomizedDialogs from "./common/basic-modal";
-import { FormControl } from "react-bootstrap";
 
 import clsx from "clsx";
 
@@ -20,11 +19,10 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose }) => {
       open={open}
       handleClose={handleClose}
     >
-      <FormControl
-        as="textarea"
+      <textarea
         placeholder="Vietnamese translation."
         className="rounded"
-        rows={10}
+        rows={18}
         style={{
           padding: 0,
           width: "98%",
@@ -32,6 +30,7 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose }) => {
           backgroundColor: "#111111",
           color: "#fff",
           boxSizing: "border-box",
+          outline: "none",
         }}
       />
       <div className={clsx("d-flex", "justify-content-center","mt-3")}>
