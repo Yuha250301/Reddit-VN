@@ -5,7 +5,6 @@ import Header from "../common/header";
 import CustomizedProgressBars from "./progress-bar";
 import Award from "../common/award";
 import League from "./league";
-import Footer from "../common/footer";
 
 const ranking = require("assets/img/top1_season_icon.svg").default;
 const example = require("assets/img/sample_avatar.svg").default;
@@ -53,7 +52,6 @@ const Season: React.FC = () => {
           <League title="Silver Member" list={[{avatar: example, name: "Tuan Anh Nguyen"}, {avatar: example, name: "Kira Yagami"}, {avatar: example, name: "Lê Huỳnh Bảo"}, {avatar: example, name: "Lê Huỳnh Bảo"}, {avatar: example, name: "Lê Huỳnh Bảo"}, {avatar: example, name: "Lê Huỳnh Bảo"} ]}/>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 };

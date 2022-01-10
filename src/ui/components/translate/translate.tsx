@@ -156,7 +156,6 @@ const Translate: React.FC = () => {
       <NameModal open={openName} handleClose={()=> handleClose("name")}/>
       <DeleteModal open={openDelete} handleClose={()=> handleClose("delete")}/>
       <PreviewModal open={openPreview} handleClose={()=> handleClose("preview")} content=''/>
-      
     </div>
   );
 };

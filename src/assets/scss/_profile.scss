@@ -1,0 +1,70 @@
+.rvn-profile {
+  background-color: #1c1c1c;
+  font-size: 16px;
+  min-height: 92vh;
+  &__body {
+    padding: 13vh 5vw 0 6vw;
+  }
+  &__content {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    padding-top: 2.5vh;
+    border-top: 1px solid #fff;
+    h6 {
+      position: absolute;
+      font-size: 16px;
+      font-weight: 700;
+      z-index: 2;
+      top: -10px;
+      background-color: #1c1c1c;
+      padding-right: 1rem;
+    }
+  }
+  &__info {
+    margin-top: 44px;
+    margin-bottom: 5vh;
+    position: relative;
+    display: flex;
+    align-items: start;
+    gap: 27px;
+    font-family: SVN-Gilroy;
+    p {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 32px;
+    }
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 50.4px;
+      margin-right: 1rem;
+    }
+    .change-button {
+      margin-left: auto;
+      align-self: center;
+      background-color: #414141;
+      color: #fff;
+      padding: 15px 2.5rem;
+      border-radius: 7px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  }
+  &__collection {
+    margin-bottom: 8vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+  }
+  &__following {
+    background-color: #101010;
+    padding: 3rem;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin-bottom: 5rem;
+  }
+}
