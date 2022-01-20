@@ -20,7 +20,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     maxWidth: 360,
     fontSize: 11,
     lineHeight: "11.55px",
-    fontWeight: "700",
+    fontWeight: "400",
     // border: "1px solid #dadde9",
     padding: "6px",
     borderRadius: "5px",

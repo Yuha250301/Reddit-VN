@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import ToolCus from "./tool-custom";
+import ToolCus from "../common/tool-custom";
 import CustomizedDialogs from "./common/basic-modal";
 
 import clsx from "clsx";
