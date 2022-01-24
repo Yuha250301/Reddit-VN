@@ -5,7 +5,7 @@ import React from "react";
 interface OrangeButtonProps {
     img?: any;
     content?: string;
-    onClick: () => void;
+    onClick: (e: any) => void;
 }
 
 const OrangeButton: React.FC<OrangeButtonProps> = ({ img, content, onClick, ...other  }) => {

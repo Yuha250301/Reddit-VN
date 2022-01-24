@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import Header from "../common/header";
 import NavbarRvn from "../common/nav";
 import ToolCus from "../common/tool-custom";
 import ScrollButton from "../common/scroll-button";
@@ -70,7 +69,6 @@ const Translate: React.FC = () => {
 
   return (
     <div className={Root}>
-      <Header />
       <NavbarRvn />
       <div className={ClassNames.Content}>
         <p className="mb-2">

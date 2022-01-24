@@ -1,8 +1,12 @@
 /* eslint-disable prettier/prettier */
 
 import React from "react";
+
+import Header from "../common/header";
 import Footer from "../common/footer";
 import ContentBoard from "./content-board";
+import useAuthApp from "ui/controller/use-auth-app";
+
 // interface MainProps {}
 
 const Root = "rvn-main";
@@ -13,10 +17,12 @@ const ClassNames = {
 };
 
 const Main: React.FC = function Main() {
+  const isAuth = useAuthApp();
   return (
     <main id={Root} className={ClassNames.Root}>
-      <ContentBoard/>
-      <Footer/>
+      {isAuth && <Header/>}
+      <ContentBoard isAuth={isAuth} />
+      <Footer />
     </main>
   );
 };

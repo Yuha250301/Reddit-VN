@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import clsx from "clsx";
 import React from "react";
-import Header from "../common/header";
 import CustomizedProgressBars from "./progress-bar";
 import Award from "../common/award";
 import League from "./league";
@@ -25,7 +24,6 @@ const ListAward = ["TRANSLATOR OF THE MONTH","GOLD MEMBER","SILVER MEMBER","TRAN
 const Season: React.FC = () => {
   return (
     <div className={Root}>
-      <Header />
       <div className={ClassNames.Body}>
         <div
           className={clsx(ClassNames.Ranking, "d-flex", "align-items-center")}

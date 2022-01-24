@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import Header from "../common/header";
 import NavbarRvn from "../common/nav";
 
 const Root = "rvn-translate__suggestions";
@@ -20,7 +19,6 @@ const listSuggestion = [
 const Suggestions: React.FC = () => {
   return (
     <>
-      <Header />
       <NavbarRvn />
       <div className={Root}>
         {listSuggestion.map((title: any, index: number) => (

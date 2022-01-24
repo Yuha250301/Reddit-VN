@@ -28,6 +28,8 @@
 			"ui/*": ["src/ui/*"],
 			"utils/*": ["src/utils/*"],
 			"assets/*": ["src/assets/*"],
+            "controller/*": ["src/controller/*"],
+			"data/*": ["src/data/*"],
 			"@libs/*": ["libs/*"]
 		},
 		"allowSyntheticDefaultImports": true,

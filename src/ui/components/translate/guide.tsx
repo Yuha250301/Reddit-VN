@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import clsx from "clsx";
-import Header from "../common/header";
 import NavbarRvn from "../common/nav";
 
 const Root = "rvn-translate__guide";
@@ -21,7 +20,6 @@ const ClassNames = {
 const Guide: React.FC = ({}) => {
   return (
     <>
-      <Header />
       <NavbarRvn />
       <div className={ClassNames.Root}>
         <div>

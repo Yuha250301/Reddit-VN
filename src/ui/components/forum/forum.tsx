@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import Header from "../common/header";
 import ToolCus from "../common/tool-custom";
 import clsx from "clsx";
 import SuggestMenu from "./suggest-menu";
@@ -62,7 +61,6 @@ const ListForum1 = [
 const Forum: React.FC = () => {
   return (
     <div className={Root}>
-      <Header />
       <div className={ClassNames.Content}>
         <div
           className={clsx("d-flex", "justify-content-between", "mb-4")}

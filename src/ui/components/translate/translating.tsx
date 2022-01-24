@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import Header from "../common/header";
 import NavbarRvn from "../common/nav";
 import clsx from "clsx";
 import PreviewPostTitle from "./common/post-translated";
@@ -32,7 +31,6 @@ const listTranslated = [
 const Translating: React.FC = () => {
   return (
     <>
-      <Header />
       <NavbarRvn/>
       <div className={Root}>
         {listTranslated.map((tagList: any, index: number) => (

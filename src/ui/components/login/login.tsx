@@ -1,11 +1,17 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import clsx from "clsx";
+import EventEmitter from "utils/event-emitter";
+import AuthActions from "ui/action/auth-action";
+import AuthController from "controller/core/auth";
+
 import OrangeButton from "../common/orange-button";
 import PasswordField from "./password-field";
-import Footer from "../common/footer";
-import clsx from "clsx";
 
 const logo = require("assets/img/logo.svg").default;
+const REGISTER_PATH = "/register";
+const LOGIN_PATH = "/login";
 
 const Root = "rvn-login";
 const ClassNames = {
@@ -19,10 +25,40 @@ const ClassNames = {
 };
 
 const Login: React.FC = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(
+    window.location.pathname === REGISTER_PATH,
+  );
+  const [credential, setCredential] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const listener = EventEmitter.addListener(AuthActions.DONE_REGISTER, () => {
+      setIsSignUp(true);
+    });
+    return () => listener.remove();
+  }, []);
+
+  useEffect(() => {
+    if (window.location.pathname === REGISTER_PATH) {
+      setIsSignUp(true);
+    } else if (window.location.pathname === LOGIN_PATH) {
+      setIsSignUp(false);
+    }
+  }, [window.location.pathname]);
 
   const handleSignUp = (e: any) => {
+    e.preventDefault();
     setIsSignUp(!isSignUp);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (isSignUp)
+      AuthController.register(credential, email, password, password);
+    else {
+        AuthController.login(password, credential);
+    }
   };
 
   return (
@@ -47,18 +83,30 @@ const Login: React.FC = () => {
         >
           <img src={logo} alt="logo-login" className="m-5" />
           <div className={ClassNames.Content}>
-            <form>
+            <input
+              type="text"
+              placeholder={isSignUp ? "Username" : "Username or email"}
+              className={ClassNames.FormControl}
+              name="credential"
+              value={credential}
+              onChange={(e) => setCredential(e.target.value)}
+            />
+            {isSignUp && (
               <input
-                type="text"
-                placeholder="Username"
+                type="email"
+                placeholder="Email"
                 className={ClassNames.FormControl}
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <PasswordField />
-              <OrangeButton
-                content={!isSignUp ? "Log in" : "Sign up"}
-                onClick={() => this}
-              />
-            </form>
+            )}
+
+            <PasswordField password={password} setPassword={setPassword} />
+            <OrangeButton
+              content={!isSignUp ? "Log in" : "Sign up"}
+              onClick={handleSubmit}
+            />
           </div>
           <div className={ClassNames.Anchor}>
             <span onClick={handleSignUp}>
@@ -68,7 +116,6 @@ const Login: React.FC = () => {
             <span>Ban log</span>
           </div>
         </div>
-        <Footer />
       </div>
     </div>
   );

@@ -5,8 +5,12 @@ import clsx from 'clsx';
 
 
 const Root = "rvn-login__password-field";
+interface PasswordFieldProps {
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const PasswordField: React.FC = () => {
+const PasswordField: React.FC<PasswordFieldProps> = ({ password, setPassword }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const showHide = (e: any) => {
@@ -17,9 +21,13 @@ const PasswordField: React.FC = () => {
 
   return (
     <div className={clsx(Root)}>
-      <input className="rvn-login__form-control"
+      <input
+        className="rvn-login__form-control"
         type={!showPassword ? "password" : "text"}
         placeholder="Password"
+        name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <i
         onClick={showHide}
