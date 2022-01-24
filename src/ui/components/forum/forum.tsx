@@ -70,7 +70,7 @@ const Forum: React.FC = () => {
         >
           <input
             placeholder="Show your opinion and don’t forget choose a topic."
-            className={clsx(ClassNames.FormControl)}
+            className={clsx(ClassNames.FormControl, "me-3")}
             style={{
               backgroundColor: "#101010",
               border: "16px solid #101010",
@@ -80,7 +80,7 @@ const Forum: React.FC = () => {
           <ToolCus
             content="POST"
             bgColor="#414141"
-            height="6vh"
+            height="56px"
             width="144px"
           />
         </div>
@@ -89,13 +89,13 @@ const Forum: React.FC = () => {
             icon={imgIcon}
             content="Photos"
             bgColor="#101010"
-            height="4.8vh"
+            height="48px"
           />
           <ToolCus
             icon={hashtagIcon}
             content="Topic"
             bgColor="#101010"
-            height="4.8vh"
+            height="48px"
           />
         </div>
         <TableForum title="#Announcement" listForum={ListForum} length={3}/>

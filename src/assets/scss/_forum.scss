@@ -24,10 +24,10 @@
     background-color: #1c1c1c;
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
-    padding: 18vh 430px 0 6vw;
+    padding: 160px 430px 0 6vw;
   }
   &__suggest-menu {
-    margin-top: 3vh;
+    margin-top: 45px;
     width: 262px;
     background-color: #101010;
     height: 100%;
@@ -103,7 +103,7 @@
       align-items: center;
       cursor: pointer;
       &__body {
-        width: 78%;
+        width: 70%;
         margin-left: 20px;
         margin-bottom: 12px;
         padding-top: 5px;

@@ -68,7 +68,6 @@ const Login: React.FC = () => {
             <span>Ban log</span>
           </div>
         </div>
-        <Footer />
       </div>
     </div>
   );
