@@ -78,7 +78,6 @@ const Header: React.FC = () => {
           "align-items-center",
           "justify-content-between",
           "me-2",
-          "p-4",
         )}
       >
         <nav className={ClassNames.Brand}>

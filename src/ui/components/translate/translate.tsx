@@ -86,7 +86,7 @@ const Translate: React.FC = () => {
           <ToolCus
             content="Go ahead"
             bgColor="#414141"
-            height="6vh"
+            height="56px"
             width="144px"
           />
         </div>
@@ -99,42 +99,42 @@ const Translate: React.FC = () => {
               icon={nameIcon}
               content="Name"
               bgColor="#101010"
-              height="4.8vh"
+              height="48px"
               onClick={()=>handleOpen("name")}
             />
             <ToolCus
               icon={noteIcon}
               content="Notes"
               bgColor="#101010"
-              height="4.8vh"
+              height="48px"
               onClick={()=>handleOpen("note")}
             />
             <ToolCus
               icon={deleteIcon}
               content="Delete"
               bgColor="#101010"
-              height="4.8vh"
+              height="48px"
               onClick={()=>handleOpen("delete")}
             />
             <ToolCus
               icon={downloadImgIcon}
               content="Download"
               bgColor="#101010"
-              height="4.8vh"
+              height="48px"
               dis={true}
             />
             <ToolCus
               icon={downloadVideoIcon}
               content="Download"
               bgColor="#101010"
-              height="4.8vh"
+              height="48px"
               dis={true}
             />
             <ToolCus
               icon={eyeIcon}
               content="Preview"
               bgColor="#101010"
-              height="4.8vh"
+              height="48px"
               onClick={()=>handleOpen("preview")}
             />
           </div>
@@ -143,7 +143,7 @@ const Translate: React.FC = () => {
             icon={saveIcon}
             content="Save"
             bgColor="#E85B25"
-            height="4.8vh"
+            height="48px"
             width="144px"
           />
         </div>

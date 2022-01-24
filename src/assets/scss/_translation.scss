@@ -22,7 +22,7 @@
     background-color: #1c1c1c;
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
-    padding: 14vh 4vw 0 8vw;
+    padding: 125px 4vw 0 8vw;
   }
   &__disable-tool {
     background-color: rgba(0, 0, 0, 0.5);
@@ -70,15 +70,15 @@
   }
   &__translating {
     min-height: 100vh;
-    padding: 20vh 12vw 5vh 14vw;
+    padding: 150px 12vw 5vh 14vw;
   }
   &__suggestions {
     min-height: 100vh;
-    padding: 20vh 12vw 5vh 14vw;
+    padding: 150px 12vw 5vh 14vw;
   }
   &__guide {
     min-height: 100vh;
-    padding: 16vh 4vw 5vh 10vw;
+    padding: 140px 4vw 5vh 10vw;
     display: flex;
     flex-direction: column;
     gap: 20px;
