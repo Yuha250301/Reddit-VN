@@ -20,6 +20,15 @@
   font-weight: 700;
   src: url('../font/SVN-Gilroy\ Bold.otf');
 }
+@font-face {
+  font-family: 'SVN-Gilroy';
+  font-weight: 400;
+  src: url('../font/SVN-Gilroy\ Medium.otf');
+}
+
+html{
+  background-color: #101010;
+}
 
 body {
   background: #1c1c1c;
@@ -75,6 +84,9 @@ footer {
     // left: calc(50% - translateX(50%));
     left: 50%;
     transform: translateX(-55%);
+    @include responsiveMax(MD) {
+      transform: translateX(-40%);
+    }
     a {
       color: #fff;
       text-decoration: none;

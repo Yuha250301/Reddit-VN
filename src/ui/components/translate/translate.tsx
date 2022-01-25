@@ -35,6 +35,12 @@ const Translate: React.FC = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openPreview, setOpenPreview] = React.useState(false);
 
+  // const [openModal,setOpenModal] = React.useState(false);
+
+  // const handleModal = (type: string) => {
+  //   setModal
+  // }
+
   const handleOpen = (type: string) => {
     switch (type) {
       case "note":
@@ -77,8 +83,8 @@ const Translate: React.FC = () => {
           *Click to open <u>the link</u> in new tab
         </p>
         <div
-          className={clsx("d-flex", "justify-content-between", "mb-4")}
-          style={{ height: "6vh", width: "100%" }}
+          className={clsx("d-flex", "justify-content-between", "mb-3")}
+          style={{ width: "100%" }}
         >
           <input
             placeholder="Paste the Reddit link to translate"
@@ -94,8 +100,8 @@ const Translate: React.FC = () => {
         </div>
         <div className={clsx("d-flex", "justify-content-between", "pb-4")}>
           <div
-            className={clsx("d-flex", "justify-content-between")}
-            style={{ width: "810px" }}
+            className={clsx("d-flex", "justify-content-start","flex-wrap")}
+            style={{ width: "810px", gap: "10px" }}
           >
             <ToolCus
               icon={nameIcon}

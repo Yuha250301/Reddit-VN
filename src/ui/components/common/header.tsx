@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-// import { Container, Navbar, Nav, Form, FormControl } from "react-bootstrap";
+import useWindowDimensions from "./useWindowDimension";
 import { AiOutlineSearch, AiOutlineBell } from "react-icons/ai";
 import Avatar from "./avatar";
 import clsx from "clsx";
@@ -37,6 +37,8 @@ const Header: React.FC = () => {
   const handleActive = (section: Section) => {
     if (MENU.includes(section)) setActive(section);
   };
+
+  const {width, height} = useWindowDimensions();
 
   const selectSection = (key: Section) => {
     handleActive(key);
@@ -127,49 +129,52 @@ const Header: React.FC = () => {
             ClassNames.Right,
           )}
         >
-          {!isSearching ? (
-            <div
-              className={clsx(
-                "d-flex",
-                "align-items-center",
-                "me-4",
-                "rounded-circle",
-                "h-50",
-                "p-2",
-              )}
-              onClick={setSearchingOn}
-              style={{ backgroundColor: "#343434" }}
-            >
-              <AiOutlineSearch size={15} />
+          {(width > 1023) && 
+          <>
+            {!isSearching ? (
+              <div
+                className={clsx(
+                  "d-flex",
+                  "align-items-center",
+                  "me-4",
+                  "rounded-circle",
+                  "h-50",
+                  "p-2",
+                )}
+                onClick={setSearchingOn}
+                style={{ backgroundColor: "#343434" }}
+              >
+                <AiOutlineSearch size={15} />
+              </div>
+            ) : (
+              <form
+                className={clsx("d-flex", "align-items-center", "me-4")}
+                onClick={setSearchingOn}
+              >
+                <input
+                  placeholder="🔎︎ Search"
+                  className={clsx("rounded-pill", ClassNames.Search)}
+                  aria-label="Search"
+                />
+              </form>
+            )}
+            <div className={clsx("d-flex", "align-items-center", "me-4")}>
+              <div
+                className={clsx(
+                  !isSearching ? "rounded-pill" : "rounded-circle",
+                  !isSearching && "pe-3 ps-3",
+                  ClassNames.TranslateButton,
+                )}
+                onClick={() => {
+                  onClick(null, Section.TRANSLATE);
+                  setSearchingOff();
+                }}
+              >
+                <img src={listIcon} />
+                {!isSearching && "Translate now"}
+              </div>
             </div>
-          ) : (
-            <form
-              className={clsx("d-flex", "align-items-center", "me-4")}
-              onClick={setSearchingOn}
-            >
-              <input
-                placeholder="🔎︎ Search"
-                className={clsx("rounded-pill", ClassNames.Search)}
-                aria-label="Search"
-              />
-            </form>
-          )}
-          <div className={clsx("d-flex", "align-items-center", "me-4")}>
-            <div
-              className={clsx(
-                !isSearching ? "rounded-pill" : "rounded-circle",
-                !isSearching && "pe-3 ps-3",
-                ClassNames.TranslateButton,
-              )}
-              onClick={() => {
-                onClick(null, Section.TRANSLATE);
-                setSearchingOff();
-              }}
-            >
-              <img src={listIcon} />
-              {!isSearching && "Translate now"}
-            </div>
-          </div>
+          </>}
           <div
             className={clsx(
               "d-flex",
