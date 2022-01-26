@@ -11,6 +11,8 @@ import NoteModal from "./note-modal";
 import NameModal from "./name-modal";
 import DeleteModal from "./delete-modal";
 import PreviewModal from "./preview-modal";
+import CustomizedDialogs from "./common/basic-modal";
+
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -19,6 +21,8 @@ const downloadVideoIcon = require("assets/img/download_video_icon.svg").default;
 const downloadImgIcon = require("assets/img/download_img_icon.svg").default;
 const eyeIcon = require("assets/img/eye_icon.svg").default;
 const saveIcon = require("assets/img/save_icon.svg").default;
+const copyIcon = require("assets/img/copy_icon.svg").default;
+
 
 const Root = "rvn-translate";
 const ClassNames = {
@@ -31,49 +35,145 @@ const ClassNames = {
 };
 
 const Translate: React.FC = () => {
-  const [openNote, setOpenNote] = React.useState(false);
-  const [openName, setOpenName] = React.useState(false);
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const [openPreview, setOpenPreview] = React.useState(false);
+  const [openModal, setOpenModal] = React.useState(false);
+  const [contentModal, setContentModal] = React.useState({title:"",large:false, content: <></>});
 
-  // const [openModal,setOpenModal] = React.useState(false);
+  const previewContent = "";
 
-  // const handleModal = (type: string) => {
-  //   setModal
-  // }
+  const handleModal = () => {
+    setOpenModal(!openModal);
+  }
 
-  const handleOpen = (type: string) => {
+  const handleContentModal = (type: string) => {
     switch (type) {
       case "note":
-        setOpenNote(true);
+        setContentModal({
+          title: "WANNA SAY SOMETHING?",
+          large: false,
+          content:
+            <>
+              <textarea
+                placeholder="Vietnamese translation."
+                className="rounded"
+                rows={18}
+                style={{
+                  padding: 0,
+                  width: "98%",
+                  border: "16px solid #111111",
+                  backgroundColor: "#111111",
+                  color: "#fff",
+                  boxSizing: "border-box",
+                  outline: "none",
+                }}
+              />
+              <div className={clsx("d-flex", "justify-content-center", "mt-3")}>
+                <ToolCus
+                  icon={saveIcon}
+                  content="SAVE"
+                  bgColor="#E85B25"
+                  height="4.8vh"
+                  width="144px"
+                  onClick={handleModal}
+                />
+              </div>
+            </>
+        })
         break;
       case "name":
-        setOpenName(true);
+        setContentModal({
+          title: "TRANSLATED BY",
+          large: false,
+          content:
+            <>
+              <textarea
+                placeholder="Vietnamese translation."
+                className="rounded"
+                rows={18}
+                style={{
+                  padding: 0,
+                  width: "98%",
+                  border: "16px solid #111111",
+                  backgroundColor: "#111111",
+                  color: "#fff",
+                  boxSizing: "border-box",
+                  outline: "none",
+                }}
+              />
+              <div className={clsx("d-flex", "justify-content-center", "mt-3")}>
+                <ToolCus
+                  icon={saveIcon}
+                  content="SAVE"
+                  bgColor="#E85B25"
+                  height="4.8vh"
+                  width="144px"
+                  onClick={handleModal}
+                />
+              </div>
+            </>
+        });
         break;
       case "delete":
-        setOpenDelete(true);
+        setContentModal({
+          title: "ARE YOU SURE TO DELETE THIS TRANSLATION?",
+          large: false,
+          content:
+            <>
+              <div className={clsx("d-flex", "justify-content-center", "m-4")}>
+                <div className="me-5">
+                  <ToolCus
+                    content="YES"
+                    bgColor="#FFFFFF"
+                    height="4.8vh"
+                    width="144px"
+                    onClick={handleModal}
+                  />
+                </div>
+                <ToolCus
+                  content="NO"
+                  bgColor="#E85B25"
+                  height="4.8vh"
+                  width="144px"
+                  onClick={handleModal}
+                />
+              </div>
+            </>
+        });
         break;
       case "preview":
-        setOpenPreview(true);
+        setContentModal({
+          title: "PREVIEW YOUR POST",
+          large: true,
+          content:
+            <>
+              <div
+                style={{
+                  padding: 0,
+                  height: "60vh",
+                  width: "100%",
+                  border: "16px solid #111111",
+                  borderRadius: "20px",
+                  backgroundColor: "#111111",
+                  color: "#fff",
+                  boxSizing: "border-box",
+                }}
+              >
+                {previewContent}
+              </div>
+              <div className={clsx("d-flex", "justify-content-center", "mt-3")}>
+                <ToolCus
+                  icon={copyIcon}
+                  content="COPY"
+                  bgColor="#E85B25"
+                  height="4.8vh"
+                  width="144px"
+                  onClick={handleModal}
+                />
+              </div>
+            </>
+        });
         break;
     }
-  };
-  const handleClose = (type: string) => {
-    switch (type) {
-      case "note":
-        setOpenNote(false);
-        break;
-      case "name":
-        setOpenName(false);
-        break;
-      case "delete":
-        setOpenDelete(false);
-        break;
-      case "preview":
-        setOpenPreview(false);
-        break;
-    }
-  };
+  }
 
   return (
     <div className={Root}>
@@ -89,7 +189,7 @@ const Translate: React.FC = () => {
           <input
             placeholder="Paste the Reddit link to translate"
             className={clsx(ClassNames.FormControl)}
-            style={{backgroundColor: "#101010",border: "16px solid #101010", color: "#fff"}}
+            style={{ backgroundColor: "#101010", border: "16px solid #101010", color: "#fff" }}
           />
           <ToolCus
             content="Go ahead"
@@ -100,7 +200,7 @@ const Translate: React.FC = () => {
         </div>
         <div className={clsx("d-flex", "justify-content-between", "pb-4")}>
           <div
-            className={clsx("d-flex", "justify-content-start","flex-wrap")}
+            className={clsx("d-flex", "justify-content-start", "flex-wrap")}
             style={{ width: "810px", gap: "10px" }}
           >
             <ToolCus
@@ -108,21 +208,21 @@ const Translate: React.FC = () => {
               content="Name"
               bgColor="#101010"
               height="48px"
-              onClick={()=>handleOpen("name")}
+              onClick={() => {handleModal(); handleContentModal("name")}}
             />
             <ToolCus
               icon={noteIcon}
               content="Notes"
               bgColor="#101010"
               height="48px"
-              onClick={()=>handleOpen("note")}
+              onClick={() => {handleModal(); handleContentModal("note")}}
             />
             <ToolCus
               icon={deleteIcon}
               content="Delete"
               bgColor="#101010"
               height="48px"
-              onClick={()=>handleOpen("delete")}
+              onClick={() => {handleModal(); handleContentModal("delete")}}
             />
             <ToolCus
               icon={downloadImgIcon}
@@ -143,7 +243,7 @@ const Translate: React.FC = () => {
               content="Preview"
               bgColor="#101010"
               height="48px"
-              onClick={()=>handleOpen("preview")}
+              onClick={() => {handleModal(); handleContentModal("preview")}}
             />
           </div>
 
@@ -158,10 +258,15 @@ const Translate: React.FC = () => {
         <Post />
       </div>
       <ScrollButton />
-      <NoteModal open={openNote} handleClose={()=> handleClose("note")}/>
-      <NameModal open={openName} handleClose={()=> handleClose("name")}/>
-      <DeleteModal open={openDelete} handleClose={()=> handleClose("delete")}/>
-      <PreviewModal open={openPreview} handleClose={()=> handleClose("preview")} content=''/>
+      <CustomizedDialogs
+        title={contentModal.title}
+        open={openModal}
+        handleClose={handleModal}
+        large={contentModal.large}
+      >
+        {contentModal.content}
+      </CustomizedDialogs>
+
     </div>
   );
 };
