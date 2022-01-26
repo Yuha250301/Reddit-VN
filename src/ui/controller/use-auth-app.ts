@@ -15,7 +15,7 @@ const useAuthApp = (): boolean => {
       },
     );
     return () => listener.remove();
-  });
+  }, []);
   return isAuth;
 };
 

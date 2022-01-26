@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
+import { crawler } from "utils/crawler";
+
 import NavbarRvn from "../common/nav";
 import ToolCus from "../common/tool-custom";
 import ScrollButton from "../common/scroll-button";

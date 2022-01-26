@@ -33,6 +33,10 @@ module.exports = {
         test: /\.(pdf)$/,
         use: "file-loader?name=pdf/[name].[ext]",
       },
+      {
+        test: /\.worker\.js$/,
+        use: { loader: "worker-loader" },
+      },
     ],
   },
   plugins: [

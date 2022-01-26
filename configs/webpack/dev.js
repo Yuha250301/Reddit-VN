@@ -22,6 +22,7 @@ module.exports = merge(commonConfig, {
       ["assets"]: path.resolve(__dirname + "../../../src/assets"),
       ["controller"]: path.resolve(__dirname + "../../../src/controller"),
       ["data"]: path.resolve(__dirname + "../../../src/data"),
+      ["database"]: path.resolve(__dirname + "../../../src/database"),
     },
   },
   plugins: [],

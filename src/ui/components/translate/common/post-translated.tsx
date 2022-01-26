@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { TranslatingPost } from "data/post-manager";
 import React from "react";
 
 const styles = {
@@ -12,23 +13,25 @@ const styles = {
 
 interface PreviewPostTitleProps {
   tagName: string;
-  titles: any[];
+  posts: TranslatingPost[];
 }
 
 const PreviewPostTitle: React.FC<PreviewPostTitleProps> = ({
   tagName,
-  titles,
+  posts,
 }) => {
   return (
     <div style={styles}>
       <div style={{ width: "300px" }}>
         <p>{tagName}</p>
       </div>
-      <div style={{width: "100%"}}>
-        {titles.map((title: any, index: number) => (
+      <div style={{ width: "100%" }}>
+        {posts.map((item: TranslatingPost, index: number) => (
           <div key={index}>
-            <p style={{cursor: "pointer" }}>{title}</p>
-            {index != titles.length-1 && <hr style={{margin: "15px 0px", opacity:"0.8"}}/>}
+            <p style={{ cursor: "pointer" }}>{item.title}</p>
+            {index != posts.length - 1 && (
+              <hr style={{ margin: "15px 0px", opacity: "0.8" }} />
+            )}
           </div>
         ))}
       </div>

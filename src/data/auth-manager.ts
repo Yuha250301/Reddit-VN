@@ -1,5 +1,4 @@
 interface UserData {
-  userId: string;
   username: string;
   token: string;
   email: string;
@@ -9,7 +8,6 @@ interface UserData {
 const RVN_USER_PATH = "rvn_user";
 
 export class AuthManager {
-  private userId?: string;
   private username?: string;
   private token?: string;
   private email?: string;
@@ -20,7 +18,6 @@ export class AuthManager {
       const data = localStorage.getItem("rvn_user");
       if (data) {
         const user: UserData = JSON.parse(data);
-        this.userId = user.userId;
         this.username = user.username;
         this.token = user.token;
         this.email = user.email;
@@ -38,19 +35,14 @@ export class AuthManager {
     this.email = data.email;
     this.avatar = data.avatar;
     this.name = data.name;
-    this.userId = data.userId;
   }
   removeUser() {
     localStorage.removeItem(RVN_USER_PATH);
     this.username = "";
     this.token = "";
-    this.userId = "";
     this.email = "";
     this.avatar = "";
     this.name = "";
-  }
-  getUserId() {
-    return this.userId;
   }
   getUsername() {
     return this.username;
