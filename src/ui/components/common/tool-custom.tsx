@@ -41,7 +41,8 @@ const ToolCus: React.FC<ToolCusProps> = ({
         ...ToolCusStyle,
         backgroundColor: bgColor,
         height: height,
-        width: width,
+        maxWidth: width,
+        minWidth: "80px",
         color: bgColor === "#FFFFFF" ? "black" : "white",
       }}
     >

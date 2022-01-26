@@ -23,8 +23,12 @@ const Suggestions: React.FC = () => {
       <div className={Root}>
         {listSuggestion.map((title: any, index: number) => (
           <div key={index} style={{ cursor: "pointer", width: "100%" }}>
-            <span style={{ display: 'inline-block', width: "300px" }}>{title.tagName}</span>
-            <span style={{ width: "100%" }}>{title.title}</span>
+            <div className="d-flex">
+              <div style={{ width: "300px" }}>
+                <span >{title.tagName}</span>
+              </div>
+              <div style={{ width: "100%" }}><span>{title.title}</span></div>
+            </div>
             <hr style={{ margin: "25px 0px", opacity: "0.8" }} />
           </div>
         ))}
