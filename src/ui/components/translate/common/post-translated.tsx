@@ -1,7 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { TranslatingPost } from "data/post-manager";
 import React from "react";
+import { useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 
+import postAtom from "ui/state/post-atom";
+import { Section } from "ui/components/main/const";
+import PostManager, { TranslatingPost } from "data/post-manager";
 const styles = {
   marginTop: "-1px",
   borderTop: "0.5px solid #fff",
@@ -20,6 +24,16 @@ const PreviewPostTitle: React.FC<PreviewPostTitleProps> = ({
   tagName,
   posts,
 }) => {
+  const setPost = useSetRecoilState(postAtom);
+  const navigate = useNavigate();
+  const selectPost = async (e: any, id: string) => {
+    e.preventDefault();
+    const post = await PostManager.getPostData(id);
+    if (post) {
+      setPost(post);
+      navigate(`/${Section.TRANSLATE}`, { replace: true });
+    }
+  };
   return (
     <div style={styles}>
       <div style={{ width: "300px" }}>
@@ -28,7 +42,9 @@ const PreviewPostTitle: React.FC<PreviewPostTitleProps> = ({
       <div style={{ width: "100%" }}>
         {posts.map((item: TranslatingPost, index: number) => (
           <div key={index}>
-            <p style={{ cursor: "pointer" }}>{item.title}</p>
+            <p style={{ cursor: "pointer" }} onClick={(e) => selectPost(e, item.id)}>
+              {item.title}
+            </p>
             {index != posts.length - 1 && (
               <hr style={{ margin: "15px 0px", opacity: "0.8" }} />
             )}

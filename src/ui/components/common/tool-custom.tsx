@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from "react";
+import React from "react";
 
 interface ToolCusProps {
   icon?: any;
@@ -8,7 +8,7 @@ interface ToolCusProps {
   height?: string;
   width?: string;
   dis?: false | boolean;
-  onClick?: () => void;
+  onClick?: Function;
 }
 
 const ToolCus: React.FC<ToolCusProps> = ({
@@ -29,11 +29,15 @@ const ToolCus: React.FC<ToolCusProps> = ({
     fontWeight: "700",
     fontSize: "16px",
   };
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    if (onClick) onClick();
+  };
 
   return (
     <div
       typeof="button"
-      onClick={onClick}
+      onClick={handleClick}
       className="btn rounded"
       // onMouseOver={onMouseOver}
       // onMouseOut={onMouseOut}

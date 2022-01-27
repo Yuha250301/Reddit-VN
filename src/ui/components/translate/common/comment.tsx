@@ -1,91 +1,46 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from "react";
-import DetailUser from "./detail-user";
-import P2T from "./preview-to-translate";
-import clsx from "clsx";
-import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
-import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
-
-const nodeIcon = require("assets/img/node_icon.svg").default;
-
-const Root = "rvn-translate__post__comment";
-const ClassNames = {
-  Root,
-  Title: `${Root}__title`,
-  Content: `${Root}__content`,
-  Disable: `${Root}__disable`,
-  Node: `${Root}__node`,
-};
+import React, { useEffect, useState } from "react";
+import RedditDB from "database/raw-db";
+import UIComment from "./ui-comment";
 
 interface CommentProps {
-  user: string;
-  reward: string;
-  content: string;
-  comment: any[];
+  postId: string;
+  commentId: string;
 }
 
-const Comment: React.FC<CommentProps> = ({
-  user,
-  reward,
-  content,
-  comment,
-}) => {
-  const [isHidden, setIsHidden] = useState(false);
-  const [childComment, setChildComment] = useState(false);
-
-  const handleHidden = () => {
-    setIsHidden(!isHidden);
+const Comment: React.FC<CommentProps> = function Comment({
+  postId,
+  commentId,
+}) {
+  const [comment, setComment] = useState<any>(null);
+  const getData = async (postId: string, commentId: string) => {
+    const data = await RedditDB.getCommentById(postId, commentId);
+    if (data) setComment(data);
   };
-
-  const handleChildComment = () => {
-    setChildComment(!childComment);
-  };
-
-  return (
-    <div className={ClassNames.Root}>
-      <div className={ClassNames.Title}>
-        <div style={{position: "relative", left: "-9px", display: "flex", alignItems: "center"}}>
-          {!childComment ? (
-            <ArrowRightRoundedIcon
-              onClick={ (comment.length !== 0) ? handleChildComment : () => this}
-              sx={{cursor: (comment.length !== 0) ? "pointer" : "auto", color: (comment.length !== 0) ? "white" : "rgba(255, 255, 255, 0.5)"}}
-            />
-          ) : (
-            <ArrowDropDownRoundedIcon
-              onClick={handleChildComment}
-              sx={{cursor: "pointer", color: "#fff"}}
-            />
-          )}
-          <DetailUser user={user} reward={reward} />
-        </div>
-
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            onChange={handleHidden}
-            defaultChecked={isHidden}
-          />
-          <span className="checkbox-custom rectangular"></span>
-        </label>
-      </div>
-      <div className={clsx(ClassNames.Content)}>
-        <P2T content={content} isHidden={isHidden} />
-        <div className={clsx(!childComment && "disable")}>
-          {comment.map((comment, index) => (
-            <div key={index} className="position-relative">
-              <img src={nodeIcon} className={ClassNames.Node} />
-              <Comment
-                user={comment.user}
-                reward={comment.reward}
-                content={comment.content}
-                comment={comment.comment}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    getData(postId, commentId);
+  }, [postId, commentId]);
+  const children: string[] = [];
+  comment?.replies?.data?.children?.forEach((item: any) => {
+    if (
+      item.kind === "more" &&
+      item?.data?.children &&
+      Array.isArray(item?.data?.children)
+    )
+      children.push(...item.data.children);
+    else if(item && item?.data?.id) children.push(item.data.id);
+    else console.log('DataErr: comment do not match requirements', item);
+  });
+  if (!comment) return null;
+  else
+    return (
+      <UIComment
+        postId={postId}
+        user={comment.author}
+        reward={`${comment.upvotes} | ${comment.awards}`}
+        content={comment.body}
+        comments={children}
+      />
+    );
 };
 
 export default Comment;

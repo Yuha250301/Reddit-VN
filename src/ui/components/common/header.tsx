@@ -8,6 +8,8 @@ import Avatar from "./avatar";
 import clsx from "clsx";
 import { Section, MENU, HEADER } from "../main/const";
 import ProfileTooltip from "./profile-menu";
+import { useSetRecoilState } from "recoil";
+import postAtom from "ui/state/post-atom";
 
 const brand = require("assets/img/logo_brand.svg").default;
 const listIcon = require("assets/img/list_icon.svg").default;
@@ -32,19 +34,27 @@ const ClassNames = {
 const Header: React.FC = () => {
   const location = useLocation();
   const [active, setActive] = useState<Section>(Section.HOME);
+  const setPost = useSetRecoilState(postAtom);
   const navigate = useNavigate();
 
   const handleActive = (section: Section) => {
     if (MENU.includes(section)) setActive(section);
   };
 
-  const {width, height} = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const selectSection = (key: Section) => {
     handleActive(key);
     if (HEADER.includes(key)) {
       navigate(`/${key}`);
     }
+  };
+
+  const translate = (e: any) => {
+    e.preventDefault();
+    setPost(undefined);
+    navigate(`${Section.TRANSLATE}`);
+    setSearchingOff();
   };
 
   useEffect(() => {
@@ -129,52 +139,50 @@ const Header: React.FC = () => {
             ClassNames.Right,
           )}
         >
-          {(width > 1023) && 
-          <>
-            {!isSearching ? (
-              <div
-                className={clsx(
-                  "d-flex",
-                  "align-items-center",
-                  "me-4",
-                  "rounded-circle",
-                  "h-50",
-                  "p-2",
-                )}
-                onClick={setSearchingOn}
-                style={{ backgroundColor: "#343434" }}
-              >
-                <AiOutlineSearch size={15} />
+          {width > 1023 && (
+            <>
+              {!isSearching ? (
+                <div
+                  className={clsx(
+                    "d-flex",
+                    "align-items-center",
+                    "me-4",
+                    "rounded-circle",
+                    "h-50",
+                    "p-2",
+                  )}
+                  onClick={setSearchingOn}
+                  style={{ backgroundColor: "#343434" }}
+                >
+                  <AiOutlineSearch size={15} />
+                </div>
+              ) : (
+                <form
+                  className={clsx("d-flex", "align-items-center", "me-4")}
+                  onClick={setSearchingOn}
+                >
+                  <input
+                    placeholder="🔎︎ Search"
+                    className={clsx("rounded-pill", ClassNames.Search)}
+                    aria-label="Search"
+                  />
+                </form>
+              )}
+              <div className={clsx("d-flex", "align-items-center", "me-4")}>
+                <div
+                  className={clsx(
+                    !isSearching ? "rounded-pill" : "rounded-circle",
+                    !isSearching && "pe-3 ps-3",
+                    ClassNames.TranslateButton,
+                  )}
+                  onClick={translate}
+                >
+                  <img src={listIcon} />
+                  {!isSearching && "Translate now"}
+                </div>
               </div>
-            ) : (
-              <form
-                className={clsx("d-flex", "align-items-center", "me-4")}
-                onClick={setSearchingOn}
-              >
-                <input
-                  placeholder="🔎︎ Search"
-                  className={clsx("rounded-pill", ClassNames.Search)}
-                  aria-label="Search"
-                />
-              </form>
-            )}
-            <div className={clsx("d-flex", "align-items-center", "me-4")}>
-              <div
-                className={clsx(
-                  !isSearching ? "rounded-pill" : "rounded-circle",
-                  !isSearching && "pe-3 ps-3",
-                  ClassNames.TranslateButton,
-                )}
-                onClick={() => {
-                  onClick(null, Section.TRANSLATE);
-                  setSearchingOff();
-                }}
-              >
-                <img src={listIcon} />
-                {!isSearching && "Translate now"}
-              </div>
-            </div>
-          </>}
+            </>
+          )}
           <div
             className={clsx(
               "d-flex",

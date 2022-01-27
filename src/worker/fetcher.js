@@ -13,13 +13,12 @@ if ("function" === typeof importScripts) {
       return url + ".json";
     };
     parseUrlLink = (url) => {
-        if(!url) return "";
-        const regex =
-          /(?:^.+?)(?:reddit.com\/r)(?:\/[\w\d]+){2}(?:\/)([\w\d]*)/g;
-        const match = regex.exec(url);
-        if(match && match.length > 1) return match[1];
-        else return "";
-    }
+      if (!url) return "";
+      const regex = /(?:^.+?)(?:reddit.com\/r)(?:\/[\w\d]+){2}(?:\/)([\w\d]*)/g;
+      const match = regex.exec(url);
+      if (match && match.length > 1) return match[1];
+      else return "";
+    };
     //Get award, max 3 award: platium -> gold -> silver -> another awards
     getAward = (data) => {
       let count = 0;
@@ -79,7 +78,7 @@ if ("function" === typeof importScripts) {
         }, {});
         return Object.keys(wordSet);
       }
-      const author = "u/" + postInfo.author;
+      const author = postInfo.author;
       const indexed_author = getAllWords(author);
       return {
         subReddit: postInfo.subreddit_name_prefixed,
@@ -146,7 +145,7 @@ if ("function" === typeof importScripts) {
       const database = await idb.openDB(this.dbName);
       const version = parseInt(database.version);
       const storeNames = database.objectStoreNames;
-      database.close();
+      await database.close();
       if (!storeNames.contains(storeName)) {
         //need add storeName
         this.db = await idb.openDB(this.dbName, version + 1, {
@@ -180,8 +179,9 @@ if ("function" === typeof importScripts) {
       const postInfo = json[0].data.children[0].data;
       const bodyRoot = this.helper.parseInfo(postInfo);
       this.root = bodyRoot;
+      this.root.rootComments = [];
       try {
-        await this.db.add(this.id, bodyRoot);
+        await this.db.put(this.id, bodyRoot);
         await this.getCommentsFromJSON(json);
       } catch (err) {
         console.log("open error in parse post", err);
@@ -264,8 +264,9 @@ if ("function" === typeof importScripts) {
         } else if (typeof item !== "undefined") {
           const data = this.helper.parseComment(item, prefix, rootCommentId);
           if (data) {
-            await this.db.add(this.id, data);
+            await this.db.put(this.id, data);
             if (prefix === "") rootCommentId = data.id;
+            this.root.rootComments.push(data.id);
             if (
               typeof item.data.replies !== "undefined" &&
               item.data.replies !== ""
@@ -288,18 +289,19 @@ if ("function" === typeof importScripts) {
       switch (event.data.cmd) {
         case "crawl": {
           const { url, isFull } = JSON.parse(event.data.data);
-          const fetcher = new Fetcher(url, true, () => {
+          const fetcher = new Fetcher(url, isFull, () => {
             console.log("Done fetch");
           });
-          fetcher.fetch()
-          .then(async () => {
-            self.postMessage({
-              cmd: "crawl-result",
-              data: JSON.stringify(fetcher.root),
-              id: event.data.id,
-            });
-          })
-          .catch(e => console.log(e));
+          fetcher
+            .fetch()
+            .then(async () => {
+              self.postMessage({
+                cmd: "crawl-result",
+                data: JSON.stringify(fetcher.root),
+                id: event.data.id,
+              });
+            })
+            .catch((e) => console.log(e));
           break;
         }
       }

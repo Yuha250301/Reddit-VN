@@ -1,3 +1,4 @@
+import PostController from "controller/core/post";
 import PostManager, { TranslatingPost, PostData } from "data/post-manager";
 import { useState, useEffect } from "react";
 import PostActions from "ui/action/post-action";
@@ -10,7 +11,7 @@ const useListPosts = (): TranslatingPost[] => {
     if (listPosts) setPosts(listPosts);
   };
   useEffect(() => {
-    initData();
+    PostController.init();
     const listener = EventEmitter.addListener(
       PostActions.INIT_AFTER_AUTH,
       initData,

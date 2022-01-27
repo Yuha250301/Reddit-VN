@@ -9,7 +9,7 @@ const parseInfo = (postInfo: any) => {
     shortenLink: "https://redd.it/" + postInfo.id,
     title: postInfo.title,
     text: postInfo.selftext_html,
-    author: "u/" + postInfo.author,
+    author: postInfo.author,
     id: postInfo.id,
     url: postInfo.url,
     link: "https://www.reddit.com" + postInfo.permalink,

@@ -3,6 +3,7 @@ import PostActions from "ui/action/post-action";
 import EventEmitter from "utils/event-emitter";
 import PostManager, { PostData } from "data/post-manager";
 import { crawler } from "utils/crawler";
+import RedditDB from "database/raw-db";
 
 export interface PostServerData {
   rawPostId: string;
@@ -23,6 +24,7 @@ class PostController {
   async crawl(url: string, isSubmit: boolean = false, isFull: boolean = true) {
     if (!url) throw new Error("ControllerError: url not valid");
     else {
+      RedditDB.closeDatabase();
       const data: PostData = await crawler(url, isFull);
       await PostManager.addPost(data);
       const param: PostServerData = {
@@ -33,12 +35,13 @@ class PostController {
       };
       if (!isSubmit) await Fetcher.createPost(param);
       EventEmitter.emit(PostActions.ADD_POST, data);
+      return data;
     }
   }
 
   async delete(id: string) {
-    await PostManager.deletePost(id);
     await Fetcher.deletePost(id);
+    await PostManager.deletePost(id);
     EventEmitter.emit(PostActions.DELETE_POST, id);
   }
 }

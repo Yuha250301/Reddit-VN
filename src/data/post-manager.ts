@@ -24,6 +24,7 @@ export interface PostData {
   isVideo: boolean;
   isImage: boolean;
   link: string;
+  rootComments: string[];
 }
 
 export class PostManager {
