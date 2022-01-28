@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from "react";
 import DetailUser from "./common/detail-user";
-import UIComment from "./common/ui-comment";
 import clsx from "clsx";
 import Switch from "@mui/material/Switch";
 import P2T from "./common/preview-to-translate";
@@ -12,6 +11,7 @@ const commentIcon = require("assets/img/comment_icon.svg").default;
 
 interface PostProps {
   post: PostData;
+  isReady: boolean;
 }
 
 const Root = "rvn-translate__post";
@@ -21,7 +21,7 @@ const ClassNames = {
   UIComment: `${Root}__comment`,
 };
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post, isReady }) => {
   const [isFullComment, setIsFullComment] = useState(true);
 
   const handleComment = () => {
@@ -65,9 +65,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
             <h5>Full comments</h5>
           </div>
         </div>
-        {post.rootComments && post.rootComments.length
+        {isReady && post.rootComments && post.rootComments.length
           ? post.rootComments.map((id: string, index: number) => (
-              <Comment postId={post.id} commentId={id} key = {index}/>
+              <Comment postId={post.id} commentId={id} key={index} />
             ))
           : null}
       </div>

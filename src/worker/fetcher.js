@@ -162,7 +162,8 @@ if ("function" === typeof importScripts) {
           },
         });
       } else {
-        throw new Error("Post already fetched");
+        this.isDataExist = true;
+        console.log("Post already fetched");
       }
     }
     status = (response) => {
@@ -181,7 +182,7 @@ if ("function" === typeof importScripts) {
       this.root = bodyRoot;
       this.root.rootComments = [];
       try {
-        await this.db.put(this.id, bodyRoot);
+        if(!this.isDataExist) await this.db.put(this.id, bodyRoot);
         await this.getCommentsFromJSON(json);
       } catch (err) {
         console.log("open error in parse post", err);
@@ -264,7 +265,7 @@ if ("function" === typeof importScripts) {
         } else if (typeof item !== "undefined") {
           const data = this.helper.parseComment(item, prefix, rootCommentId);
           if (data) {
-            await this.db.put(this.id, data);
+            if(!this.isDataExist) await this.db.put(this.id, data);
             if (prefix === "") rootCommentId = data.id;
             this.root.rootComments.push(data.id);
             if (

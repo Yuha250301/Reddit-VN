@@ -12,12 +12,20 @@ const Comment: React.FC<CommentProps> = function Comment({
   commentId,
 }) {
   const [comment, setComment] = useState<any>(null);
-  const getData = async (postId: string, commentId: string) => {
+  const getData = async (
+    postId: string,
+    commentId: string,
+    subscribed: boolean,
+  ) => {
     const data = await RedditDB.getCommentById(postId, commentId);
-    if (data) setComment(data);
+    if (data && subscribed) setComment(data);
   };
   useEffect(() => {
-    getData(postId, commentId);
+    let subscribed = true;
+    getData(postId, commentId, subscribed);
+    return () => {
+      subscribed = false;
+    };
   }, [postId, commentId]);
   const children: string[] = [];
   comment?.replies?.data?.children?.forEach((item: any) => {
@@ -27,8 +35,8 @@ const Comment: React.FC<CommentProps> = function Comment({
       Array.isArray(item?.data?.children)
     )
       children.push(...item.data.children);
-    else if(item && item?.data?.id) children.push(item.data.id);
-    else console.log('DataErr: comment do not match requirements', item);
+    else if (item && item?.data?.id) children.push(item.data.id);
+    else console.log("DataErr: comment do not match requirements", item);
   });
   if (!comment) return null;
   else

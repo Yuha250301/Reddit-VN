@@ -4,6 +4,7 @@ import EventEmitter from "utils/event-emitter";
 import PostManager, { PostData } from "data/post-manager";
 import { crawler } from "utils/crawler";
 import RedditDB from "database/raw-db";
+import PostDb from "database/post-db";
 
 export interface PostServerData {
   rawPostId: string;
@@ -24,16 +25,19 @@ class PostController {
   async crawl(url: string, isSubmit: boolean = false, isFull: boolean = true) {
     if (!url) throw new Error("ControllerError: url not valid");
     else {
-      RedditDB.closeDatabase();
+      RedditDB.closeDatabase(); //close all db relate to browser bug: https://bugs.webkit.org/show_bug.cgi?id=171049
       const data: PostData = await crawler(url, isFull);
-      await PostManager.addPost(data);
-      const param: PostServerData = {
-        rawPostId: data.id,
-        subreddit: data.subReddit,
-        title: data.title,
-        url,
-      };
-      if (!isSubmit) await Fetcher.createPost(param);
+      const post = await PostDb.getPost(data.id);
+      if (!post) await PostManager.addPost(data);
+      if (!isSubmit) {
+        const param: PostServerData = {
+          rawPostId: data.id,
+          subreddit: data.subReddit,
+          title: data.title,
+          url,
+        };
+        await Fetcher.createPost(param);
+      }
       EventEmitter.emit(PostActions.ADD_POST, data);
       return data;
     }

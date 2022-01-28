@@ -44,13 +44,20 @@ class PostDB {
   }
   async addPost(data: PostData) {
     if (!this.db) await this.init();
-    await this.db?.add(POST, data);
+    const post = await this.getPost(data.id);
+    if (!post) await this.db?.add(POST, data);
   }
   async addListPosts(posts: PostData[]) {
     if (!this.db) await this.init();
     const tx = this.db?.transaction(POST, "readwrite");
     if (tx)
-      await Promise.all([...posts.map((post) => tx.store.add(post)), tx.done]);
+      await Promise.all([
+        ...posts.map((post) => {
+          const isExist = tx.store.get(post.id);
+          if (!isExist) tx.store.add(post);
+        }),
+        tx.done,
+      ]);
   }
   async putPost(data: PostData) {
     if (!this.db) await this.init();
@@ -58,14 +65,18 @@ class PostDB {
   }
   async deletePost(id: string) {
     if (!this.db) await this.init();
-    await this.db?.delete(POST, id);
+    const post = await this.getPost(id);
+    if (!post) await this.db?.delete(POST, id);
   }
   async deleteListPosts(posts: string[]) {
     if (!this.db) await this.init();
     const tx = this.db?.transaction(POST, "readwrite");
     if (tx)
       await Promise.all([
-        ...posts.map((post) => tx.store.delete(post)),
+        ...posts.map((post) => {
+          const isExist = tx.store.get(post);
+          if (!isExist) tx.store.delete(post);
+        }),
         tx.done,
       ]);
   }
@@ -79,7 +90,8 @@ class PostDB {
   }
   async deleteTrans(id: string) {
     if (!this.db) await this.init();
-    await this.db?.delete(TRANS, id);
+    const post = await this.getTrans(id);
+    if (!post) await this.db?.delete(TRANS, id);
   }
 }
 const postDb = new PostDB();

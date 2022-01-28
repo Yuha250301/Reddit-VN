@@ -40,11 +40,21 @@ export class PostManager {
     await Promise.all(
       shouldFetchList.map(async (item) => {
         const post = await PostDb.getPost(item.rawPostId);
-        const postComments = await RedditDB.checkPostExist(item.rawPostId);
         if (post) this.postDataMap.set(item.rawPostId, post);
-        if (!post || !postComments) PostController.crawl(item.url, true);
+        if (!post) PostController.crawl(item.url, true);
       }),
     );
+  }
+  async getPost(id: string) {
+    const post = this.postDataMap.get(id);
+    if (post) return post;
+    else {
+      const dbPost = await PostDb.getPost(id);
+      if (dbPost) {
+        this.postDataMap.set(dbPost.id, dbPost);
+        return dbPost;
+      } else return null;
+    }
   }
   async addPost(data: PostData) {
     this.postList.add(data.id);
@@ -85,7 +95,7 @@ export class PostManager {
             const post: TranslatingPost = {
               subreddit: data.subReddit,
               title: data.title,
-              id: data.id
+              id: data.id,
             };
             return post;
           } else return null;

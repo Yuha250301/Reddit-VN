@@ -43,12 +43,13 @@ const crawler = async (url: string, isFull: boolean = true) => {
   return result;
 };
 
-const crawlerPopularPost = async () => {
-  const response = await axios.get("https://www.reddit.com/.json");
-  let allPost = response.data.data.children.map((post: any) => {
-    return parseInfo(post.data);
-  });
-  return allPost;
+const parsePopularPost = (response: any) => {
+  if (response?.data?.children) {
+    let allPost = response.data.children.map((post: any) => {
+      return parseInfo(post.data);
+    });
+    return allPost;
+  } else return null;
 };
 
-export { crawler, crawlerPopularPost };
+export { crawler, parsePopularPost };

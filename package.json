@@ -89,6 +89,7 @@
     "recoil": "^0.5.2",
     "styled-components": "^5.3.3",
     "swiper": "^7.3.2",
+    "swr": "^1.2.0",
     "worker-loader": "^3.0.8"
   },
   "main": ".eslintrc.js",
