@@ -1,7 +1,11 @@
-enum ModalAction {
-    OPEN_MODAL = "OPEN_MODAL",
-    CLOSE_MODAL = "CLOSE_MODAL",
-    CLOSE_COMMON_MODAL = "CLOSE_COMMON_MODAL",
-  }
+export enum ModalAction {
+  OPEN_MODAL = "OPEN_MODAL",
+  CLOSE_MODAL = "CLOSE_MODAL",
+  CLOSE_COMMON_MODAL = "CLOSE_COMMON_MODAL",
+}
 
-export default ModalAction;
+export enum ModalType {
+  ERROR_MODAL = "ERROR_MODAL",
+  TOOL_MODAL = "TOOL_MODAL",
+}
+
