@@ -45,8 +45,8 @@ class PostController {
 
   async delete(id: string) {
     await Fetcher.deletePost(id);
-    await PostManager.deletePost(id);
     EventEmitter.emit(PostActions.DELETE_POST, id);
+    await PostManager.deletePost(id);
   }
 }
 const postController = new PostController();
