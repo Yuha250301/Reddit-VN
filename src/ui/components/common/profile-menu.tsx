@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import clsx from "clsx";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import AuthController from "controller/core/auth";
 
 
 const logout = require("assets/img/logout_icon.svg").default;
@@ -79,7 +80,7 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
                     width: "auto",
                     fontWeight: "700",
                     marginRight: "10px",
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   {name}
@@ -127,6 +128,7 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
                 <div
                   className={clsx("d-flex", "align-items-center")}
                   style={{ cursor: "pointer" }}
+                  onClick={AuthController.logout}
                 >
                   <img className="me-3" src={logout} />
                   Log out

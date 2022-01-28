@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import clsx from "clsx";
-import Header from "../common/header";
 import NavbarRvn from "../common/nav";
 
 const Root = "rvn-translate__guide";
@@ -17,35 +16,43 @@ const ClassNames = {
 //   content: string;
 //   comment: any[];
 // }
-
 const Guide: React.FC = ({}) => {
   return (
     <>
-      <Header />
       <NavbarRvn />
       <div className={ClassNames.Root}>
         <div>
           <h5>How to manage tabs?</h5>
           <div className={clsx(ClassNames.Content)}>
             <iframe
-              width="1153px"
-              height="541px"
-              src="https://www.youtube.com/embed/tgbNymZ7vqY"
+              width="674"
+              height="379"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             ></iframe>
           </div>
         </div>
 
         <div>
-          <h5 style={{color: 'white'}}>How to manage comments?</h5>
+          <h5 style={{ color: "white" }}>How to manage comments?</h5>
         </div>
 
         <div>
-          <h5 >Having problems with the translate tool?</h5>
+          <h5>Having problems with the translate tool?</h5>
           <div className={clsx(ClassNames.Content)}>
-            <p>Contact with <a href="https://www.facebook.com/lcf.star" style={{color: 'white'}}>La Mia</a> for more.</p>
+            <p>
+              Contact with{" "}
+              <a
+                href="https://www.facebook.com/lcf.star"
+                style={{ color: "white" }}
+              >
+                La Mia
+              </a>{" "}
+              for more.
+            </p>
           </div>
         </div>
-        
       </div>
     </>
   );

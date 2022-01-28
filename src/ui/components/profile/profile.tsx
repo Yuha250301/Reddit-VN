@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import clsx from "clsx";
 import React from "react";
-import Header from "../common/header";
 import Award from "../common/award";
 import Avatar from "../common/avatar";
 import NavItem from "../common/nav-item";
@@ -34,7 +33,6 @@ const ListFollowing = [
 const Profile: React.FC = () => {
   return (
     <div className={Root}>
-      <Header />
       <div className={ClassNames.Body}>
         <div className={clsx(ClassNames.Info)}>
           <ProgressCircle value={30}>
