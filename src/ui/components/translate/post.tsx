@@ -36,7 +36,13 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
           user={post.author}
           reward={`${post.upvotes} | ${post.awards}`}
         />
-        <P2T content={post.title} isHidden={true} />
+        <P2T
+          content={post.title}
+          isHidden={false}
+          commentId={post.id}
+          postId={post.id}
+          rootCommentId={post.id}
+        />
       </div>
       <div className={ClassNames.UIComment}>
         <div className={clsx("d-flex", "justify-content-between")}>

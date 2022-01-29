@@ -19,21 +19,25 @@ const ClassNames = {
 };
 
 interface UICommentProps {
+  id: string;
   postId: string;
   user: string;
   reward: string;
   content: string;
+  rootCommentId: string;
   comments: string[];
 }
 
 const UIComment: React.FC<UICommentProps> = ({
+  id,
+  rootCommentId,
   user,
   reward,
   content,
   comments,
   postId,
 }) => {
-  const [isHidden, setIsHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
   const [childComment, setChildComment] = useState(false);
 
   const handleHidden = () => {
@@ -44,6 +48,19 @@ const UIComment: React.FC<UICommentProps> = ({
     setChildComment(!childComment);
   };
 
+  const children: string[] = [];
+  const hasChild = comments && comments.length;
+  if (childComment && hasChild)
+    comments.forEach((item: any) => {
+      if (
+        item.kind === "more" &&
+        item?.data?.children &&
+        Array.isArray(item?.data?.children)
+      )
+        children.push(...item.data.children);
+      else if (item && item?.data?.id) children.push(item.data.id);
+      else console.log("DataErr: comment do not match requirements", item);
+    });
   return (
     <div className={ClassNames.Root}>
       <div className={ClassNames.Title}>
@@ -57,11 +74,10 @@ const UIComment: React.FC<UICommentProps> = ({
         >
           {!childComment ? (
             <ArrowRightRoundedIcon
-              onClick={comments.length !== 0 ? handleChildComment : () => this}
+              onClick={hasChild ? handleChildComment : undefined}
               sx={{
-                cursor: comments.length !== 0 ? "pointer" : "auto",
-                color:
-                  comments.length !== 0 ? "white" : "rgba(255, 255, 255, 0.5)",
+                cursor: hasChild ? "pointer" : "auto",
+                color: hasChild ? "white" : "rgba(255, 255, 255, 0.5)",
               }}
             />
           ) : (
@@ -77,20 +93,31 @@ const UIComment: React.FC<UICommentProps> = ({
           <input
             type="checkbox"
             onChange={handleHidden}
-            defaultChecked={isHidden}
+            defaultChecked={!isHidden}
           />
           <span className="checkbox-custom rectangular"></span>
         </label>
       </div>
       <div className={clsx(ClassNames.Content)}>
-        <P2T content={content} isHidden={isHidden} />
+        <P2T
+          content={content}
+          isHidden={isHidden}
+          commentId={id}
+          postId={postId}
+          rootCommentId={rootCommentId}
+        />
         <div className={clsx(!childComment && "disable")}>
-          {childComment && comments.map((commentId: string, index: number) => (
-            <div key={index} className="position-relative">
-              <img src={nodeIcon} className={ClassNames.Node} />
-              <Comment commentId={commentId} postId={postId} />
-            </div>
-          ))}
+          {childComment &&
+            children.map((commentId: string, index: number) => (
+              <div key={index} className="position-relative">
+                <img src={nodeIcon} className={ClassNames.Node} />
+                <Comment
+                  commentId={commentId}
+                  postId={postId}
+                  rootCommentId={rootCommentId}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>

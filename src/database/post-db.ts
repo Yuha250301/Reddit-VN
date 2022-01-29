@@ -1,9 +1,10 @@
 import { openDB, DBSchema, IDBPDatabase } from "idb";
 import { PostData } from "data/post-manager";
+import { CommentTranslate } from "data/trans-manager";
 interface RVNPostDatabase extends DBSchema {
   trans: {
     key: string;
-    value: string;
+    value: CommentTranslate;
   };
   posts: {
     key: string;
@@ -29,7 +30,7 @@ class PostDB {
       this.db = await openDB<RVNPostDatabase>(RVN_POST, version + 1, {
         upgrade(db) {
           db.createObjectStore(TRANS, {
-            keyPath: "id",
+            keyPath: "commentId",
           });
           db.createObjectStore(POST, {
             keyPath: "id",
@@ -80,18 +81,42 @@ class PostDB {
         tx.done,
       ]);
   }
+  async getAllTrans() {
+    if (!this.db) await this.init();
+    return await this.db?.getAll(TRANS);
+  }
   async getTrans(id: string) {
     if (!this.db) await this.init();
     return await this.db?.get(TRANS, id);
   }
-  async updateTrans(commentId: string, content: string) {
+  async addTrans(comment: CommentTranslate) {
     if (!this.db) await this.init();
-    await this.db?.put(TRANS, commentId, content);
+    delete comment.isModified;
+    delete comment.isSubmit;
+    await this.db?.add(TRANS, comment);
+  }
+  async updateTrans(comment: CommentTranslate) {
+    if (!this.db) await this.init();
+    delete comment.isModified;
+    delete comment.isSubmit;
+    await this.db?.put(TRANS, comment);
   }
   async deleteTrans(id: string) {
     if (!this.db) await this.init();
     const post = await this.getTrans(id);
     if (!post) await this.db?.delete(TRANS, id);
+  }
+  async deleteListTrans(comments: string[]) {
+    if (!this.db) await this.init();
+    const tx = this.db?.transaction(TRANS, "readwrite");
+    if (tx)
+      await Promise.all([
+        ...comments.map((comment) => {
+          const isExist = tx.store.get(comment);
+          if (!isExist) tx.store.delete(comment);
+        }),
+        tx.done,
+      ]);
   }
 }
 const postDb = new PostDB();

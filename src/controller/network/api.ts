@@ -1,5 +1,6 @@
-import { PostServerData } from "controller/core/post";
-import AuthManager from "data/auth-manager";
+import { PostServerData, PostSubmitServerData } from "controller/core/post";
+import AuthManager, { UserData } from "data/auth-manager";
+import { CommentTranslate } from "data/trans-manager";
 
 export class ClientAPI {
   private origin: string;
@@ -29,8 +30,8 @@ export class ClientAPI {
   _put<T>(url: string, data: string, needAuth: boolean = true): Promise<T> {
     return this._fetch(url, "put", needAuth, data);
   }
-  _delete<T>(url: string, needAuth: boolean = true): Promise<T> {
-    return this._fetch(url, "delete", needAuth);
+  _delete<T>(url: string, needAuth: boolean = true, data?: string): Promise<T> {
+    return this._fetch(url, "delete", needAuth, data);
   }
   _fetch<T>(
     url: string,
@@ -127,6 +128,10 @@ export class ClientAPI {
     };
     return this._post(url, JSON.stringify(body));
   }
+  updateOwnInfo(data: UserData) {
+    const url = this._createUrl("users/me");
+    return this._post(url, JSON.stringify(data));
+  }
   createPost(data: PostServerData) {
     const url = this._createUrl("posts");
     return this._post(url, JSON.stringify(data));
@@ -135,9 +140,29 @@ export class ClientAPI {
     const url = this._createUrl("posts");
     return this._get<PostServerData[]>(url);
   }
+  updatePost(postId: string, post: PostSubmitServerData) {
+    const url = this._createUrl(`posts/single/${postId}`);
+    return this._put(url, JSON.stringify(post));
+  }
   deletePost(postId: string) {
     const url = this._createUrl(`posts/single/${postId}`);
     return this._delete(url);
+  }
+  getTrans(): Promise<CommentTranslate[]> {
+    const url = this._createUrl("trans");
+    return this._get<CommentTranslate[]>(url);
+  }
+  createTrans(comment: CommentTranslate) {
+    const url = this._createUrl("trans");
+    return this._post(url, JSON.stringify(comment));
+  }
+  updateTrans(commentId: string, content: string) {
+    const url = this._createUrl(`trans/single/${commentId}`);
+    return this._put(url, JSON.stringify({ content }));
+  }
+  deleteCommentInPost(postId: string) {
+    const url = this._createUrl(`trans`);
+    return this._delete(url, true, JSON.stringify({ postId }));
   }
 }
 const fetcher = new ClientAPI();

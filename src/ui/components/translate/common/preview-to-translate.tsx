@@ -1,20 +1,63 @@
 /* eslint-disable prettier/prettier */
-import React from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import clsx from "clsx";
+import TransManager from "data/trans-manager";
+import debounce from "utils/debounce";
+import TransController from "controller/core/trans";
 
 interface P2TProps {
   content: string;
+  commentId: string;
+  postId: string;
+  rootCommentId: string;
   isHidden?: boolean;
 }
 
-const P2T: React.FC<P2TProps> = ({ content, isHidden }) => {
+const DEBOUNCE_TIME = 500;
+
+const P2T: React.FC<P2TProps> = ({
+  content,
+  isHidden,
+  commentId,
+  postId,
+  rootCommentId,
+}) => {
+  const [translate, setTranslate] = useState<string>("");
+  const getTrans = async (subscribed: boolean) => {
+    const data = await TransManager.getTrans(postId, commentId);
+    if (subscribed) setTranslate(data);
+  };
+  const updateTrans = useMemo(() => {
+    return debounce(TransController.update, DEBOUNCE_TIME);
+  }, []);
+
+  const handleTextChange = useCallback((value: string) => {
+    setTranslate(value);
+    if (value) {
+      const comment = {
+        content: value,
+        commentId,
+        postId,
+        rootCommentId,
+      };
+      updateTrans(comment);
+    }
+  }, []);
+
+  useEffect(() => {
+    let subscribed = true;
+    if (!isHidden) getTrans(subscribed);
+    return () => {
+      subscribed = false;
+    };
+  }, [commentId, isHidden]);
   return (
     <div
       className={clsx(
         "d-flex",
         "align-content-stretch",
         "justify-content-between",
-        !isHidden && "disable",
+        isHidden && "disable",
       )}
     >
       <div
@@ -46,6 +89,8 @@ const P2T: React.FC<P2TProps> = ({ content, isHidden }) => {
             boxSizing: "border-box",
             outline: "none",
           }}
+          value={translate}
+          onChange={(e) => handleTextChange(e.target.value)}
         />
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import PostController from "controller/core/post";
+import TransController from "controller/core/trans";
 
 import ToolCus from "../common/tool-custom";
 import clsx from "clsx";
@@ -48,9 +49,14 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
       .then(setPost)
       .catch((err) => console.log("CoreError: err when crawl", err));
   };
+
   const deletePost = async () => {
     if (post) await PostController.delete(post.id);
     setPost(undefined);
+  };
+
+  const savePost = async () => {
+    if (post) await TransController.save(post.id);
   };
   return (
     <>
@@ -148,6 +154,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
             bgColor="#E85B25"
             height="48px"
             width="144px"
+            onClick={savePost}
           />
         )}
       </div>

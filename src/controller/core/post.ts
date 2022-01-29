@@ -5,6 +5,7 @@ import PostManager, { PostData } from "data/post-manager";
 import { crawler } from "utils/crawler";
 import RedditDB from "database/raw-db";
 import PostDb from "database/post-db";
+import TransController from "./trans";
 
 export interface PostServerData {
   rawPostId: string;
@@ -13,13 +14,20 @@ export interface PostServerData {
   url: string;
   mediaLink?: string;
   isPosted?: boolean;
+  lastUpdated: number;
+}
+
+export interface PostSubmitServerData {
+  mediaLink?: string;
+  isPosted?: boolean;
+  lastUpdated?: number;
 }
 
 class PostController {
   constructor() {}
   async init() {
     const listPost: PostServerData[] = await Fetcher.getPosts();
-    await PostManager.init(listPost);
+    await [TransController.initTime(listPost), PostManager.init(listPost)];
     EventEmitter.emit(PostActions.INIT_AFTER_AUTH); //emit to trigger update, don't send heavy data via event emitter
   }
   async crawl(url: string, isSubmit: boolean = false, isFull: boolean = true) {
@@ -35,12 +43,17 @@ class PostController {
           subreddit: data.subReddit,
           title: data.title,
           url,
+          lastUpdated: Date.now(),
         };
         await Fetcher.createPost(param);
       }
       EventEmitter.emit(PostActions.ADD_POST, data);
       return data;
     }
+  }
+
+  async updateLastTime(id: string, timestamp: number) {
+    await Fetcher.updatePost(id, { lastUpdated: timestamp });
   }
 
   async delete(id: string) {

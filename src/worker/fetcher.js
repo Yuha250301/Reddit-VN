@@ -100,7 +100,7 @@ if ("function" === typeof importScripts) {
       };
     };
     //Get a comment info
-    parseComment = (commentInfo, prefix, rootCommentId) => {
+    parseComment = (commentInfo, prefix) => {
       if (commentInfo.data.author) {
         function getAllWords(text) {
           const allWordsIncludingDups = text.split("");
@@ -123,7 +123,6 @@ if ("function" === typeof importScripts) {
         commentInfo.data.awards = commentInfo.data.all_awardings
           ? this.getAward(commentInfo.data)
           : "";
-        if (rootCommentId) commentInfo.rootCommentId = rootCommentId;
         return commentInfo.data;
       } else return null;
     };
@@ -198,7 +197,7 @@ if ("function" === typeof importScripts) {
           console.log("request failed", error.message);
         });
     };
-    fetch = async (more, location, prefix, rootCommentId, callback) => {
+    fetch = async (more, location, prefix, callback) => {
       callback = callback || null;
       try {
         if (!more) {
@@ -224,7 +223,7 @@ if ("function" === typeof importScripts) {
                   this.status,
                   this.json,
                   (json) =>
-                    this.getCommentsFromJSON(json, prefix, rootCommentId),
+                    this.getCommentsFromJSON(json, prefix),
                   callback,
                 ),
               );
@@ -239,7 +238,7 @@ if ("function" === typeof importScripts) {
         throw e;
       }
     };
-    getCommentsFromJSON = async (json, prefix = "", rootCommentId) => {
+    getCommentsFromJSON = async (json, prefix = "") => {
       if (json[1].data.children[0]) {
         this.location = json[1].data.children[0].data.permalink;
         this.location = this.location.replace(
@@ -250,23 +249,21 @@ if ("function" === typeof importScripts) {
       return await this.getCommentsFromArray(
         json[1].data.children,
         prefix,
-        rootCommentId,
       );
     };
     //Recursively go through the object tree and compile all the comments
-    getCommentsFromArray = async (arr, prefix, rootCommentId) => {
+    getCommentsFromArray = async (arr, prefix) => {
       let listMoreFetchPromise = [];
       arr.forEach(async (item) => {
         if (item.kind == "more") {
           this.moreChild = item.data.children;
           listMoreFetchPromise.push(
-            this.fetch(true, this.location, prefix, rootCommentId),
+            this.fetch(true, this.location, prefix),
           );
         } else if (typeof item !== "undefined") {
-          const data = this.helper.parseComment(item, prefix, rootCommentId);
+          const data = this.helper.parseComment(item, prefix);
           if (data) {
             if(!this.isDataExist) await this.db.put(this.id, data);
-            if (prefix === "") rootCommentId = data.id;
             this.root.rootComments.push(data.id);
             if (
               typeof item.data.replies !== "undefined" &&
@@ -275,7 +272,6 @@ if ("function" === typeof importScripts) {
               this.getCommentsFromArray(
                 item.data.replies.data.children,
                 prefix + ">",
-                rootCommentId,
               );
             }
           }
