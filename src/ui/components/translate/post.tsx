@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Switch from "@mui/material/Switch";
 import P2T from "./common/preview-to-translate";
 import { PostData } from "data/post-manager";
-import Comment from "./common/comment";
+import ListComment from "./common/list-comment";
 
 const commentIcon = require("assets/img/comment_icon.svg").default;
 
@@ -71,11 +71,13 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
             <h5>Full comments</h5>
           </div>
         </div>
-        {isReady && post.rootComments && post.rootComments.length
-          ? post.rootComments.map((id: string, index: number) => (
-              <Comment postId={post.id} commentId={id} key={index} />
-            ))
-          : null}
+        {isReady && post.rootComments && post.rootComments.length ? (
+          <ListComment
+            itemsPerPage={30}
+            list={post.rootComments}
+            postId={post.id}
+          />
+        ) : null}
       </div>
     </div>
   );

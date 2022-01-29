@@ -264,7 +264,11 @@ if ("function" === typeof importScripts) {
           const data = this.helper.parseComment(item, prefix);
           if (data) {
             if(!this.isDataExist) await this.db.put(this.id, data);
-            this.root.rootComments.push(data.id);
+            this.root.rootComments.push({
+              id: data.id,
+              user: data.author,
+              reward: data.awards,
+            });
             if (
               typeof item.data.replies !== "undefined" &&
               item.data.replies !== ""

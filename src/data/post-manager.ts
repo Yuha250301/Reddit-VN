@@ -8,6 +8,12 @@ export interface TranslatingPost {
   id: string;
 }
 
+export interface BasicComment {
+    id: string;
+    user: string;
+    reward: string;
+}
+
 export interface PostData {
   id: string;
   subReddit: string;
@@ -24,7 +30,7 @@ export interface PostData {
   isVideo: boolean;
   isImage: boolean;
   link: string;
-  rootComments: string[];
+  rootComments: BasicComment[];
 }
 
 export class PostManager {

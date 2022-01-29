@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DetailUser from "./detail-user";
 import P2T from "./preview-to-translate";
 import Comment from "./comment";
@@ -23,9 +23,9 @@ interface UICommentProps {
   postId: string;
   user: string;
   reward: string;
-  content: string;
-  rootCommentId: string;
-  comments: string[];
+  content?: string;
+  rootCommentId?: string;
+  comments?: string[];
 }
 
 const UIComment: React.FC<UICommentProps> = ({
@@ -39,6 +39,13 @@ const UIComment: React.FC<UICommentProps> = ({
 }) => {
   const [isHidden, setIsHidden] = useState(true);
   const [childComment, setChildComment] = useState(false);
+  const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  useEffect(() => {
+    setIsHidden(true);
+    setChildComment(false);
+    if (inputRef.current && inputRef.current.checked)
+      inputRef.current.checked = false;
+  }, [id]);
 
   const handleHidden = () => {
     setIsHidden(!isHidden);
@@ -94,32 +101,35 @@ const UIComment: React.FC<UICommentProps> = ({
             type="checkbox"
             onChange={handleHidden}
             defaultChecked={!isHidden}
+            ref={inputRef}
           />
           <span className="checkbox-custom rectangular"></span>
         </label>
       </div>
-      <div className={clsx(ClassNames.Content)}>
-        <P2T
-          content={content}
-          isHidden={isHidden}
-          commentId={id}
-          postId={postId}
-          rootCommentId={rootCommentId}
-        />
-        <div className={clsx(!childComment && "disable")}>
-          {childComment &&
-            children.map((commentId: string, index: number) => (
-              <div key={index} className="position-relative">
-                <img src={nodeIcon} className={ClassNames.Node} />
-                <Comment
-                  commentId={commentId}
-                  postId={postId}
-                  rootCommentId={rootCommentId}
-                />
-              </div>
-            ))}
+      {content && rootCommentId && (
+        <div className={clsx(ClassNames.Content)}>
+          <P2T
+            content={content}
+            isHidden={isHidden}
+            commentId={id}
+            postId={postId}
+            rootCommentId={rootCommentId}
+          />
+          <div className={clsx(!childComment && "disable")}>
+            {childComment &&
+              children.map((commentId: string, index: number) => (
+                <div key={index} className="position-relative">
+                  <img src={nodeIcon} className={ClassNames.Node} />
+                  <Comment
+                    commentId={commentId}
+                    postId={postId}
+                    rootCommentId={rootCommentId}
+                  />
+                </div>
+              ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

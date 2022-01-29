@@ -6,12 +6,16 @@ interface CommentProps {
   postId: string;
   commentId: string;
   rootCommentId?: string;
+  reward?: string;
+  user?: string;
 }
 
 const Comment: React.FC<CommentProps> = function Comment({
   postId,
   commentId,
   rootCommentId,
+  reward,
+  user,
 }) {
   const [comment, setComment] = useState<any>(null);
   const getData = async (subscribed: boolean) => {
@@ -25,7 +29,16 @@ const Comment: React.FC<CommentProps> = function Comment({
       subscribed = false;
     };
   }, [postId, commentId]);
-  if (!comment) return null;
+  if (!comment && reward && user) {
+    return (
+      <UIComment
+        id={commentId}
+        postId={postId}
+        user={user}
+        reward={reward}
+      />
+    );
+  } else if (!comment) return null;
   else
     return (
       <UIComment
