@@ -5,6 +5,9 @@ import PostController from "controller/core/post";
 import ToolCus from "../common/tool-custom";
 import clsx from "clsx";
 import { PostData } from "data/post-manager";
+import manager from "../modal/manager";
+import { ModalType } from "../modal/const";
+
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -26,13 +29,11 @@ const ClassNames = {
 interface TranslateHeaderProps {
   post: PostData | undefined;
   setPost: React.Dispatch<React.SetStateAction<PostData | undefined>>;
-  handleOpenModal: (type: string, callback?: Function) => void;
 }
 
 const TranslateHeader: React.FC<TranslateHeaderProps> = ({
   post,
   setPost,
-  handleOpenModal,
 }) => {
   const [url, setUrl] = useState(post?.link || "");
   useEffect(() => {
@@ -98,14 +99,14 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
             content="Name"
             bgColor="#101010"
             height="48px"
-            onClick={() => handleOpenModal("name")}
+            onClick={() => manager.addModal(ModalType.NAME_MODAL)}
           />
           <ToolCus
             icon={noteIcon}
             content="Notes"
             bgColor="#101010"
             height="48px"
-            onClick={() => handleOpenModal("note")}
+            onClick={() => manager.addModal(ModalType.NOTE_MODAL)}
           />
           {post && (
             <>
@@ -114,7 +115,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
                 content="Delete"
                 bgColor="#101010"
                 height="48px"
-                onClick={() => handleOpenModal("delete", deletePost)}
+                onClick={() => manager.addModal(ModalType.DELETE_MODAL)}
               />
               <ToolCus
                 icon={downloadImgIcon}
@@ -135,7 +136,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
                 content="Preview"
                 bgColor="#101010"
                 height="48px"
-                onClick={() => handleOpenModal("preview")}
+                onClick={() => manager.addModal(ModalType.PREVIEW_MODAL)}
               />
             </>
           )}

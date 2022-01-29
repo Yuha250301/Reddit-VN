@@ -6,7 +6,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import manager from "../modal/manager";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
@@ -65,23 +64,27 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 };
 
 export interface CustomizedDialogsProps {
-  type: string;
+  title: string;
+  children?: React.ReactNode;
+  open: boolean;
+  large: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CustomizedDialogs(props: CustomizedDialogsProps) {
 
-  const { title, children, open, large} = props;
+  const { title, children, open, setOpen, large} = props;
   return (
     <div>
       <BootstrapDialog
-        onClose={() => manager.removeAllModal()}
+        onClose={() => setOpen(false)}
         aria-labelledby="customized-dialog-title"
         open={open}
         maxWidth={large ? "lg" : "sm"}
       >
         <BootstrapDialogTitle
           id="customized-dialog-title"
-          onClose={() => manager.removeAllModal()}
+          onClose={() => setOpen(false)}
         >
           {title}
         </BootstrapDialogTitle>

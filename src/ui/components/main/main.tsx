@@ -6,6 +6,8 @@ import Header from "../common/header";
 import Footer from "../common/footer";
 import ContentBoard from "./content-board";
 import useAuthApp from "ui/controller/use-auth-app";
+import Modal from "../modal/index";
+
 
 // interface MainProps {}
 
@@ -21,6 +23,7 @@ const Main: React.FC = function Main() {
   return (
     <main id={Root} className={ClassNames.Root}>
       {isAuth && <Header/>}
+      <Modal/>
       <ContentBoard isAuth={isAuth} />
       <Footer />
     </main>

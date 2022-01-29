@@ -6,6 +6,9 @@ export enum ModalAction {
 
 export enum ModalType {
   ERROR_MODAL = "ERROR_MODAL",
-  TOOL_MODAL = "TOOL_MODAL",
+  NOTE_MODAL = "NOTE_MODAL",
+  DELETE_MODAL = "DELETE_MODAL",
+  NAME_MODAL = "NAME_MODAL",
+  PREVIEW_MODAL = "PREVIEW_MODAL",
 }
 

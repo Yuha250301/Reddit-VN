@@ -6,8 +6,6 @@ import postAtom from "ui/state/post-atom";
 import NavbarRvn from "../common/nav";
 import ScrollButton from "../common/scroll-button";
 import Post from "./post";
-import CustomizedDialogs from "./common/basic-modal";
-import useTranslateModal from "ui/controller/use-translate-modal";
 import TranslateHeader from "./translate-header";
 import { PostData } from "data/post-manager";
 import PostController from "controller/core/post";
@@ -24,7 +22,6 @@ const ClassNames = {
 };
 
 const Translate: React.FC = () => {
-  const [contentModal, handleOpenModal, handleCloseModal] = useTranslateModal();
   const [post, setPost] = useRecoilState<PostData | undefined>(postAtom);
   const [isReady, setReady] = useState<boolean>(false); //only show comment when it's ready
   const checkPostExist = async () => {
@@ -64,21 +61,13 @@ const Translate: React.FC = () => {
       <NavbarRvn />
       <div className={ClassNames.Content}>
         <TranslateHeader
-          handleOpenModal={handleOpenModal}
           post={post}
           setPost={setPost}
         />
         {post && <Post post={post} isReady={isReady} />}
       </div>
       <ScrollButton />
-      <CustomizedDialogs
-        title={contentModal.title}
-        open={!!contentModal.content}
-        handleClose={handleCloseModal}
-        large={contentModal.large}
-      >
-        {contentModal.content}
-      </CustomizedDialogs>
+      
     </div>
   );
 };
