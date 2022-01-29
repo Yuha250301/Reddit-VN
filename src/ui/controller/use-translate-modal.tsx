@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ToolCus from "ui/components/common/tool-custom";
 import clsx from "clsx";
+import { ModalAction, ModalType } from "ui/components/modal/const";
+import EventEmitter from "../../utils/event-emitter"
 
 const saveIcon = require("assets/img/save_icon.svg").default;
 const copyIcon = require("assets/img/copy_icon.svg").default;
@@ -29,6 +31,15 @@ const useTranslateModal = (): [
   const handleCloseModal = () => {
     setContentModal(EMPTY_MODAL);
   };
+
+  useEffect(() => {
+    const handleError = EventEmitter.addListener(
+      ModalAction.OPEN_MODAL,
+      ({ type, data }: { type: ModalType; data: any }) => {
+        handleContentModal("error");
+      }
+    );
+  })
 
   const handleContentModal = (type: string, callback?: Function) => {
     const handleConfirm = (e: any) => {

@@ -67,24 +67,24 @@ export interface CustomizedDialogsProps {
   title: string;
   children?: React.ReactNode;
   open: boolean;
-  handleClose: () => void;
-  large?: boolean;
+  large: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CustomizedDialogs(props: CustomizedDialogsProps) {
-  const { title, children, open, handleClose, large, ...other } = props;
 
+  const { title, children, open, setOpen, large} = props;
   return (
     <div>
       <BootstrapDialog
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         aria-labelledby="customized-dialog-title"
         open={open}
         maxWidth={large ? "lg" : "sm"}
       >
         <BootstrapDialogTitle
           id="customized-dialog-title"
-          onClose={handleClose}
+          onClose={() => setOpen(false)}
         >
           {title}
         </BootstrapDialogTitle>
