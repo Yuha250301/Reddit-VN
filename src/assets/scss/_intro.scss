@@ -1,0 +1,730 @@
+/* -------- landing section ------- */
+.lamas-landing {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    z-index: -100;
+  }
+  &__body {
+    width: 66.25rem;
+    box-sizing: border-box;
+    position: relative;
+    padding: 12rem 0rem 10.5rem 5.5rem;
+    margin-top: 1rem;
+    @include responsiveMax(XL) {
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding-left: 0;
+    }
+  }
+  &__img {
+    position: absolute;
+    //top: 0;
+    //left: 35%;
+    right: -14rem;
+    bottom: 0;
+    max-width: 64rem;
+    width: 100%;
+    height: auto;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    img {
+      width: 100%;
+      mix-blend-mode: lighten;
+    }
+    @include responsiveMax(XL) {
+      position: static;
+      top: auto;
+      right: auto;
+      display: flex;
+    }
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    //width: 400px;
+    &__title {
+      font-family: Raleway;
+      font-size: 3.25rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 3.75rem;
+      letter-spacing: 0em;
+      margin-bottom: 0.625rem;
+      max-width: 31.35rem;
+      z-index: 2;
+    }
+    &__desc {
+      font-family: Nunito;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 1.5rem;
+      letter-spacing: 0em;
+      margin-bottom: 4.9375rem;
+      max-width: 25rem;
+      color: color("white", "400");
+      z-index: 2;
+    }
+    &__btn {
+      z-index: 2;
+      a {
+        border: 0.0625rem solid color("green", "100");
+        background: color("green", "200");
+        box-shadow: 0rem 0rem 3.75rem 0rem color("green", "600");
+        cursor: pointer;
+        border-radius: 0.3215rem;
+        padding: 0.875rem 1.4375rem;
+        font-family: Nunito;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.375rem;
+        letter-spacing: 0em;
+        text-align: center;
+        color: color("purple", "800");
+        text-decoration: none;
+      }
+    }
+    @include responsiveMax(XL) {
+      padding: 0;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+}
+/* -------- token info section s------- */
+.lamas-token-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.625rem;
+    padding: 1.25rem 0.5rem;
+    margin-top: 6.5rem;
+    border: 0.09375rem solid color("white", "700");
+    background: color("dark-gray", "600");
+    hr {
+      border-top: 0.0625rem solid color("white", "700");
+      text-align: center;
+      width: 80%;
+      margin-left: 10%;
+      margin-right: 10%;
+      margin-top: 0rem;
+      margin-bottom: 1rem;
+    }
+    @include responsiveMin(XL) {
+      flex-direction: row;
+      hr {
+        border-left: 0.0625rem solid color("white", "700");
+        height: 2.5rem;
+        width: 0;
+        border-top: 0;
+        margin: 0rem 0.5rem;
+      }
+    }
+  }
+  &__logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    img {
+      height: 2.5rem;
+    }
+    span {
+      margin-left: 0.9375rem;
+      font-family: Raleway;
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.75rem;
+      letter-spacing: 0em;
+      text-align: left;
+      color: color("white", "base");
+    }
+  }
+  &__item {
+    padding: 0rem 1.25rem;
+    margin-bottom: 1rem;
+    &__name {
+      font-family: Nunito;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.125rem;
+      letter-spacing: 0em;
+      text-align: center;
+      color: color("white", "600");
+      margin-bottom: 0.5rem;
+    }
+    &__value {
+      font-family: Raleway;
+      font-size: 1.25rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.4375rem;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    @include responsiveMin(XL) {
+      margin-bottom: 0rem;
+    }
+  }
+}
+/* -------- game info section ------- */
+.lamas-game-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5rem;
+  &__body {
+    width: 66.25rem;
+    margin-top: 10rem;
+    padding: 0 0.625rem;
+  }
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3.75rem;
+    &__title {
+      font-family: Raleway;
+      font-size: 3rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 3.4375rem;
+      letter-spacing: 0em;
+      text-align: left;
+      background: color("radial-gradient", "dark-gray"),
+        color("radial-gradient", "green-dark"),
+        color("linear-gradient", "purple-black");
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 27rem;
+      min-width: 17.5rem;
+      text-shadow: 0px 0px 30px rgba(138, 80, 230, 0.5);
+    }
+    &__desc {
+      font-family: Nunito;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.375rem;
+      letter-spacing: 0em;
+      max-width: 25rem;
+      text-align: right;
+      color: color("white", "600");
+      min-width: 13.875rem;
+    }
+    @include responsiveMax(XL) {
+      align-items: stretch;
+      flex-direction: column;
+      align-items: center;
+      &__desc {
+        text-align: center;
+      }
+      &__title {
+        text-align: center;
+      }
+    }
+  }
+  &__container {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    grid-gap: 1.25rem;
+    @include responsiveMin(XL) {
+      grid-template-columns: auto auto auto auto;
+    }
+    @include responsiveMax(SM) {
+      grid-template-columns: auto;
+    }
+  }
+  &__item {
+    position: relative;
+    text-align: center;
+    border: 0.09375rem solid color("white", "700");
+    border-radius: 0.625rem;
+    color: color("black", "700");
+    padding: 0.5rem 0.625rem 0.8125rem 0.625rem;
+    width: 14.1875rem;
+    @include responsiveMin(XL) {
+      margin-bottom: 0rem;
+    }
+    img {
+      height: 10.3125rem;
+    }
+    &__title {
+      font-family: Raleway;
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.75rem;
+      letter-spacing: 0em;
+      color: color("white", "base");
+      margin-top: 0.4375rem;
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 10.125rem;
+      box-sizing: border-box;
+      margin-top: 0.625rem;
+      margin-bottom: 0.8125rem;
+      &.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        hr {
+          border-top: 0.0625rem solid color("white", "700");
+          text-align: center;
+          width: 82%;
+          margin-left: 9%;
+          margin-right: 9%;
+          margin-top: 0.625rem;
+          margin-bottom: 0.3215rem;
+        }
+      }
+      &__container {
+        margin-top: 1.125rem;
+      }
+      &__value {
+        font-family: Raleway;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 900;
+        line-height: 1.4375rem;
+        letter-spacing: 0em;
+        text-align: center;
+        color: color("green", "200");
+      }
+      &__title {
+        font-family: Nunito;
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.125rem;
+        letter-spacing: 0em;
+        text-align: center;
+        color: color("white", "550");
+        margin-top: 0.125rem;
+        margin-bottom: 0.8125rem;
+      }
+    }
+    &__desc {
+      font-family: Nunito;
+      font-size: 0.75rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.125rem;
+      letter-spacing: 0em;
+      text-align: center;
+      color: color("white", "300");
+    }
+    &__play {
+      width: 100%;
+      padding-top: 0.75rem;
+      cursor: pointer;
+      padding-bottom: 0.6875rem;
+      display: inline-block;
+      text-decoration: none;
+      text-align: center;
+      font-family: Nunito;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.125rem;
+      letter-spacing: 0em;
+      color: color("white", "base");
+      border-radius: 0.3125rem;
+      background: color("white", "800");
+      &:hover {
+        background: color("green", "200");
+        color: color("purple", "800");
+      }
+    }
+    &__show {
+      color: color("white", "550");
+      cursor: pointer;
+      font-family: Nunito;
+      font-size: 0.75rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.125rem;
+      letter-spacing: 0em;
+      text-align: center;
+      &:hover {
+        color: color("white", "300");
+        path {
+          stroke: color("white", "300");
+        }
+      }
+      img {
+        width: 0.625rem;
+        height: 0.3125rem;
+        margin: 0;
+      }
+    }
+  }
+}
+
+/* -------- nft info section ------- */
+.lamas-intro-nft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15rem 0;
+    width: 66.25rem;
+  }
+  &__first {
+    img {
+      position: absolute;
+      bottom: -2rem;
+      left: 0;
+      z-index: -1;
+      width: 16rem;
+      @include responsiveMin(MD) {
+        width: 21.875rem;
+        bottom: -3.125rem;
+      }
+    }
+
+  }
+  &__second {
+    img {
+      position: absolute;
+      bottom: -2rem;
+      right: 0;
+      z-index: -1;
+      width: 16rem;
+      @include responsiveMin(MD) {
+        width: 21.875rem;
+        bottom: -3.125rem;
+      }
+    }
+  }
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6.675rem;
+    @include responsiveMin(MD) {
+      margin-bottom: 6.675rem;
+    }
+    &__title {
+      font-family: Nunito;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0em;
+      text-align: center;
+      color: color("neutral", "700");
+      text-transform: uppercase;
+    }
+    &__desc1 {
+      font-family: Raleway;
+      font-size: 2.25rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 2.5625rem;
+      letter-spacing: 0em;
+      text-align: center;
+      color: color("white", "base");
+      margin-top: 0.5rem;
+      margin-bottom: 0.75rem;
+      min-width: 20.125rem;
+    }
+    &__desc2 {
+      font-family: Nunito;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.375rem;
+      letter-spacing: 0em;
+      text-align: center;
+      color: color("white", "540");
+      max-width: 20rem;
+      margin-bottom: 3.125rem;
+    }
+    &__btn {
+      padding: 0.625rem 1.25rem;
+      box-shadow: 0rem 0rem 2.5rem 0rem color("green", "600");
+      background: color("green", "200");
+      border-radius: 0.3215rem;
+      cursor: pointer;
+      a {
+        text-decoration: none;
+        font-family: Nunito;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.375rem;
+        letter-spacing: 0em;
+        text-align: center;
+        color: color("purple", "800");
+      }
+    }
+  }
+}
+
+/* -------- farm info section ------- */
+.lamas-tokenizing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    display: flex;
+    flex-direction: column;
+    margin: 2.875rem 0 15.4375rem;
+    padding: 0 1rem;
+    @include responsiveMin(MD) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      width: 66.25rem;
+    }
+  }
+  &__content {
+    &__title {
+      font-family: Raleway;
+      font-size: 2.25rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 2.5625rem;
+      letter-spacing: 0em;
+      text-align: left;
+      color: color("white", "base");
+      max-width: 23rem;
+      min-width: 14.75rem;
+      margin-bottom: 0.75rem;
+    }
+    &__sub-title {
+      font-family: Nunito;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1rem;
+      letter-spacing: 0em;
+      text-align: left;
+      color: color("white", "400");
+      text-transform: uppercase;
+      margin-bottom: 0.625rem;
+    }
+    &__desc {
+      font-family: Nunito;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.375rem;
+      letter-spacing: 0em;
+      text-align: left;
+      color: color("white", "540");
+      margin-bottom: 3.125rem;
+    }
+    &__btn {
+      margin-top: 0.625rem;
+      margin-bottom: 5rem;
+      a {
+        background: color("purple", "200");
+        box-shadow: 0rem 0rem 2.5rem 0rem color("purple", "300");
+        cursor: pointer;
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.3215rem;
+        font-family: Nunito;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.275rem;
+        letter-spacing: 0em;
+        text-align: center;
+        color: color("white", "300");
+        text-decoration: none;
+      }
+    }
+  }
+  &__container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1.25rem;
+    @include responsiveMax(SM) {
+      grid-template-columns: auto;
+      justify-content: center;
+    }
+    &__item {
+      width: 12.1875rem;
+      border-radius: 0.625rem;
+      padding: 1.5625rem 1.875rem 1.5625rem 1.5625rem;
+      background: color("dark-gray", "600");
+      svg {
+        margin-bottom: 1.125rem;
+      }
+      &__title {
+        font-family: Raleway;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 900;
+        line-height: 1.4375rem;
+        letter-spacing: 0em;
+        text-align: left;
+        color: color("white", "base");
+        margin-bottom: 0.5rem;
+      }
+      &__desc {
+        font-family: Nunito;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.125rem;
+        letter-spacing: 0em;
+        text-align: left;
+        color: color("white", "540");
+      }
+    }
+  }
+}
+
+/* -------- roadmap info section ------- */
+.lamas-roadmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 66.25rem;
+    margin: 4rem 0 4rem;
+    padding: 0 0.625rem;
+  }
+  &__content {
+    display: grid;
+    &__period {
+      &__title {
+        width: 15rem;
+        height: 4.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: color("purple", "200");
+        border-radius: 0.3125rem;
+        font-family: Raleway;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 900;
+        line-height: 1.125rem;
+        letter-spacing: 0em;
+        text-align: center;
+        margin-bottom: 0.6875rem;
+        box-sizing: border-box;
+      }
+      &__item {
+        width: 15rem;
+        padding: 1.0625rem 0rem;
+        background: color("dark-gray", "600");
+        color: color("white", "base");
+        border-radius: 0.3125rem;
+        font-family: Nunito;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.125rem;
+        letter-spacing: 0em;
+        text-align: center;
+        margin-bottom: 0.6875rem;
+        box-sizing: border-box;
+      }
+    }
+  }
+  &__header {
+    font-family: Raleway;
+    font-size: 2.25rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 2.5625rem;
+    letter-spacing: 0em;
+    text-align: center;
+    color: color("white", "base");
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* -------- backer info section ------- */
+.lamas-backer-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 66.25rem;
+    margin: 4rem 0 4rem;
+  }
+  &__header {
+    font-family: Raleway;
+    font-size: 2.25rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 2.5625rem;
+    letter-spacing: 0em;
+    text-align: center;
+    color: color("white", "base");
+    margin-bottom: 2.5rem;
+  }
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 66.25rem;
+    border-radius: 0.625rem;
+    padding: 1.875rem 4.0625rem;
+    background: color("black", "800");
+    @include responsiveMax(SM) {
+      flex-direction: column;
+    }
+    &__item {
+      margin: 0rem 1rem;
+      img {
+        height: 1rem;
+        @include responsiveMax(SM) {
+          height: 100%;
+          margin-bottom: 2rem;
+        }
+        @include responsiveMin(MD) {
+          height: 1.875rem;
+        }
+      }
+    }
+  }
+}

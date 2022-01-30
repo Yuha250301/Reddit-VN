@@ -1,0 +1,119 @@
+.rvn-forum {
+  min-height: 1110px;
+  padding-bottom: 7vh;
+  position: relative;
+  font-family: "SVN-Gilroy";
+  &__form-control {
+    background-color: #101010;
+    border-color: #101010;
+    padding: 12px 20px;
+    width: 56vw;
+    font-size: 16px;
+    height: 6vh;
+    color: #fff;
+    border-radius: 5px;
+    outline: none;
+    @include responsiveMax(MD) {
+      width: 810px;
+    }
+    :focus {
+      color: #fff;
+    }
+  }
+  &__content {
+    background-color: #1c1c1c;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    padding: 160px 430px 0 6vw;
+  }
+  &__suggest-menu {
+    margin-top: 45px;
+    width: 262px;
+    background-color: #101010;
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    padding: 0;
+    padding-bottom: 20px;
+    margin-bottom: 8vh;
+    &__title {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 20px;
+      width: 60%;
+      position: absolute;
+      top: -30px;
+    }
+    &__best {
+      padding-bottom: 1px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 10%;
+    }
+    &__top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 7%;
+    }
+    &__suggest-item{
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      &:hover {
+        color: #e85b25;
+      }
+    }
+  }
+  &__nav-forum {
+    position: absolute;
+    right: 6vw;
+    top: 14vh;
+  }
+  &__table-forum {
+    background-color: #101010;
+    border-radius: 10px;
+    line-height: 16.8px;
+    margin-top: 5vh;
+    h5,
+    h6 {
+      font-weight: 700;
+      color: #fff;
+    }
+    header {
+      padding: 14px 21px 11px 21px;
+      border-radius: 10px 10px 0 0;
+      background-color: #e85b25;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      img {
+        cursor: pointer;
+      }
+    }
+    footer {
+      padding: 20px 26px;
+    }
+    &__node-forum {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &__body {
+        width: 70%;
+        margin-left: 20px;
+        margin-bottom: 12px;
+        padding-top: 5px;
+      }
+      &:hover {
+        color: #e85b25;
+        h6 {
+          color: #e85b25;
+        }
+      }
+    }
+  }
+}

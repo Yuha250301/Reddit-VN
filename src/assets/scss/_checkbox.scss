@@ -1,0 +1,90 @@
+@mixin transition($time) {
+    transition: all $time ease-out;
+    -webkit-transition: all $time ease-out;
+    -moz-transition: all $time ease-out;
+    -ms-transition: all $time ease-out;
+    -o-transition: all $time ease-out;
+}
+@mixin transform($rotate-deg, $scale) {
+    -webkit-transform: rotate($rotate-deg) scale($scale);
+    -ms-transform: rotate($rotate-deg) scale($scale);
+    transform: rotate($rotate-deg) scale($scale);   
+}
+@mixin locate($left, $top, $width, $height) {
+    left: $left;
+    top: $top;
+    width: $width;
+    height: $height;
+}
+/* Styling Checkbox Starts */
+.checkbox-label {
+    display: inline-block;
+    position: relative;
+    margin-left: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 18px;
+    height: 18px;
+    width: 18px;
+    clear: both;
+    margin-bottom: 3px;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        
+        &:checked ~ .checkbox-custom{
+            background-color: #1c1c1c;
+            border-radius: 5px;
+            opacity:1; 
+            @include transform(0deg,1);
+            border: 2px solid #fff;
+
+            &:before{
+                @include locate(-3px, -3px, 24px,24px);
+                @include transform(0deg, 3);
+                @include transition(0.3s);
+                opacity:0;
+                z-index: 999;
+            }
+            &:after {
+                @include transform(45deg, 1);
+                @include locate(4px, 0px, 5.5px, 10.5px);
+                opacity:1;
+                border: solid #fff;
+                border-width: 0 2px 2px 0;
+                background-color: transparent;
+                border-radius: 0;
+              }
+        }
+    }
+    .checkbox-custom {
+        position: absolute;
+        @include locate(0px, 3.5px, 18px, 18px);
+        background-color: transparent;
+        border-radius: 5px;
+        @include transition(0.3s);
+        border: 2px solid #fff;
+
+        &:after {
+            position: absolute;
+            content: "";
+            @include locate(12px, 12px, 0px, 0px);
+            border-radius: 5px;
+            border: solid #fff;
+            border-width: 0 3px 3px 0;
+            opacity:1; 
+            @include transform(0deg,0);
+            @include transition(0.3s);
+        }
+        &:before {
+            position: absolute;
+            content: "";
+            @include locate(10px, 10px, 0px, 0px);
+            border-radius: 5px;
+            border: 2px solid #fff;
+            @include transform(0deg, 0); 
+        }
+    }
+}
