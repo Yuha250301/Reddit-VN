@@ -10,10 +10,11 @@ const useListPosts = (): [TranslatingPost[], boolean] => {
   const initData = async () => {
     const listPosts = await PostManager.getListPostWithCommonData();
     if (listPosts) setPosts(listPosts);
-    setIsFetch(true);;
+    setIsFetch(true);
   };
   useEffect(() => {
-    PostController.init();
+    if (!PostManager.getListPost().length) PostController.init();
+    else initData();
     const listener = EventEmitter.addListener(
       PostActions.INIT_AFTER_AUTH,
       initData,

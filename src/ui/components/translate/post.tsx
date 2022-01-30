@@ -80,7 +80,7 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
             list={post.rootComments}
             postId={post.id}
           />
-        ) : <Loading style = {{margin: '10% 0'}}/>}
+        ) : <Loading style = {{margin: '50px 0'}}/>}
       </div>
     </div>
   );

@@ -254,7 +254,7 @@ if ("function" === typeof importScripts) {
     //Recursively go through the object tree and compile all the comments
     getCommentsFromArray = async (arr, prefix) => {
       let listMoreFetchPromise = [];
-      arr.forEach(async (item) => {
+      await Promise.all(arr.map(async (item) => {
         if (item.kind == "more") {
           this.moreChild = item.data.children;
           listMoreFetchPromise.push(
@@ -280,7 +280,7 @@ if ("function" === typeof importScripts) {
             }
           }
         }
-      });
+      }));
       await Promise.all(listMoreFetchPromise);
     };
   }

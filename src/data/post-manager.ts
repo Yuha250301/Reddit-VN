@@ -9,9 +9,9 @@ export interface TranslatingPost {
 }
 
 export interface BasicComment {
-    id: string;
-    user: string;
-    reward: string;
+  id: string;
+  user: string;
+  reward: string;
 }
 
 export interface PostData {
@@ -95,7 +95,7 @@ export class PostManager {
   async getListPostWithCommonData() {
     return (
       await Promise.all(
-        Array.from(this.postList).map(async (item) => {
+        Array.from<string>(this.postList).map(async (item) => {
           const data = await this.getPostData(item);
           if (data) {
             const post: TranslatingPost = {
