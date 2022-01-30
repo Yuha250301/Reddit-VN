@@ -10,7 +10,7 @@ interface DetailUserProps {
 }
 
 const DetailUser: React.FC<DetailUserProps> = ({ user, reward }) => {
-  const {width, height} = useWindowDimensions();
+  const {width} = useWindowDimensions();
   return (
     <div className={width > 890 ? "d-flex" : ""}>
       <h6 style={{ fontWeight: "700" }}>u/{user}</h6>

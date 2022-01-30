@@ -14,7 +14,7 @@ class TransController {
     posts.forEach((item) => {
       this.isLocalMap.set(
         item.rawPostId,
-        item.lastUpdated <
+        parseInt(item.lastUpdated || "0") <
           parseInt(
             localStorage.getItem(`${UPDATE_TIME}${item.rawPostId}`) || "0",
           ),
@@ -27,7 +27,6 @@ class TransController {
     const localComments: CommentTranslate[] =
       (await PostDb.getAllTrans()) || [];
     localComments.forEach((item) => {
-      item.isModified = false;
       TransManager.addComment(item);
     });
     list.forEach((item) => {

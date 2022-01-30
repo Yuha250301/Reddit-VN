@@ -53,8 +53,8 @@ class PostDB {
     const tx = this.db?.transaction(POST, "readwrite");
     if (tx)
       await Promise.all([
-        ...posts.map((post) => {
-          const isExist = tx.store.get(post.id);
+        ...posts.map(async (post) => {
+          const isExist = await tx.store.get(post.id);
           if (!isExist) tx.store.add(post);
         }),
         tx.done,
@@ -67,16 +67,16 @@ class PostDB {
   async deletePost(id: string) {
     if (!this.db) await this.init();
     const post = await this.getPost(id);
-    if (!post) await this.db?.delete(POST, id);
+    if (post) await this.db?.delete(POST, id);
   }
   async deleteListPosts(posts: string[]) {
     if (!this.db) await this.init();
     const tx = this.db?.transaction(POST, "readwrite");
     if (tx)
       await Promise.all([
-        ...posts.map((post) => {
-          const isExist = tx.store.get(post);
-          if (!isExist) tx.store.delete(post);
+        ...posts.map(async (post) => {
+          const isExist = await tx.store.get(post);
+          if (isExist) tx.store.delete(post);
         }),
         tx.done,
       ]);
@@ -91,29 +91,27 @@ class PostDB {
   }
   async addTrans(comment: CommentTranslate) {
     if (!this.db) await this.init();
-    delete comment.isModified;
     delete comment.isSubmit;
     await this.db?.add(TRANS, comment);
   }
   async updateTrans(comment: CommentTranslate) {
     if (!this.db) await this.init();
-    delete comment.isModified;
     delete comment.isSubmit;
     await this.db?.put(TRANS, comment);
   }
   async deleteTrans(id: string) {
     if (!this.db) await this.init();
     const post = await this.getTrans(id);
-    if (!post) await this.db?.delete(TRANS, id);
+    if (post) await this.db?.delete(TRANS, id);
   }
   async deleteListTrans(comments: string[]) {
     if (!this.db) await this.init();
     const tx = this.db?.transaction(TRANS, "readwrite");
     if (tx)
       await Promise.all([
-        ...comments.map((comment) => {
-          const isExist = tx.store.get(comment);
-          if (!isExist) tx.store.delete(comment);
+        ...comments.map(async (comment) => {
+          const isExist = await tx.store.get(comment);
+          if (isExist) tx.store.delete(comment);
         }),
         tx.done,
       ]);

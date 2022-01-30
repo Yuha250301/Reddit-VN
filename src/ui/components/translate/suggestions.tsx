@@ -9,6 +9,7 @@ import NavbarRvn from "../common/nav";
 import { parsePopularPost } from "utils/crawler";
 import { PostData } from "data/post-manager";
 import useCustomSWR from "ui/controller/use-custom-swr";
+import Loading from "../common/loading";
 
 const Root = "rvn-translate__suggestions";
 
@@ -51,12 +52,22 @@ const Suggestions: React.FC = () => {
         ;
       </>
     );
-  } else {
-    if (error) {
-      console.log("NetworkError: err when crawl popular post", error);
-    }
-    return <NavbarRvn />;
   }
+  if (error) {
+    console.log("NetworkError: err when crawl popular post", error);
+    return (
+      <>
+        <NavbarRvn />
+        <div className={Root}>Có lỗi xảy ra khi gợi ý bài dịch mới</div>
+      </>
+    );
+  }
+  return (
+    <>
+      <NavbarRvn />
+      <Loading />
+    </>
+  );
 };
 
 export default Suggestions;

@@ -42,6 +42,19 @@ class RedditDB {
     if (!this.db) await this.init();
     return await this.db?.get(postId, commentId);
   }
+  async getListComment(postId: string, comments: string[]) {
+    if (!this.db) await this.init();
+    const tx = this.db?.transaction(postId, "readwrite");
+    if (tx) {
+      const list = await Promise.all(
+        comments.map((comment) => {
+          return tx.store.get(comment);
+        }),
+      );
+      await tx.done;
+      return list;
+    } else return [];
+  }
   async getCommentByAuthor(postId: string, keyword: string) {
     if (!this.db) await this.init();
     return await this.db?.getAllFromIndex(

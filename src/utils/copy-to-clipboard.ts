@@ -1,12 +1,10 @@
 export default function copyToClipBoard(
   previewContent: string,
-  setCopy: React.Dispatch<React.SetStateAction<string>>,
+  callback: (value: void) => void | PromiseLike<void>,
 ) {
   navigator.clipboard
     .writeText(previewContent)
-    .then(function () {
-      setCopy("COPIED!");
-    })
+    .then(callback)
     .catch(function (err: any) {
       console.log("CopyErr: Browser not supported", err);
       const el = document.createElement("input");
@@ -29,6 +27,6 @@ export default function copyToClipBoard(
       el.readOnly = oldReadOnly;
 
       document.execCommand("copy");
-      setCopy("COPIED!!");
+      callback();
     });
 }

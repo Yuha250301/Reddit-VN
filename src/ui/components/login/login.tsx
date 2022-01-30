@@ -8,6 +8,8 @@ import AuthController from "controller/core/auth";
 
 import OrangeButton from "../common/orange-button";
 import PasswordField from "./password-field";
+import { useNavigate } from "react-router";
+import { Section } from "../main/const";
 
 const logo = require("assets/img/logo.svg").default;
 const REGISTER_PATH = "/register";
@@ -31,12 +33,22 @@ const Login: React.FC = () => {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const listener = EventEmitter.addListener(AuthActions.DONE_REGISTER, () => {
-      setIsSignUp(true);
+      setIsSignUp(false);
     });
-    return () => listener.remove();
+    const listener2 = EventEmitter.addListener(
+      AuthActions.SET_AUTH,
+      (token: string) => {
+        if (token) navigate(`/${Section.TRANSLATE}`);
+      },
+    );
+    return () => {
+      listener.remove();
+      listener2.remove();
+    };
   }, []);
 
   useEffect(() => {
@@ -57,7 +69,7 @@ const Login: React.FC = () => {
     if (isSignUp)
       AuthController.register(credential, email, password, password);
     else {
-        AuthController.login(password, credential);
+      AuthController.login(password, credential);
     }
   };
 

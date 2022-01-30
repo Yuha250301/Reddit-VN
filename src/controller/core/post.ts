@@ -6,6 +6,7 @@ import { crawler } from "utils/crawler";
 import RedditDB from "database/raw-db";
 import PostDb from "database/post-db";
 import TransController from "./trans";
+import ConfigManager from "data/config";
 
 export interface PostServerData {
   rawPostId: string;
@@ -14,13 +15,13 @@ export interface PostServerData {
   url: string;
   mediaLink?: string;
   isPosted?: boolean;
-  lastUpdated: number;
+  lastUpdated: string;
 }
 
 export interface PostSubmitServerData {
   mediaLink?: string;
   isPosted?: boolean;
-  lastUpdated?: number;
+  lastUpdated?: string;
 }
 
 class PostController {
@@ -30,11 +31,11 @@ class PostController {
     await [TransController.initTime(listPost), PostManager.init(listPost)];
     EventEmitter.emit(PostActions.INIT_AFTER_AUTH); //emit to trigger update, don't send heavy data via event emitter
   }
-  async crawl(url: string, isSubmit: boolean = false, isFull: boolean = true) {
+  async crawl(url: string, isSubmit: boolean = false) {
     if (!url) throw new Error("ControllerError: url not valid");
     else {
       RedditDB.closeDatabase(); //close all db relate to browser bug: https://bugs.webkit.org/show_bug.cgi?id=171049
-      const data: PostData = await crawler(url, isFull);
+      const data: PostData = await crawler(url, ConfigManager.getIsFull());
       const post = await PostDb.getPost(data.id);
       if (!post) await PostManager.addPost(data);
       if (!isSubmit) {
@@ -43,7 +44,7 @@ class PostController {
           subreddit: data.subReddit,
           title: data.title,
           url,
-          lastUpdated: Date.now(),
+          lastUpdated: Date.now().toString(),
         };
         await Fetcher.createPost(param);
       }
@@ -53,7 +54,7 @@ class PostController {
   }
 
   async updateLastTime(id: string, timestamp: number) {
-    await Fetcher.updatePost(id, { lastUpdated: timestamp });
+    await Fetcher.updatePost(id, { lastUpdated: timestamp.toString() });
   }
 
   async delete(id: string) {

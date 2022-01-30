@@ -2,15 +2,16 @@ import Fetcher from "../network/api";
 import AuthManager from "data/auth-manager";
 import AuthActions from "ui/action/auth-action";
 import EventEmitter from "utils/event-emitter";
+import ModalManager from "ui/components/modal/manager";
+import { ModalType } from "ui/components/modal/const";
 
 class AuthController {
   constructor() {}
   async login(password: string, credential: string) {
     try {
       const resp: any = await Fetcher.login(credential, password);
-      if (resp.id) {
+      if (resp.jwtToken) {
         const user = {
-          userId: resp.id,
           username: resp.username,
           token: resp.jwtToken,
           name: resp.name,
@@ -21,8 +22,9 @@ class AuthController {
         AuthManager.updateUser(user);
         EventEmitter.emit(AuthActions.SET_AUTH, resp.jwtToken);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      ModalManager.addModal(ModalType.ERROR_MODAL, err.message);
     }
   }
   async register(
@@ -38,9 +40,16 @@ class AuthController {
         password,
         confirmPassword,
       );
-      if (resp) EventEmitter.emit(AuthActions.DONE_REGISTER);
-    } catch (err) {
+      if (resp) {
+        ModalManager.addModal(
+          ModalType.ANNOUCE_MODAL,
+          "Đăng ký thành công, bạn kiểm tra email và đăng nhập nhé",
+        );
+        EventEmitter.emit(AuthActions.DONE_REGISTER);
+      }
+    } catch (err: any) {
       console.log(err);
+      ModalManager.addModal(ModalType.ERROR_MODAL, err.message);
     }
   }
   logout() {

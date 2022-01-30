@@ -19,7 +19,7 @@ export class AuthManager {
   constructor() {
     this.aliasName = DEFAULT_ALIAS_NAME;
     try {
-      const data = localStorage.getItem("rvn_user");
+      const data = localStorage.getItem(RVN_USER_PATH);
       if (data) {
         const user: UserData = JSON.parse(data);
         this.username = user.username;

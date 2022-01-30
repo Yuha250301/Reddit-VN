@@ -1,0 +1,48 @@
+.pagination {
+  display: flex;
+  margin-top: 3rem;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  background-color: #1c1c1c;
+  border: 1px solid aliceblue;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+  &:hover {
+    z-index: 2;
+    color: #e85b25;
+    text-decoration: none;
+    background-color: #1c1c1c;
+    border-color: aliceblue;
+  }
+
+  &:focus {
+    z-index: 3;
+    color: #e85b25;
+    background-color: #1c1c1c;
+  }
+}
+
+.page-item {
+  &:not(:first-child) .page-link {
+    margin-left: -1px;
+  }
+
+  &.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #e85b25;
+    border-color: #dee2e6;
+  }
+
+  &.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #1c1c1c;
+    border-color: #dee2e6;
+  }
+}

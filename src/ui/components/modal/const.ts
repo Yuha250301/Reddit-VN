@@ -10,5 +10,19 @@ export enum ModalType {
   DELETE_MODAL = "DELETE_MODAL",
   NAME_MODAL = "NAME_MODAL",
   PREVIEW_MODAL = "PREVIEW_MODAL",
+  ANNOUCE_MODAL = "ANNOUCE_MODAL"
+}
+
+export type ModalInfo = {
+  [key in ModalType]: {
+    title: string;
+    large: boolean;
+    content: React.FC<ContentModalProps>;
+  };
+};
+
+export interface ContentModalProps {
+  handleCloseModal: () => void;
+  content?: string;
 }
 

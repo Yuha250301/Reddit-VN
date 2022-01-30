@@ -6,6 +6,8 @@ import Switch from "@mui/material/Switch";
 import P2T from "./common/preview-to-translate";
 import { PostData } from "data/post-manager";
 import ListComment from "./common/list-comment";
+import Loading from "../common/loading";
+import ConfigManager from "data/config";
 
 const commentIcon = require("assets/img/comment_icon.svg").default;
 
@@ -22,10 +24,11 @@ const ClassNames = {
 };
 
 const Post: React.FC<PostProps> = ({ post, isReady }) => {
-  const [isFullComment, setIsFullComment] = useState(true);
+  const [isFullComment, setIsFullComment] = useState(ConfigManager.getIsFull());
 
   const handleComment = () => {
     setIsFullComment(!isFullComment);
+    ConfigManager.setIsFull(!isFullComment);
   };
 
   return (
@@ -77,7 +80,7 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
             list={post.rootComments}
             postId={post.id}
           />
-        ) : null}
+        ) : <Loading style = {{margin: '10% 0'}}/>}
       </div>
     </div>
   );

@@ -59,8 +59,8 @@ const PaginatedItems: React.FC<PaginatedItemsProps> = ({
       <ReactPaginate
         onPageChange={handlePageClick}
         breakLabel="..."
-        nextLabel="next >"
-        previousLabel="< previous"
+        nextLabel=">"
+        previousLabel="<"
         pageRangeDisplayed={3}
         marginPagesDisplayed={3}
         pageCount={pageCount}

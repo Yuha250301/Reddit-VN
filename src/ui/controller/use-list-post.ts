@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import PostActions from "ui/action/post-action";
 import EventEmitter from "utils/event-emitter";
 
-const useListPosts = (): TranslatingPost[] => {
+const useListPosts = (): [TranslatingPost[], boolean] => {
   const [posts, setPosts] = useState<TranslatingPost[]>([]);
+  const [isFetch, setIsFetch] = useState(false);
   const initData = async () => {
     const listPosts = await PostManager.getListPostWithCommonData();
     if (listPosts) setPosts(listPosts);
+    setIsFetch(true);;
   };
   useEffect(() => {
     PostController.init();
@@ -39,7 +41,7 @@ const useListPosts = (): TranslatingPost[] => {
       listener3.remove();
     };
   }, []);
-  return posts;
+  return [posts, isFetch];
 };
 
 export default useListPosts;

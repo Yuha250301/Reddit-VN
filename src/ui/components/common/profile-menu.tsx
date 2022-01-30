@@ -5,7 +5,7 @@ import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import clsx from "clsx";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import AuthController from "controller/core/auth";
-
+import { useNavigate } from "react-router";
 
 const logout = require("assets/img/logout_icon.svg").default;
 const translating = require("assets/img/translating_icon.svg").default;
@@ -47,6 +47,12 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
   children,
 }) => {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const handleLogout = (e: any) => {
+    if (e) e.preventDefault();
+    AuthController.logout();
+    navigate("/");
+  };
 
   const handleTooltipClose = () => {
     setOpen(false);
@@ -128,7 +134,7 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
                 <div
                   className={clsx("d-flex", "align-items-center")}
                   style={{ cursor: "pointer" }}
-                  onClick={AuthController.logout}
+                  onClick={handleLogout}
                 >
                   <img className="me-3" src={logout} />
                   Log out

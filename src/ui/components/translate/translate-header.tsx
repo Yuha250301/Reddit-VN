@@ -6,9 +6,8 @@ import TransController from "controller/core/trans";
 import ToolCus from "../common/tool-custom";
 import clsx from "clsx";
 import { PostData } from "data/post-manager";
-import manager from "../modal/manager";
+import ModalManager from "../modal/manager";
 import { ModalType } from "../modal/const";
-
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -32,10 +31,7 @@ interface TranslateHeaderProps {
   setPost: React.Dispatch<React.SetStateAction<PostData | undefined>>;
 }
 
-const TranslateHeader: React.FC<TranslateHeaderProps> = ({
-  post,
-  setPost,
-}) => {
+const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
   const [url, setUrl] = useState(post?.link || "");
   useEffect(() => {
     setUrl(post?.link || "");
@@ -49,11 +45,6 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
     PostController.crawl(url)
       .then(setPost)
       .catch((err) => console.log("CoreError: err when crawl", err));
-  };
-
-  const deletePost = async () => {
-    if (post) await PostController.delete(post.id);
-    setPost(undefined);
   };
 
   const savePost = async () => {
@@ -105,14 +96,14 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
             content="Name"
             bgColor="#101010"
             height="48px"
-            onClick={() => manager.addModal(ModalType.NAME_MODAL)}
+            onClick={() => ModalManager.addModal(ModalType.NAME_MODAL)}
           />
           <ToolCus
             icon={noteIcon}
             content="Notes"
             bgColor="#101010"
             height="48px"
-            onClick={() => manager.addModal(ModalType.NOTE_MODAL)}
+            onClick={() => ModalManager.addModal(ModalType.NOTE_MODAL)}
           />
           {post && (
             <>
@@ -121,7 +112,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
                 content="Delete"
                 bgColor="#101010"
                 height="48px"
-                onClick={() => manager.addModal(ModalType.DELETE_MODAL)}
+                onClick={() => ModalManager.addModal(ModalType.DELETE_MODAL)}
               />
               <ToolCus
                 icon={downloadImgIcon}
@@ -142,7 +133,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
                 content="Preview"
                 bgColor="#101010"
                 height="48px"
-                onClick={() => manager.addModal(ModalType.PREVIEW_MODAL)}
+                onClick={() => ModalManager.addModal(ModalType.PREVIEW_MODAL)}
               />
             </>
           )}

@@ -67,6 +67,7 @@ const P2T: React.FC<P2TProps> = ({
           padding: "16px",
           backgroundColor: "#101010",
           color: "#fff",
+          overflowWrap: "break-word",
         }}
       >
         {content}
@@ -74,7 +75,12 @@ const P2T: React.FC<P2TProps> = ({
 
       <div
         className="input-box"
-        style={{ marginLeft: "8vw", width: "40vw", position: "relative" }}
+        style={{
+          marginLeft: "8vw",
+          width: "40vw",
+          position: "relative",
+          height: "100%",
+        }}
       >
         <textarea
           placeholder="Vietnamese translation."
@@ -88,6 +94,7 @@ const P2T: React.FC<P2TProps> = ({
             color: "#fff",
             boxSizing: "border-box",
             outline: "none",
+            height: "100%",
           }}
           value={translate}
           onChange={(e) => handleTextChange(e.target.value)}

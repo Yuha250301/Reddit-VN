@@ -1,11 +1,12 @@
 import { PostServerData, PostSubmitServerData } from "controller/core/post";
 import AuthManager, { UserData } from "data/auth-manager";
 import { CommentTranslate } from "data/trans-manager";
+import AuthController from "controller/core/auth";
 
 export class ClientAPI {
   private origin: string;
   constructor() {
-    this.origin = "http://localhost:3001";
+    this.origin = "http://api.rvninc.net";
   }
   _authHeader(url: string) {
     // return auth header with jwt if user is logged in and request is to the api url
@@ -33,13 +34,13 @@ export class ClientAPI {
   _delete<T>(url: string, needAuth: boolean = true, data?: string): Promise<T> {
     return this._fetch(url, "delete", needAuth, data);
   }
-  _fetch<T>(
+  async _fetch<T>(
     url: string,
     type: "get" | "post" | "put" | "delete",
     needAuth: boolean = true,
     data?: string,
   ): Promise<T> {
-    return new Promise<T>((resolve, reject) => {
+    {
       const authHeader = needAuth ? this._authHeader(url) : null;
       const request: RequestInit = {
         method: type,
@@ -49,25 +50,24 @@ export class ClientAPI {
         },
         ...(data && { body: data }),
       };
-      fetch(url, request)
-        .then((response) => {
-          if (!response.ok) {
-            const message = "Error with Status Code: " + response.status;
-            throw new Error(message);
-          } else {
-            if ([401, 403].includes(response.status)) {
-              const error = response.statusText;
-              return Promise.reject(error);
-            }
-            return response.json() as Promise<T>;
-          }
-        })
-        .then(resolve)
-        .catch((err) => {
-          console.log("NetworkError: err when post to server", err);
-          reject(err);
-        });
-    });
+      const fetchResult = await fetch(url, request);
+      const result = await fetchResult.json();
+
+      if (fetchResult.ok) {
+        return result;
+      }
+
+      const responseError = {
+        type: "Error",
+        message: result.message || "Something went wrong",
+        data: result.data || "",
+        code: result.code || "",
+      };
+
+      let error = new Error();
+      error = { ...error, ...responseError };
+      throw error;
+    }
   }
   register(
     username: string,

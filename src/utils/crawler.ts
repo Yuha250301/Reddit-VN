@@ -1,4 +1,3 @@
-import axios from "axios";
 //@ts-ignore
 import Worker from "worker-loader!../worker/fetcher";
 import { PostData } from "data/post-manager";
