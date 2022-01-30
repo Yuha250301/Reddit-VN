@@ -49,6 +49,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
 
   const savePost = async () => {
     if (post) await TransController.save(post.id);
+    ModalManager.addModal(ModalType.ANNOUCE_MODAL, "Bài dịch của bạn đã được lưu thành công");
   };
   return (
     <>
