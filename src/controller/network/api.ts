@@ -6,7 +6,7 @@ import AuthController from "controller/core/auth";
 export class ClientAPI {
   private origin: string;
   constructor() {
-    this.origin = "http://api.rvninc.net";
+    this.origin = "https://api.rvninc.net";
   }
   _authHeader(url: string) {
     // return auth header with jwt if user is logged in and request is to the api url
@@ -51,6 +51,11 @@ export class ClientAPI {
         ...(data && { body: data }),
       };
       const fetchResult = await fetch(url, request);
+      if (!fetchResult.ok && fetchResult.status === 401) {
+        AuthController.logout();
+        window.location.href = window.location.href;
+        throw new Error("Unauthorized");
+      }
       const result = await fetchResult.json();
 
       if (fetchResult.ok) {
