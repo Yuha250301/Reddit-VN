@@ -4,7 +4,7 @@ const { resolve } = require("path");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 const commonConfig = require("./common");
@@ -49,6 +49,7 @@ module.exports = merge(commonConfig, {
         },
       },
     },
-    minimizer: [new UglifyJsPlugin()],
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
 });
