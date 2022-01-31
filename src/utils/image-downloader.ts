@@ -1,10 +1,40 @@
-import axios from "axios";
-import JSZip from "jszip";
+const get = async (
+  url: string,
+  type: "json" | "arraybuffer" = "json",
+  additionHeader?: any,
+) => {
+  {
+    const request: RequestInit = {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      ...(!!additionHeader && additionHeader),
+    };
+    const fetchResult = await fetch(url, request);
+    const result = await (type === "json"
+      ? fetchResult.json()
+      : fetchResult.arrayBuffer());
+
+    if (fetchResult.ok) {
+      return result;
+    }
+
+    const responseError = {
+      type: "Error",
+      message: "Something went wrong",
+    };
+
+    let error = new Error();
+    error = { ...error, ...responseError };
+    throw error;
+  }
+};
 
 const getFileNameWithExtension = (url: string) => {
   const regex = /[^/\\&\?]+\.\w{3,4}(?=[\?&].*$|$)/;
   const m = regex.exec(url);
-  if(m && m.length) return m[0];
+  if (m && m.length) return m[0];
   else return (Math.random() + 1).toString(36).substring(7);
 };
 
@@ -32,42 +62,35 @@ const saveAs = (data: any, name: string) => {
 };
 const downloadImg = async (url: string, id: string) => {
   if (isHost(url)) {
-    const response = await axios.get(
+    const response = await get(
       "https://young-moon-cab4.tnah-work.workers.dev/?" + url,
+      "arraybuffer",
       {
-        responseType: "arraybuffer",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/image/*",
-        },
+        Accept: "application/image/*",
       },
     );
-    saveAs(response.data, "RVN-" + id + getFileExtension(url));
+    saveAs(response, "RVN-" + id + getFileExtension(url));
   } else if (
     url.startsWith("http://imgur.com/a/") ||
     url.startsWith("https://imgur.com/a/")
   ) {
     const albumID = url.substring(url.lastIndexOf("/") + 1);
-    const response = await axios.get(
+    const response = await get(
       "https://api.imgur.com/3/album/" + albumID,
+      "json",
       {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: "Client-ID 0d6763dedc73059",
-        },
+        authorization: "Client-ID 0d6763dedc73059",
       },
     );
+    const { default: JSZip } = await import("jszip");
     const zip = new JSZip();
     const queue = response.data.data.images.map((image: any) => {
-      return axios
-        .get("https://young-moon-cab4.tnah-work.workers.dev/?" + image.link, {
-          responseType: "arraybuffer",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+      return get(
+        "https://young-moon-cab4.tnah-work.workers.dev/?" + image.link,
+        "arraybuffer",
+      )
         .then((response) => {
-          zip.file(image.id + getFileExtension(url), response.data, {
+          zip.file(image.id + getFileExtension(url), response, {
             base64: true,
           });
         })
@@ -83,17 +106,14 @@ const downloadImg = async (url: string, id: string) => {
     url.startsWith("https://imgur.com/")
   ) {
     const imageID = url.substring(url.lastIndexOf("/") + 1);
-    const response = await axios.get(
+    const response = await get(
       "https://api.imgur.com/3/image/" + imageID,
+      "arraybuffer",
       {
-        responseType: "arraybuffer",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: "Client-ID 0d6763dedc73059",
-        },
+        authorization: "Client-ID 0d6763dedc73059",
       },
     );
-    saveAs(response.data, "RVN-" + id + getFileExtension(url));
+    saveAs(response, "RVN-" + id + getFileExtension(url));
   }
 };
 export default downloadImg;

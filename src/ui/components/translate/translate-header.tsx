@@ -39,7 +39,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
   useEffect(() => {
     setUrl(post?.link || "");
   }, [post?.link]);
-
+  
   const updateUrl = (e: any) => {
     if (!post) setUrl(e.target.value);
   };

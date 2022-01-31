@@ -13,7 +13,7 @@ import postAtom from "ui/state/post-atom";
 
 const brand = require("assets/img/logo_brand.svg").default;
 const listIcon = require("assets/img/list_icon.svg").default;
-const avatar = require("assets/img/logo.svg").default;
+const avatar = require("assets/img/avatar.svg").default;
 const noneBanner = require("assets/img/none_banner.svg").default;
 
 const Root = "rvn-header";
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
     if (MENU.includes(section)) setActive(section);
   };
 
-  const { width } = useWindowDimensions();
+//   const { width } = useWindowDimensions();
 
   const selectSection = (key: Section) => {
     handleActive(key);
@@ -95,7 +95,7 @@ const Header: React.FC = () => {
         <nav className={ClassNames.Brand}>
           <img
             src={brand}
-            width="150"
+            width="85%"
             height="auto"
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
@@ -141,8 +141,7 @@ const Header: React.FC = () => {
             ClassNames.Right,
           )}
         >
-          {width > 1023 && (
-            <>
+          
               {false &&
                 (!isSearching ? (
                   <div
@@ -184,8 +183,7 @@ const Header: React.FC = () => {
                   {!isSearching && "Translate now"}
                 </div>
               </div>
-            </>
-          )}
+          
           {false && (
             <>
               {" "}
@@ -200,15 +198,15 @@ const Header: React.FC = () => {
                 <div className="announcements">88</div>
                 <AiOutlineBell size={28} />
               </div>
-              <ProfileTooltip
-                imgBanner={noneBanner}
-                name="Username"
-                onClick={() => onClick(null, Section.PROFILE)}
-              >
-                <Avatar avatar={avatar} square={50} isCircle={true} />
-              </ProfileTooltip>
             </>
           )}
+          <ProfileTooltip
+            imgBanner={noneBanner}
+            name="Username"
+            onClick={() => onClick(null, Section.PROFILE)}
+          >
+            <Avatar avatar={avatar} square={50} isCircle={true} />
+          </ProfileTooltip>
         </nav>
       </nav>
     </header>
