@@ -86,7 +86,7 @@ const PreviewModal: React.FC<ContentModalProps> = () => {
         AuthManager.getAliasName() || "một member chăm chỉ dịch bài"
       }` +
       endLine +
-      "Edited by https://translate-rvn.web.app/";
+      "Edited by https://rvninc.net";
     if (subscribed)
       setContent(
         content

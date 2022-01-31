@@ -44,7 +44,7 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
           }
         />
         <P2T
-          content={post.title}
+          content={post.title + "\r\n\r\n" + post.text}
           isHidden={false}
           commentId={post.id}
           postId={post.id}

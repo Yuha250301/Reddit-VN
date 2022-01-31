@@ -68,6 +68,7 @@ const P2T: React.FC<P2TProps> = ({
           backgroundColor: "#101010",
           color: "#fff",
           overflowWrap: "break-word",
+          whiteSpace: "pre-wrap"
         }}
       >
         {content}
