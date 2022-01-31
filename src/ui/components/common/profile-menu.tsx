@@ -103,34 +103,38 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
                   gap: "11px",
                 }}
               >
-                <div
-                  className={clsx("d-flex", "align-items-center")}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img className="me-3" src={setting} />
-                  Settings
-                </div>
-                <div
-                  className={clsx("d-flex", "align-items-center")}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img className="me-3" src={question} />
-                  Help and Support
-                </div>
-                <div
-                  className={clsx("d-flex", "align-items-center")}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img className="me-3" src={feedback} />
-                  Feedback
-                </div>
-                <div
-                  className={clsx("d-flex", "align-items-center")}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img className="me-3" src={translating} />
-                  Language
-                </div>
+                {false && (
+                  <>
+                    <div
+                      className={clsx("d-flex", "align-items-center")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img className="me-3" src={setting} />
+                      Settings
+                    </div>
+                    <div
+                      className={clsx("d-flex", "align-items-center")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img className="me-3" src={question} />
+                      Help and Support
+                    </div>
+                    <div
+                      className={clsx("d-flex", "align-items-center")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img className="me-3" src={feedback} />
+                      Feedback
+                    </div>
+                    <div
+                      className={clsx("d-flex", "align-items-center")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img className="me-3" src={translating} />
+                      Language
+                    </div>
+                  </>
+                )}
                 <div
                   className={clsx("d-flex", "align-items-center")}
                   style={{ cursor: "pointer" }}
