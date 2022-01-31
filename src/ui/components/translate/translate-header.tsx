@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { PostData } from "data/post-manager";
 import ModalManager from "../modal/manager";
 import { ModalType } from "../modal/const";
+import downloadImg from "utils/image-downloader";
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -33,6 +34,8 @@ interface TranslateHeaderProps {
 
 const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
   const [url, setUrl] = useState(post?.link || "");
+  const [imgContent, setImgContent] = useState("Download");
+  const [downloadingVideo, setDownloadingVideo] = useState(false);
   useEffect(() => {
     setUrl(post?.link || "");
   }, [post?.link]);
@@ -49,8 +52,26 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
 
   const savePost = async () => {
     if (post) await TransController.save(post.id);
-    ModalManager.addModal(ModalType.ANNOUCE_MODAL, "Bài dịch của bạn đã được lưu thành công");
+    ModalManager.addModal(
+      ModalType.ANNOUCE_MODAL,
+      "Bài dịch của bạn đã được lưu thành công",
+    );
   };
+
+  const downloadImage = async () => {
+    if (post && post.isImage && post.url) {
+      setImgContent("Downloading");
+      await downloadImg(post.url, post.id);
+      setImgContent("Downloaded");
+    }
+  };
+
+  const startDownloadVideo = () => {
+    if (post && post.url && (post.fallbackUrl || post.url)) {
+      setDownloadingVideo(true);
+    }
+  };
+
   return (
     <>
       {url && (
@@ -117,17 +138,23 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
               />
               <ToolCus
                 icon={downloadImgIcon}
-                content="Download"
+                content={imgContent}
                 bgColor="#101010"
                 height="48px"
-                dis={!post.isImage}
+                dis={!post.isImage || !post.url}
+                onClick={downloadImage}
               />
               <ToolCus
                 icon={downloadVideoIcon}
                 content="Download"
                 bgColor="#101010"
                 height="48px"
-                dis={!post.isVideo}
+                dis={
+                  !post.isVideo ||
+                  downloadingVideo ||
+                  (!post.url && !post.fallbackUrl)
+                }
+                onClick={startDownloadVideo}
               />
               <ToolCus
                 icon={eyeIcon}
@@ -148,6 +175,18 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
             height="48px"
             width="144px"
             onClick={savePost}
+          />
+        )}
+        {post && downloadingVideo && (
+          <iframe
+            key={post.id}
+            src={
+              "https://down-583a6.web.app/?video=" +
+              btoa(post.fallbackUrl) +
+              "&audio=" +
+              btoa(post.url + "/audio")
+            }
+            style={{ display: "none" }}
           />
         )}
       </div>

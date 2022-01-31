@@ -7,8 +7,6 @@ import clsx from "clsx";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 
-const nodeIcon = require("assets/img/node_icon.svg").default;
-
 const Root = "rvn-translate__post__comment";
 const ClassNames = {
   Root,
@@ -119,7 +117,6 @@ const UIComment: React.FC<UICommentProps> = ({
             {childComment &&
               children.map((commentId: string, index: number) => (
                 <div key={index} className="position-relative">
-                  <img src={nodeIcon} className={ClassNames.Node} />
                   <Comment
                     commentId={commentId}
                     postId={postId}

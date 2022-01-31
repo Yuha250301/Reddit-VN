@@ -79,13 +79,11 @@ const P2T: React.FC<P2TProps> = ({
           marginLeft: "8vw",
           width: "40vw",
           position: "relative",
-          height: "100%",
         }}
       >
         <textarea
           placeholder="Vietnamese translation."
           className="rounded"
-          rows={2}
           style={{
             padding: "0",
             width: "100%",

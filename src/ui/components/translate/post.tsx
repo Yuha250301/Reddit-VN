@@ -37,7 +37,11 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
         <h6>{post.subReddit}</h6>
         <DetailUser
           user={post.author}
-          reward={`${post.upvotes} | ${post.awards}`}
+          reward={
+            (post.upvotes || "") +
+            (post.upvotes && post.awards ? " | " : "") +
+            (post.awards || "")
+          }
         />
         <P2T
           content={post.title}
@@ -80,7 +84,9 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
             list={post.rootComments}
             postId={post.id}
           />
-        ) : <Loading style = {{margin: '50px 0'}}/>}
+        ) : (
+          <Loading style={{ margin: "50px 0" }} />
+        )}
       </div>
     </div>
   );

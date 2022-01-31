@@ -181,7 +181,7 @@ if ("function" === typeof importScripts) {
       this.root = bodyRoot;
       this.root.rootComments = [];
       try {
-        if(!this.isDataExist) await this.db.put(this.id, bodyRoot);
+        if (!this.isDataExist) await this.db.put(this.id, bodyRoot);
         await this.getCommentsFromJSON(json);
       } catch (err) {
         console.log("open error in parse post", err);
@@ -222,8 +222,7 @@ if ("function" === typeof importScripts) {
                   url,
                   this.status,
                   this.json,
-                  (json) =>
-                    this.getCommentsFromJSON(json, prefix),
+                  (json) => this.getCommentsFromJSON(json, prefix),
                   callback,
                 ),
               );
@@ -246,41 +245,41 @@ if ("function" === typeof importScripts) {
           "",
         );
       }
-      return await this.getCommentsFromArray(
-        json[1].data.children,
-        prefix,
-      );
+      return await this.getCommentsFromArray(json[1].data.children, prefix);
     };
     //Recursively go through the object tree and compile all the comments
     getCommentsFromArray = async (arr, prefix) => {
       let listMoreFetchPromise = [];
-      await Promise.all(arr.map(async (item) => {
-        if (item.kind == "more") {
-          this.moreChild = item.data.children;
-          listMoreFetchPromise.push(
-            this.fetch(true, this.location, prefix),
-          );
-        } else if (typeof item !== "undefined") {
-          const data = this.helper.parseComment(item, prefix);
-          if (data) {
-            if(!this.isDataExist) await this.db.put(this.id, data);
-            this.root.rootComments.push({
-              id: data.id,
-              user: data.author,
-              reward: data.awards,
-            });
-            if (
-              typeof item.data.replies !== "undefined" &&
-              item.data.replies !== ""
-            ) {
-              this.getCommentsFromArray(
-                item.data.replies.data.children,
-                prefix + ">",
-              );
+      await Promise.all(
+        arr.map(async (item) => {
+          if (item.kind == "more") {
+            this.moreChild = item.data.children;
+            listMoreFetchPromise.push(this.fetch(true, this.location, prefix));
+          } else if (typeof item !== "undefined") {
+            const data = this.helper.parseComment(item, prefix);
+            if (data) {
+              if (!this.isDataExist) await this.db.put(this.id, data);
+              this.root.rootComments.push({
+                id: data.id,
+                user: data.author,
+                reward:
+                  (data.upvotes || "") +
+                  (data.upvotes && data.awards ? " | " : "") +
+                  (data.awards || ""),
+              });
+              if (
+                typeof item.data.replies !== "undefined" &&
+                item.data.replies !== ""
+              ) {
+                this.getCommentsFromArray(
+                  item.data.replies.data.children,
+                  prefix + ">",
+                );
+              }
             }
           }
-        }
-      }));
+        }),
+      );
       await Promise.all(listMoreFetchPromise);
     };
   }
