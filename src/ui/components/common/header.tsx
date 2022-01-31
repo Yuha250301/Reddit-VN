@@ -60,8 +60,8 @@ const Header: React.FC = () => {
   useEffect(() => {
     const pathname = location.pathname.substr(1);
     handleActive(pathname);
-    if (pathname === Section.TRANSLATE) setSearchingOn();
-    else setSearchingOff();
+    // if (pathname === Section.TRANSLATE) setSearchingOn();
+    // else setSearchingOff();
   }, [location.pathname]);
 
   const [isSearching, setIsSearching] = useState(false);
@@ -102,34 +102,36 @@ const Header: React.FC = () => {
           />
         </nav>
 
-        <nav className={ClassNames.Nav}>
-          <a
-            className={clsx(
-              checkActive(Section.FORUM) ? ClassNames.ActiveNav : "",
-            )}
-            onClick={(e: any) => onClick(e, Section.FORUM)}
-          >
-            Forum
-          </a>
-          <a
-            className={clsx(
-              checkActive(Section.MISSION) && ClassNames.ActiveNav,
-              "ms-5",
-            )}
-            onClick={(e: any) => onClick(e, Section.MISSION)}
-          >
-            Mission
-          </a>
-          <a
-            className={clsx(
-              checkActive(Section.SEASON) && ClassNames.ActiveNav,
-              "ms-5",
-            )}
-            onClick={(e: any) => onClick(e, Section.SEASON)}
-          >
-            Season
-          </a>
-        </nav>
+        {false && (
+          <nav className={ClassNames.Nav}>
+            <a
+              className={clsx(
+                checkActive(Section.FORUM) ? ClassNames.ActiveNav : "",
+              )}
+              onClick={(e: any) => onClick(e, Section.FORUM)}
+            >
+              Forum
+            </a>
+            <a
+              className={clsx(
+                checkActive(Section.MISSION) && ClassNames.ActiveNav,
+                "ms-5",
+              )}
+              onClick={(e: any) => onClick(e, Section.MISSION)}
+            >
+              Mission
+            </a>
+            <a
+              className={clsx(
+                checkActive(Section.SEASON) && ClassNames.ActiveNav,
+                "ms-5",
+              )}
+              onClick={(e: any) => onClick(e, Section.SEASON)}
+            >
+              Season
+            </a>
+          </nav>
+        )}
 
         <nav
           className={clsx(
@@ -141,33 +143,34 @@ const Header: React.FC = () => {
         >
           {width > 1023 && (
             <>
-              {!isSearching ? (
-                <div
-                  className={clsx(
-                    "d-flex",
-                    "align-items-center",
-                    "me-4",
-                    "rounded-circle",
-                    "h-50",
-                    "p-2",
-                  )}
-                  onClick={setSearchingOn}
-                  style={{ backgroundColor: "#343434" }}
-                >
-                  <AiOutlineSearch size={15} />
-                </div>
-              ) : (
-                <form
-                  className={clsx("d-flex", "align-items-center", "me-4")}
-                  onClick={setSearchingOn}
-                >
-                  <input
-                    placeholder="🔎︎ Search"
-                    className={clsx("rounded-pill", ClassNames.Search)}
-                    aria-label="Search"
-                  />
-                </form>
-              )}
+              {false &&
+                (!isSearching ? (
+                  <div
+                    className={clsx(
+                      "d-flex",
+                      "align-items-center",
+                      "me-4",
+                      "rounded-circle",
+                      "h-50",
+                      "p-2",
+                    )}
+                    onClick={setSearchingOn}
+                    style={{ backgroundColor: "#343434" }}
+                  >
+                    <AiOutlineSearch size={15} />
+                  </div>
+                ) : (
+                  <form
+                    className={clsx("d-flex", "align-items-center", "me-4")}
+                    onClick={setSearchingOn}
+                  >
+                    <input
+                      placeholder="🔎︎ Search"
+                      className={clsx("rounded-pill", ClassNames.Search)}
+                      aria-label="Search"
+                    />
+                  </form>
+                ))}
               <div className={clsx("d-flex", "align-items-center", "me-4")}>
                 <div
                   className={clsx(
@@ -183,24 +186,29 @@ const Header: React.FC = () => {
               </div>
             </>
           )}
-          <div
-            className={clsx(
-              "d-flex",
-              "align-items-center",
-              "me-4",
-              "position-relative",
-            )}
-          >
-            <div className="announcements">88</div>
-            <AiOutlineBell size={28} />
-          </div>
-          <ProfileTooltip
-            imgBanner={noneBanner}
-            name="Username"
-            onClick={() => onClick(null, Section.PROFILE)}
-          >
-            <Avatar avatar={avatar} square={50} isCircle={true} />
-          </ProfileTooltip>
+          {false && (
+            <>
+              {" "}
+              <div
+                className={clsx(
+                  "d-flex",
+                  "align-items-center",
+                  "me-4",
+                  "position-relative",
+                )}
+              >
+                <div className="announcements">88</div>
+                <AiOutlineBell size={28} />
+              </div>
+              <ProfileTooltip
+                imgBanner={noneBanner}
+                name="Username"
+                onClick={() => onClick(null, Section.PROFILE)}
+              >
+                <Avatar avatar={avatar} square={50} isCircle={true} />
+              </ProfileTooltip>
+            </>
+          )}
         </nav>
       </nav>
     </header>
