@@ -29,7 +29,7 @@ const PreviewModal: React.FC<ContentModalProps> = () => {
         .replace(/point\ points/, "point") +
       endLine +
       comments.content +
-      endLine
+      endLine + endLine
     );
   };
 

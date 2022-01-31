@@ -32,7 +32,7 @@ class PostController {
     EventEmitter.emit(PostActions.INIT_AFTER_AUTH); //emit to trigger update, don't send heavy data via event emitter
   }
   async crawl(url: string, isSubmit: boolean = false) {
-    if (!url) throw new Error("ControllerError: url not valid");
+    if (!url) throw new Error("Url not valid");
     else {
       RedditDB.closeDatabase(); //close all db relate to browser bug: https://bugs.webkit.org/show_bug.cgi?id=171049
       const data: PostData = await crawler(url, ConfigManager.getIsFull());

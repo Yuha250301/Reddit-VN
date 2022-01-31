@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+import AuthManager from "data/auth-manager";
 import useWindowDimensions from "./useWindowDimension";
 import { AiOutlineSearch, AiOutlineBell } from "react-icons/ai";
 import Avatar from "./avatar";
@@ -202,7 +203,7 @@ const Header: React.FC = () => {
           )}
           <ProfileTooltip
             imgBanner={noneBanner}
-            name="Username"
+            name={AuthManager.getUsername() || ""}
             onClick={() => onClick(null, Section.PROFILE)}
           >
             <Avatar avatar={avatar} square={50} isCircle={true} />

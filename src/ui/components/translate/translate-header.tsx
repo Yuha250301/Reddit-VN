@@ -39,15 +39,19 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
   useEffect(() => {
     setUrl(post?.link || "");
   }, [post?.link]);
-  
+
   const updateUrl = (e: any) => {
     if (!post) setUrl(e.target.value);
   };
 
-  const crawl = () => {
+  const crawl = (e: any) => {
+    if (e) e.preventDefault();
     PostController.crawl(url)
       .then(setPost)
-      .catch((err) => console.log("CoreError: err when crawl", err));
+      .catch((err) => {
+        console.log("CoreError: err when crawl", err);
+        ModalManager.addModal(ModalType.ERROR_MODAL, err.message);
+      });
   };
 
   const savePost = async () => {
@@ -83,31 +87,35 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
           in new tab
         </p>
       )}
-      <div
-        className={clsx("d-flex", "justify-content-between", "mb-3")}
-        style={{ width: "100%" }}
-      >
-        <input
-          placeholder="Paste the Reddit link to translate"
-          className={clsx(ClassNames.FormControl)}
-          style={{
-            backgroundColor: "#101010",
-            border: "16px solid #101010",
-            color: "#fff",
-          }}
-          disabled={!!post}
-          value={url}
-          onChange={updateUrl}
-        />
-        <ToolCus
-          content="Go ahead"
-          bgColor="#414141"
-          height="56px"
-          width="144px"
-          onClick={crawl}
-          dis={!!post}
-        />
-      </div>
+      <form>
+        <div
+          className={clsx("d-flex", "justify-content-between", "mb-3")}
+          style={{ width: "100%" }}
+        >
+          <input
+            placeholder="Paste the Reddit link to translate"
+            className={clsx(ClassNames.FormControl)}
+            style={{
+              backgroundColor: "#101010",
+              border: "16px solid #101010",
+              color: "#fff",
+              marginRight: "20px",
+            }}
+            disabled={!!post}
+            value={url}
+            onChange={updateUrl}
+          />
+          <ToolCus
+            content="Go ahead"
+            bgColor="#414141"
+            height="56px"
+            width="144px"
+            onClick={crawl}
+            dis={!!post}
+          />
+        </div>
+        <button style={{ display: "none" }} onClick={crawl} type="submit" />
+      </form>
       <div className={clsx("d-flex", "justify-content-between", "pb-4")}>
         <div
           className={clsx("d-flex", "justify-content-start", "flex-wrap")}
