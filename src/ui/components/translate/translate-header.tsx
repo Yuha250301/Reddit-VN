@@ -62,7 +62,7 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
     if (post && post.isImage && post.url) {
       setImgContent("Downloading");
       await downloadImg(post.url, post.id);
-      setImgContent("Downloaded");
+      setImgContent("Download");
     }
   };
 
