@@ -33,6 +33,7 @@ const Login: React.FC = () => {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [disable, setDisable] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,10 +67,15 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (isSignUp)
-      AuthController.register(credential, email, password, password);
-    else {
-      AuthController.login(password, credential);
+    if (!disable) {
+      setDisable(true);
+      let promise;
+      if (isSignUp)
+        promise = AuthController.register(credential, email, password, password);
+      else {
+        promise = AuthController.login(password, credential);
+      }
+      promise.finally(() => setDisable(false));
     }
   };
 

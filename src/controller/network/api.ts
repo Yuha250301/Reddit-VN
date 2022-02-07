@@ -6,8 +6,8 @@ import AuthController from "controller/core/auth";
 export class ClientAPI {
   private origin: string;
   constructor() {
-    this.origin = "https://api.rvninc.net";
-    //this.origin = "http://localhost:3000";
+    //this.origin = "https://api.rvninc.net";
+    this.origin = "http://localhost:3000";
   }
   _authHeader(url: string) {
     // return auth header with jwt if user is logged in and request is to the api url
@@ -165,6 +165,10 @@ export class ClientAPI {
   updateTrans(commentId: string, content: string) {
     const url = this._createUrl(`trans/single/${commentId}`);
     return this._put(url, JSON.stringify({ content }));
+  }
+  deleteTrans(commentId: string) {
+    const url = this._createUrl(`trans/single/${commentId}`);
+    return this._delete(url);
   }
   deleteCommentInPost(postId: string) {
     const url = this._createUrl(`trans`);

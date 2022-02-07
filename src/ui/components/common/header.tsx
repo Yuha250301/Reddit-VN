@@ -204,7 +204,7 @@ const Header: React.FC = () => {
           <ProfileTooltip
             imgBanner={noneBanner}
             name={AuthManager.getUsername() || ""}
-            onClick={() => onClick(null, Section.PROFILE)}
+            onClick={() => {/*onClick(null, Section.PROFILE)*/}}
           >
             <Avatar avatar={avatar} square={50} isCircle={true} />
           </ProfileTooltip>

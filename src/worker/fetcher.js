@@ -1,3 +1,4 @@
+import { parseUrlLink } from "utils/url-helper";
 if ("function" === typeof importScripts) {
   if (typeof idb === "undefined")
     self.importScripts("https://cdn.jsdelivr.net/npm/idb@7/build/umd.js");
@@ -11,13 +12,6 @@ if ("function" === typeof importScripts) {
         url = url.replace(/redd.it/, "www.reddit.com");
       }
       return url + ".json";
-    };
-    parseUrlLink = (url) => {
-      if (!url) return "";
-      const regex = /(?:^.+?)(?:reddit.com\/r)(?:\/[\w\d]+){2}(?:\/)([\w\d]*)/g;
-      const match = regex.exec(url);
-      if (match && match.length > 1) return match[1];
-      else return "";
     };
     //Get award, max 3 award: platium -> gold -> silver -> another awards
     getAward = (data) => {
@@ -201,7 +195,7 @@ if ("function" === typeof importScripts) {
       callback = callback || null;
       try {
         if (!more) {
-          this.id = this.helper.parseUrlLink(this.url);
+          this.id = parseUrlLink(this.url);
           if (!this.db) await this.createObjectStore(this.id);
           await this.fetchUrl(
             this.url,

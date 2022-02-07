@@ -52,6 +52,17 @@ class TransController {
       Date.now().toString(),
     );
   }
+  async delete(comment: CommentTranslate) {
+    const commentSave = TransManager.checkExist(comment.postId, comment.commentId)
+    if (commentSave) {
+      await TransManager.deleteTrans(comment);
+      localStorage.setItem(
+        `${UPDATE_TIME}${comment.postId}`,
+        Date.now().toString(),
+      );
+      if(commentSave.isSubmit) await Fetcher.deleteTrans(comment.commentId);
+    } else console.log("DbError: delete not exists trans");
+  }
   async save(postId: string) {
     try {
       const list = TransManager.getTransByPost(postId);
@@ -88,7 +99,7 @@ class TransController {
     }
   }
 
-  async delete(postId: string) {
+  async deleteAll(postId: string) {
     await Fetcher.deleteCommentInPost(postId);
     await TransManager.deleteListTrans(postId);
   }

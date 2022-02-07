@@ -37,7 +37,7 @@ export class RedditManager {
   async getCommentByAuthor(postId: string, keyword: string) {
     const listComment = await RedditDB.getCommentByAuthor(postId, keyword);
     if (listComment) {
-      listComment.forEach((item) => {
+      listComment.forEach((item: any) => {
         if (!this.cacheMap.has(item.id) && item)
           this.cacheMap.set(item.id, item);
       });

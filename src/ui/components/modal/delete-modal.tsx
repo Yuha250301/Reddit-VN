@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
 
@@ -12,12 +12,19 @@ import TransController from "controller/core/trans";
 
 const DeleteModal: React.FC<ContentModalProps> = ({ handleCloseModal }) => {
   const [post, setPost] = useRecoilState<PostData | undefined>(postAtom);
+  const [isDeleting, setIsDeleting] = useState(false);
   const deletePost = async () => {
-    if (post) {
-      await PostController.delete(post.id);
-      setPost(undefined);
-      handleCloseModal();
-      await TransController.delete(post.id);
+    try {
+      if (post && !isDeleting) {
+        setIsDeleting(true);
+        await PostController.delete(post.id);
+        setPost(undefined);
+        handleCloseModal();
+        await TransController.deleteAll(post.id);
+      }
+    } catch (err) {
+      setIsDeleting(false);
+      console.log("CoreErr: err when delete post", err);
     }
   };
   return (
@@ -26,7 +33,7 @@ const DeleteModal: React.FC<ContentModalProps> = ({ handleCloseModal }) => {
         <div className="me-5">
           <ToolCus
             content="YES"
-            bgColor="#FFFFFF"
+            bgColor="#E85B25"
             height="4.8vh"
             width="144px"
             onClick={deletePost}
@@ -34,7 +41,7 @@ const DeleteModal: React.FC<ContentModalProps> = ({ handleCloseModal }) => {
         </div>
         <ToolCus
           content="NO"
-          bgColor="#E85B25"
+          bgColor="#FFFFFF"
           height="4.8vh"
           width="144px"
           onClick={handleCloseModal}

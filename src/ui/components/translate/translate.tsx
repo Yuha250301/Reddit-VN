@@ -10,6 +10,7 @@ import TranslateHeader from "./translate-header";
 import { PostData } from "data/post-manager";
 import PostController from "controller/core/post";
 import RedditDB from "database/raw-db";
+import Loading from "../common/loading";
 
 const Root = "rvn-translate";
 const ClassNames = {
@@ -24,6 +25,7 @@ const ClassNames = {
 const Translate: React.FC = () => {
   const [post, setPost] = useRecoilState<PostData | undefined>(postAtom);
   const [isReady, setReady] = useState<boolean>(false); //only show comment when it's ready
+  const [isCrawl, setIsCrawl] = useState(false);
   const checkPostExist = async () => {
     if (post) {
       let needFetch = !post.rootComments;
@@ -63,11 +65,13 @@ const Translate: React.FC = () => {
         <TranslateHeader
           post={post}
           setPost={setPost}
+          isCrawl={isCrawl}
+          setIsCrawl={setIsCrawl}
         />
         {post && <Post post={post} isReady={isReady} />}
+        {isCrawl && <Loading style={{ margin: "50px 0" }} />}
       </div>
       <ScrollButton />
-      
     </div>
   );
 };

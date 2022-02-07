@@ -91,7 +91,7 @@ const ProfileTooltip: React.FC<CustomizedTooltipProps> = ({
                 >
                   {name}
                 </h5>
-                <img src={imgBanner} />
+                {/* <img src={imgBanner} /> */}
               </div>
               <div
                 className={clsx("d-flex", "flex-column")}

@@ -47,7 +47,7 @@ export class PostManager {
       shouldFetchList.map(async (item) => {
         const post = await PostDb.getPost(item.rawPostId);
         if (post) this.postDataMap.set(item.rawPostId, post);
-        if (!post) PostController.crawl(item.url);
+        if (!post) PostController.crawl(item.url, true);
       }),
     );
   }

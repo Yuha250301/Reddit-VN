@@ -4,6 +4,7 @@ import AuthActions from "ui/action/auth-action";
 import EventEmitter from "utils/event-emitter";
 import ModalManager from "ui/components/modal/manager";
 import { ModalType } from "ui/components/modal/const";
+import PostController from "controller/core/post";
 
 class AuthController {
   constructor() {}
@@ -20,6 +21,7 @@ class AuthController {
           aliasName: resp.aliasName,
         };
         AuthManager.updateUser(user);
+        PostController.init();
         EventEmitter.emit(AuthActions.SET_AUTH, resp.jwtToken);
       }
     } catch (err: any) {

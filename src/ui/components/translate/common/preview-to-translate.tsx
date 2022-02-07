@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import clsx from "clsx";
-import TransManager from "data/trans-manager";
+import TransManager, { CommentTranslate } from "data/trans-manager";
 import debounce from "utils/debounce";
 import TransController from "controller/core/trans";
 
@@ -27,21 +27,23 @@ const P2T: React.FC<P2TProps> = ({
     const data = await TransManager.getTrans(postId, commentId);
     if (subscribed) setTranslate(data);
   };
+  const updateContent = (comment: CommentTranslate) => {
+    if (comment.content) TransController.update(comment);
+    else TransController.delete(comment);
+  }
   const updateTrans = useMemo(() => {
-    return debounce(TransController.update, DEBOUNCE_TIME);
+    return debounce(updateContent, DEBOUNCE_TIME);
   }, []);
 
   const handleTextChange = useCallback((value: string) => {
     setTranslate(value);
-    if (value) {
-      const comment = {
-        content: value,
-        commentId,
-        postId,
-        rootCommentId,
-      };
-      updateTrans(comment);
-    }
+    const comment = {
+      content: value,
+      commentId,
+      postId,
+      rootCommentId,
+    };
+    updateTrans(comment);
   }, []);
 
   useEffect(() => {

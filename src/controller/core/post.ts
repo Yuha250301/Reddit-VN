@@ -7,6 +7,8 @@ import RedditDB from "database/raw-db";
 import PostDb from "database/post-db";
 import TransController from "./trans";
 import ConfigManager from "data/config";
+import { parseUrlLink } from "utils/url-helper";
+import AuthManager from "data/auth-manager";
 
 export interface PostServerData {
   rawPostId: string;
@@ -34,22 +36,27 @@ class PostController {
   async crawl(url: string, isSubmit: boolean = false) {
     if (!url) throw new Error("Url not valid");
     else {
-      RedditDB.closeDatabase(); //close all db relate to browser bug: https://bugs.webkit.org/show_bug.cgi?id=171049
-      const data: PostData = await crawler(url, ConfigManager.getIsFull());
-      const post = await PostDb.getPost(data.id);
-      if (!post) await PostManager.addPost(data);
-      if (!isSubmit) {
-        const param: PostServerData = {
-          rawPostId: data.id,
-          subreddit: data.subReddit,
-          title: data.title,
-          url,
-          lastUpdated: Date.now().toString(),
-        };
-        await Fetcher.createPost(param);
+      const id = parseUrlLink(url);
+      if (PostManager.getListPost().includes(id) && !isSubmit) {
+        throw new Error("Bạn đã dịch bài này rồi");
+      } else {
+        RedditDB.closeDatabase(); //close all db relate to browser bug: https://bugs.webkit.org/show_bug.cgi?id=171049
+        const data: PostData = await crawler(url, ConfigManager.getIsFull());
+        const post = await PostDb.getPost(data.id);
+        if (!post) await PostManager.addPost(data);
+        if (!isSubmit) {
+          const param: PostServerData = {
+            rawPostId: data.id,
+            subreddit: data.subReddit,
+            title: data.title,
+            url,
+            lastUpdated: Date.now().toString(),
+          };
+          await Fetcher.createPost(param);
+        }
+        EventEmitter.emit(PostActions.ADD_POST, data);
+        return data;
       }
-      EventEmitter.emit(PostActions.ADD_POST, data);
-      return data;
     }
   }
 
@@ -64,4 +71,5 @@ class PostController {
   }
 }
 const postController = new PostController();
+if (AuthManager.getToken()) postController.init();
 export default postController;

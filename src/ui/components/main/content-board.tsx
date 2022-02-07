@@ -29,10 +29,10 @@ const ContentBoard: React.FC<ContentProps> = ({ isAuth }) => {
             <Route path={Section.SUGGESTION} element={<Suggestions />} />
             <Route path={Section.GUIDE} element={<Guide />} />
 
-            <Route path={Section.SEASON} element={<Season />} />
+            {/* <Route path={Section.SEASON} element={<Season />} />
             <Route path={Section.FORUM} element={<Forum />} />
             <Route path={Section.MISSION} element={<Forum />} />
-            <Route path={Section.PROFILE} element={<Profile />} />
+            <Route path={Section.PROFILE} element={<Profile />} /> */}
           </>
         ) : (
           <>

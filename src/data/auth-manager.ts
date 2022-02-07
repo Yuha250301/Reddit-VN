@@ -58,6 +58,15 @@ export class AuthManager {
   }
   updateAliasName(name: string) {
     this.aliasName = name;
+    try {
+      const data = localStorage.getItem(RVN_USER_PATH);
+      if (data) {
+        const user: UserData = JSON.parse(data);
+        localStorage.setItem(RVN_USER_PATH, JSON.stringify({...user, aliasName: name}));
+      }
+    } catch (err) {
+      console.log("ClientStorage Err: can't parse user data");
+    }
   }
   getToken() {
     return this.token;

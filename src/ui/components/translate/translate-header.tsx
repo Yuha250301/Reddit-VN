@@ -9,6 +9,7 @@ import { PostData } from "data/post-manager";
 import ModalManager from "../modal/manager";
 import { ModalType } from "../modal/const";
 import downloadImg from "utils/image-downloader";
+import {getPathFromUrl} from 'utils/url-helper';
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -30,9 +31,16 @@ const ClassNames = {
 interface TranslateHeaderProps {
   post: PostData | undefined;
   setPost: React.Dispatch<React.SetStateAction<PostData | undefined>>;
+  isCrawl: boolean;
+  setIsCrawl: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
+const TranslateHeader: React.FC<TranslateHeaderProps> = ({
+  post,
+  setPost,
+  setIsCrawl,
+  isCrawl,
+}) => {
   const [url, setUrl] = useState(post?.link || "");
   const [imgContent, setImgContent] = useState("Download");
   const [downloadingVideo, setDownloadingVideo] = useState(false);
@@ -46,12 +54,18 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({ post, setPost }) => {
 
   const crawl = (e: any) => {
     if (e) e.preventDefault();
-    PostController.crawl(url)
-      .then(setPost)
-      .catch((err) => {
-        console.log("CoreError: err when crawl", err);
-        ModalManager.addModal(ModalType.ERROR_MODAL, err.message);
-      });
+    if (!isCrawl) {
+      PostController.crawl(getPathFromUrl(url))
+        .then(setPost)
+        .catch((err) => {
+          console.log("CoreError: err when crawl", err);
+          ModalManager.addModal(ModalType.ERROR_MODAL, err.message);
+        })
+        .finally(() => {
+          setIsCrawl(false);
+        });
+      setIsCrawl(true);
+    }
   };
 
   const savePost = async () => {

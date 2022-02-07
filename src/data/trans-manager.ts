@@ -22,10 +22,10 @@ export class TransManager {
   checkExist(postId: string, commentId: string) {
     const list = this.commentMap.get(postId);
     if (list)
-      return !!list.find(
+      return list.find(
         (item: CommentTranslate) => item.commentId === commentId,
       );
-    else return false;
+    else return null;
   }
   updateSubmitStatus(trans: CommentTranslate) {
     const list = this.commentMap.get(trans.postId);
@@ -43,7 +43,7 @@ export class TransManager {
   }
   async addTrans(trans: CommentTranslate) {
     this.addComment(trans);
-    await PostDb.updateTrans({...trans});
+    await PostDb.updateTrans({ ...trans });
   }
   async getTrans(postId: string, commentId: string) {
     const list = this.commentMap.get(postId);
@@ -72,13 +72,23 @@ export class TransManager {
         trans.postId,
         list.map((item) => {
           if (item.commentId === trans.commentId) {
-            trans.isSubmit = item.isSubmit;
+            trans.isSubmit = item.isSubmit || trans.isSubmit;
             return trans;
           }
           return item;
         }),
       );
-      await PostDb.updateTrans({...trans});
+      await PostDb.updateTrans({ ...trans });
+    }
+  }
+  async deleteTrans(trans: CommentTranslate) {
+    const list = this.commentMap.get(trans.postId);
+    if (list) {
+      this.commentMap.set(
+        trans.postId,
+        list.filter((item) => item.commentId !== trans.commentId)
+      );
+      await PostDb.deleteTrans(trans.commentId);
     }
   }
   async deleteListTrans(postId: string) {
