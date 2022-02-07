@@ -6,8 +6,8 @@ import AuthController from "controller/core/auth";
 export class ClientAPI {
   private origin: string;
   constructor() {
-    //this.origin = "https://api.rvninc.net";
-    this.origin = "http://localhost:3000";
+    this.origin = "https://api.rvninc.net";
+    //this.origin = "http://localhost:3000";
   }
   _authHeader(url: string) {
     // return auth header with jwt if user is logged in and request is to the api url
