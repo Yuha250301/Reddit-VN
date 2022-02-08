@@ -17,9 +17,9 @@ const DeleteModal: React.FC<ContentModalProps> = ({ handleCloseModal }) => {
     try {
       if (post && !isDeleting) {
         setIsDeleting(true);
-        await PostController.delete(post.id);
         setPost(undefined);
         handleCloseModal();
+        await PostController.delete(post.id);
         await TransController.deleteAll(post.id);
       }
     } catch (err) {

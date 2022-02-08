@@ -43,7 +43,7 @@ const Login: React.FC = () => {
     const listener2 = EventEmitter.addListener(
       AuthActions.SET_AUTH,
       (token: string) => {
-        if (token) navigate(`/${Section.TRANSLATE}`);
+        if (token) setTimeout(() => navigate(`/${Section.TRANSLATE}`), 200);
       },
     );
     return () => {

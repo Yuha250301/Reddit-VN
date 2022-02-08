@@ -54,7 +54,10 @@ export class ClientAPI {
       const fetchResult = await fetch(url, request);
       if (!fetchResult.ok && fetchResult.status === 401) {
         AuthController.logout();
-        window.location.href = window.location.href;
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 200);
+
         throw new Error("Unauthorized");
       }
       const result = await fetchResult.json();

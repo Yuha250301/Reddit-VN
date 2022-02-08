@@ -96,6 +96,7 @@ class TransController {
         await PostController.updateLastTime(postId, Date.now());
     } catch (err) {
       console.log("NetworkErr: err when save ", err);
+      throw err;
     }
   }
 

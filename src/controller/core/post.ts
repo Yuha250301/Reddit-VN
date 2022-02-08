@@ -43,7 +43,6 @@ class PostController {
         RedditDB.closeDatabase(); //close all db relate to browser bug: https://bugs.webkit.org/show_bug.cgi?id=171049
         const data: PostData = await crawler(url, ConfigManager.getIsFull());
         const post = await PostDb.getPost(data.id);
-        if (!post) await PostManager.addPost(data);
         if (!isSubmit) {
           const param: PostServerData = {
             rawPostId: data.id,
@@ -54,6 +53,7 @@ class PostController {
           };
           await Fetcher.createPost(param);
         }
+        if (!post) await PostManager.addPost(data);
         EventEmitter.emit(PostActions.ADD_POST, data);
         return data;
       }

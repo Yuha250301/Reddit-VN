@@ -9,7 +9,7 @@ import { PostData } from "data/post-manager";
 import ModalManager from "../modal/manager";
 import { ModalType } from "../modal/const";
 import downloadImg from "utils/image-downloader";
-import {getPathFromUrl} from 'utils/url-helper';
+import { getPathFromUrl } from "utils/url-helper";
 
 const nameIcon = require("assets/img/name_icon.svg").default;
 const deleteIcon = require("assets/img/delete_icon.svg").default;
@@ -69,11 +69,15 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
   };
 
   const savePost = async () => {
-    if (post) await TransController.save(post.id);
-    ModalManager.addModal(
-      ModalType.ANNOUCE_MODAL,
-      "Bài dịch của bạn đã được lưu thành công",
-    );
+    try {
+      if (post) await TransController.save(post.id);
+      ModalManager.addModal(
+        ModalType.ANNOUCE_MODAL,
+        "Bài dịch của bạn đã được lưu thành công",
+      );
+    } catch (err: any) {
+      ModalManager.addModal(ModalType.ERROR_MODAL, err.message);
+    }
   };
 
   const downloadImage = async () => {
