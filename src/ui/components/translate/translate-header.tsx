@@ -99,7 +99,12 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
       {url && (
         <p className="mb-2">
           *Click to open{" "}
-          <a href={url} target="_blank" style={{ color: "#fd7e14" }}>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#fd7e14" }}
+          >
             the link
           </a>{" "}
           in new tab

@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import clsx from "clsx";
+import Markdown from "react-markdown";
 import TransManager, { CommentTranslate } from "data/trans-manager";
 import debounce from "utils/debounce";
 import TransController from "controller/core/trans";
+import parseContent from "utils/decode-text";
 
 interface P2TProps {
   content: string;
@@ -70,10 +72,11 @@ const P2T: React.FC<P2TProps> = ({
           backgroundColor: "#101010",
           color: "#fff",
           overflowWrap: "break-word",
-          whiteSpace: "pre-wrap"
+          whiteSpace: "pre-wrap",
+          lineHeight: "1.25rem"
         }}
       >
-        {content}
+        <Markdown>{parseContent(content) || ""}</Markdown>
       </div>
 
       <div
@@ -96,6 +99,7 @@ const P2T: React.FC<P2TProps> = ({
             boxSizing: "border-box",
             outline: "none",
             height: "100%",
+            lineHeight: "1.25rem"
           }}
           value={translate}
           onChange={(e) => handleTextChange(e.target.value)}

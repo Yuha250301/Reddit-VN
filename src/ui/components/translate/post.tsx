@@ -34,7 +34,7 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
   return (
     <div className={Root}>
       <div className={ClassNames.Title}>
-        <h6>{post.subReddit}</h6>
+        <h6 style = {{fontWeight: "700"}}>{post.subReddit}</h6>
         <DetailUser
           user={post.author}
           reward={
@@ -42,6 +42,7 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
             (post.upvotes && post.awards ? " | " : "") +
             (post.awards || "")
           }
+          isBold = {true}
         />
         <P2T
           content={post.title + "\r\n\r\n" + post.text}

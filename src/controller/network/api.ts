@@ -1,7 +1,10 @@
 import { PostServerData, PostSubmitServerData } from "controller/core/post";
 import AuthManager, { UserData } from "data/auth-manager";
 import { CommentTranslate } from "data/trans-manager";
-import AuthController from "controller/core/auth";
+import AuthActions from "ui/action/auth-action";
+import EventEmitter from "utils/event-emitter";
+import ModalManager from "ui/components/modal/manager";
+import { ModalType } from "ui/components/modal/const";
 
 export class ClientAPI {
   private origin: string;
@@ -9,56 +12,56 @@ export class ClientAPI {
     this.origin = "https://api.rvninc.net";
     //this.origin = "http://localhost:3000";
   }
-  _authHeader(url: string) {
-    // return auth header with jwt if user is logged in and request is to the api url
-    const token = AuthManager.getToken();
-    const isLoggedIn = !!token;
-    const isApiUrl = url.includes("api");
-    if (isLoggedIn && isApiUrl) {
-      return { Authorization: `Bearer ${token}` };
-    } else {
-      return null;
+  async _handleUnauthorized() {
+    //get new token from refresh token
+    try {
+      const account: UserData = await this._refreshToken();
+      if(account?.username === AuthManager.getUsername()) {
+        ModalManager.addModal(ModalType.ERROR_MODAL, "Có lỗi xảy ra, bạn vui lòng thử lại nhé"); //force user manual retry
+      } else throw new Error("DataAcceptedButNotMatch");
+    }
+    catch(err) {
+      //if still error => throw err => logout;
+      AuthManager.removeUser();
+      EventEmitter.emit(AuthActions.SET_AUTH, false);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 200);
+      throw new Error("Unauthorized");
     }
   }
   _createUrl(path: string) {
     return `${this.origin}/api/${path}`;
   }
-  _get<T>(url: string, needAuth: boolean = true): Promise<T> {
-    return this._fetch(url, "get", needAuth);
+  _get<T>(url: string): Promise<T> {
+    return this._fetch(url, "get");
   }
-  _post<T>(url: string, data: string, needAuth: boolean = true): Promise<T> {
-    return this._fetch(url, "post", needAuth, data);
+  _post<T>(url: string, data: string): Promise<T> {
+    return this._fetch(url, "post", data);
   }
-  _put<T>(url: string, data: string, needAuth: boolean = true): Promise<T> {
-    return this._fetch(url, "put", needAuth, data);
+  _put<T>(url: string, data: string): Promise<T> {
+    return this._fetch(url, "put", data);
   }
-  _delete<T>(url: string, needAuth: boolean = true, data?: string): Promise<T> {
-    return this._fetch(url, "delete", needAuth, data);
+  _delete<T>(url: string, data?: string): Promise<T> {
+    return this._fetch(url, "delete", data);
   }
   async _fetch<T>(
     url: string,
     type: "get" | "post" | "put" | "delete",
-    needAuth: boolean = true,
     data?: string,
   ): Promise<T> {
     {
-      const authHeader = needAuth ? this._authHeader(url) : null;
       const request: RequestInit = {
         method: type,
         headers: {
           "Content-Type": "application/json",
-          ...(authHeader && { ...authHeader }),
         },
+        credentials: "include",
         ...(data && { body: data }),
       };
       const fetchResult = await fetch(url, request);
       if (!fetchResult.ok && fetchResult.status === 401) {
-        AuthController.logout();
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 200);
-
-        throw new Error("Unauthorized");
+        await this._handleUnauthorized()
       }
       const result = await fetchResult.json();
 
@@ -91,7 +94,7 @@ export class ClientAPI {
       password,
       confirmPassword,
     };
-    return this._post(url, JSON.stringify(body), false);
+    return this._post(url, JSON.stringify(body));
   }
   login(credential: string, password: string) {
     if (!credential)
@@ -101,7 +104,7 @@ export class ClientAPI {
       email: credential,
       password,
     };
-    return this._post(url, JSON.stringify(body), false);
+    return this._post(url, JSON.stringify(body));
   }
   changePassword(
     oldPassword: string,
@@ -116,21 +119,21 @@ export class ClientAPI {
     };
     return this._post(url, JSON.stringify(body));
   }
-  forgotPassword(email: string) {
+  forgotPassword(credentital: string) {
     const url = this._createUrl("auth/forgot-password");
     const body = {
-      email,
+      credentital,
     };
-    return this._post(url, JSON.stringify(body), false);
+    return this._post(url, JSON.stringify(body));
   }
-  refreshToken(refreshToken: string) {
+  _refreshToken<UserData>(refreshToken?: string) {
     const url = this._createUrl("auth/refresh-token");
     const body = {
       refreshToken,
     };
-    return this._post(url, JSON.stringify(body), false);
+    return this._post<UserData>(url, JSON.stringify(body));
   }
-  revokeToken(token: string) {
+  revokeToken(token?: string) {
     const url = this._createUrl("auth/revoke-token");
     const body = {
       token,
@@ -175,7 +178,7 @@ export class ClientAPI {
   }
   deleteCommentInPost(postId: string) {
     const url = this._createUrl(`trans`);
-    return this._delete(url, true, JSON.stringify({ postId }));
+    return this._delete(url, JSON.stringify({ postId }));
   }
 }
 const fetcher = new ClientAPI();

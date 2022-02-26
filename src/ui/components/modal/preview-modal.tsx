@@ -45,7 +45,7 @@ const PreviewModal: React.FC<ContentModalProps> = () => {
     let content =
       post.subReddit +
       endLine +
-      post.author +
+      `u/${post.author}` +
       ` (${post.upvotes}${post.awards && " - "}${post.awards}) ` +
       endLine;
     const transMap = trans.reduce((pre: any, item) => {
@@ -115,7 +115,8 @@ const PreviewModal: React.FC<ContentModalProps> = () => {
           color: "#fff",
           boxSizing: "border-box",
           whiteSpace: "pre-wrap",
-          overflow: "auto"
+          overflow: "auto",
+          lineHeight: "1.25rem"
         }}
       >
         {content}

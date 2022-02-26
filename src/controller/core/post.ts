@@ -71,5 +71,5 @@ class PostController {
   }
 }
 const postController = new PostController();
-if (AuthManager.getToken()) postController.init();
+if (AuthManager.isLogged()) postController.init();
 export default postController;

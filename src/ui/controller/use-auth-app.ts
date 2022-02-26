@@ -10,8 +10,8 @@ const useAuthApp = (): boolean => {
   useEffect(() => {
     const listener = EventEmitter.addListener(
       AuthActions.SET_AUTH,
-      (token: string | null) => {
-        setAuth(!!token);
+      (isLogged: boolean) => {
+        setAuth(isLogged);
       },
     );
     return () => listener.remove();

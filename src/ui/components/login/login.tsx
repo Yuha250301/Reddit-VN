@@ -13,6 +13,7 @@ import { Section } from "../main/const";
 
 const logo = require("assets/img/logo.svg").default;
 const REGISTER_PATH = "/register";
+const FORGOT_PATH = "/forgot-password";
 const LOGIN_PATH = "/login";
 
 const Root = "rvn-login";
@@ -23,27 +24,35 @@ const ClassNames = {
   Visual: `${Root}__visual`,
   FormControl: `${Root}__form-control`,
   Anchor: `${Root}__anchor`,
+  AnchorItem: `${Root}__anchor__item`,
   LastChild: `${Root}__last-child`,
 };
 
+enum PageStatus {
+  REGISTER = "REGISTER",
+  FORGOT_PASSWORD = "FORGOT_PASSWORD",
+  LOGIN = "LOGIN",
+}
+
 const Login: React.FC = () => {
-  const [isSignUp, setIsSignUp] = useState(
-    window.location.pathname === REGISTER_PATH,
-  );
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [disable, setDisable] = useState(false);
+  const [pageStatus, setPageStatus] = useState(PageStatus.LOGIN);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const listener = EventEmitter.addListener(AuthActions.DONE_REGISTER, () => {
-      setIsSignUp(false);
-    });
+    const listener = EventEmitter.addListener(
+      AuthActions.DONE_AUTHEN_ACTION,
+      () => {
+        setPageStatus(PageStatus.LOGIN);
+      },
+    );
     const listener2 = EventEmitter.addListener(
       AuthActions.SET_AUTH,
-      (token: string) => {
-        if (token) setTimeout(() => navigate(`/${Section.TRANSLATE}`), 200);
+      (isLogged: boolean) => {
+        if (isLogged) setTimeout(() => navigate(`/${Section.TRANSLATE}`), 200);
       },
     );
     return () => {
@@ -54,15 +63,22 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (window.location.pathname === REGISTER_PATH) {
-      setIsSignUp(true);
+      setPageStatus(PageStatus.REGISTER);
     } else if (window.location.pathname === LOGIN_PATH) {
-      setIsSignUp(false);
+      setPageStatus(PageStatus.LOGIN);
+    } else if (window.location.pathname === FORGOT_PATH) {
+      setPageStatus(PageStatus.FORGOT_PASSWORD);
     }
   }, [window.location.pathname]);
 
   const handleSignUp = (e: any) => {
     e.preventDefault();
-    setIsSignUp(!isSignUp);
+    setPageStatus(PageStatus.REGISTER);
+  };
+
+  const handleForgotPassword = (e: any) => {
+    e.preventDefault();
+    setPageStatus(PageStatus.FORGOT_PASSWORD);
   };
 
   const handleSubmit = (e: any) => {
@@ -70,9 +86,16 @@ const Login: React.FC = () => {
     if (!disable) {
       setDisable(true);
       let promise;
-      if (isSignUp)
-        promise = AuthController.register(credential, email, password, password);
-      else {
+      if (pageStatus === PageStatus.REGISTER)
+        promise = AuthController.register(
+          credential,
+          email,
+          password,
+          password,
+        );
+      else if (pageStatus === PageStatus.FORGOT_PASSWORD) {
+        promise = AuthController.forgotPassword(credential);
+      } else {
         promise = AuthController.login(password, credential);
       }
       promise.finally(() => setDisable(false));
@@ -103,13 +126,17 @@ const Login: React.FC = () => {
           <div className={ClassNames.Content}>
             <input
               type="text"
-              placeholder={isSignUp ? "Username" : "Username or email"}
+              placeholder={
+                pageStatus === PageStatus.REGISTER
+                  ? "Username"
+                  : "Username or email"
+              }
               className={ClassNames.FormControl}
               name="credential"
               value={credential}
               onChange={(e) => setCredential(e.target.value)}
             />
-            {isSignUp && (
+            {pageStatus === PageStatus.REGISTER && (
               <input
                 type="email"
                 placeholder="Email"
@@ -120,18 +147,41 @@ const Login: React.FC = () => {
               />
             )}
 
-            <PasswordField password={password} setPassword={setPassword} />
+            {pageStatus !== PageStatus.FORGOT_PASSWORD && (
+              <PasswordField password={password} setPassword={setPassword} />
+            )}
             <OrangeButton
-              content={!isSignUp ? "Log in" : "Sign up"}
+              content={
+                pageStatus === PageStatus.REGISTER
+                  ? "Sign up"
+                  : pageStatus === PageStatus.LOGIN
+                  ? "Log in"
+                  : "Forgot password"
+              }
               onClick={handleSubmit}
+              style={{ marginTop: "12px" }}
             />
           </div>
           <div className={ClassNames.Anchor}>
-            <span onClick={handleSignUp}>
-              {isSignUp ? "Log in" : "Sign up"}
+            <span className={ClassNames.AnchorItem} onClick={handleSignUp}>
+              {pageStatus === PageStatus.REGISTER ? "Log in" : "Sign up"}
             </span>
             <span> • </span>
-            <span>Ban log</span>
+            <span
+              className={ClassNames.AnchorItem}
+              onClick={handleForgotPassword}
+            >
+              Forgot password
+            </span>
+            <span> • </span>
+            <a
+              href="https://www.facebook.com/groups/rvn.netherworld"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "white", textDecoration: "none" }}
+            >
+              <span className={ClassNames.AnchorItem}>Ban log</span>
+            </a>
           </div>
         </div>
       </div>

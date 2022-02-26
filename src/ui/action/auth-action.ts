@@ -1,6 +1,6 @@
 enum AuthActions {
   SET_AUTH = "SET_AUTH",
-  DONE_REGISTER = "DONE_REGISTER"
+  DONE_AUTHEN_ACTION = "DONE_AUTHEN_ACTION"
 }
 
 export default AuthActions;

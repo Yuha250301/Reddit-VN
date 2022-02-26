@@ -91,7 +91,11 @@ const UIComment: React.FC<UICommentProps> = ({
               sx={{ cursor: "pointer", color: "#fff" }}
             />
           )}
-          <DetailUser user={user} reward={reward} />
+          <DetailUser
+            user={user}
+            reward={reward}
+            isBold={!isHidden || childComment}
+          />
         </div>
 
         <label className="checkbox-label">

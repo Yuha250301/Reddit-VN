@@ -96,7 +96,7 @@ const Header: React.FC = () => {
         <nav className={ClassNames.Brand}>
           <img
             src={brand}
-            width="85%"
+            width="80%"
             height="auto"
             className="d-inline-block align-top"
             alt="React Bootstrap logo"

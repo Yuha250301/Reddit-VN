@@ -1,6 +1,5 @@
 export interface UserData {
   username?: string;
-  token?: string;
   email?: string;
   avatar?: string;
   name?: string;
@@ -11,7 +10,6 @@ const DEFAULT_ALIAS_NAME = "một member chăm chỉ dịch bài";
 
 export class AuthManager {
   private username?: string;
-  private token?: string;
   private email?: string;
   private avatar?: string;
   private name?: string;
@@ -23,7 +21,6 @@ export class AuthManager {
       if (data) {
         const user: UserData = JSON.parse(data);
         this.username = user.username;
-        this.token = user.token;
         this.email = user.email;
         this.avatar = user.avatar;
         this.name = user.name;
@@ -36,7 +33,6 @@ export class AuthManager {
   updateUser(data: UserData) {
     localStorage.setItem(RVN_USER_PATH, JSON.stringify(data));
     this.username = data.username;
-    this.token = data.token;
     this.email = data.email;
     this.avatar = data.avatar;
     this.name = data.name;
@@ -45,7 +41,6 @@ export class AuthManager {
   removeUser() {
     localStorage.removeItem(RVN_USER_PATH);
     this.username = "";
-    this.token = "";
     this.email = "";
     this.avatar = "";
     this.name = "";
@@ -68,8 +63,8 @@ export class AuthManager {
       console.log("ClientStorage Err: can't parse user data");
     }
   }
-  getToken() {
-    return this.token;
+  isLogged() {
+    return !!this.username;
   }
   getAvatar() {
     return this.avatar;

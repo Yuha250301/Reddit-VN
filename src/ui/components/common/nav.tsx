@@ -1,14 +1,17 @@
 /* eslint-disable prettier/prettier */
 import clsx from "clsx";
 import React from "react";
+import { useSetRecoilState } from "recoil";
 import NavItem from "./nav-item";
 import { useNavigate } from "react-router-dom";
 import { Section, NAV } from "../main/const";
+import postAtom from "ui/state/post-atom";
 
 const translationIcon = require("assets/img/translation_icon.svg").default;
 const listDoneIcon = require("assets/img/list_done_icon.svg").default;
 const questionIcon = require("assets/img/question_icon.svg").default;
-const GuideIcon = require("assets/img/list_done_icon.svg").default;
+const suggestionIcon = require("assets/img/suggestion-icon.svg").default;
+const backIcon = require("assets/img/back-icon.svg").default;
 
 const Root = "rvn-navbar";
 const ClassNames = {
@@ -20,6 +23,7 @@ interface NavbarProps {}
 
 const NavbarRvn: React.FC<NavbarProps> = () => {
   const navigate = useNavigate();
+  const setPost = useSetRecoilState(postAtom);
 
   const selectSection = (key: Section) => {
     if (NAV.includes(key)) {
@@ -28,6 +32,7 @@ const NavbarRvn: React.FC<NavbarProps> = () => {
   };
   const translate = (e: any) => {
     e.preventDefault();
+    setPost(undefined);
     selectSection(Section.TRANSLATE);
   };
 
@@ -42,9 +47,12 @@ const NavbarRvn: React.FC<NavbarProps> = () => {
         )}
       >
         <NavItem content="Back to translation">
+          <img src={backIcon} onClick={() => selectSection(Section.TRANSLATE)} />{" "}
+        </NavItem>
+        <NavItem content="New translation">
           <img src={translationIcon} onClick={translate} />{" "}
         </NavItem>
-        <NavItem content="Your Translations">
+        <NavItem content="Your translations">
           <img
             src={listDoneIcon}
             onClick={() => selectSection(Section.TRANSLATING)}
@@ -58,7 +66,7 @@ const NavbarRvn: React.FC<NavbarProps> = () => {
         </NavItem>
         <NavItem content="Suggestions">
           <img
-            src={GuideIcon}
+            src={suggestionIcon}
             onClick={() => selectSection(Section.SUGGESTION)}
           />{" "}
         </NavItem>

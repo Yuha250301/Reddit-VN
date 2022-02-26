@@ -41,8 +41,14 @@ const PreviewPostTitle: React.FC<PreviewPostTitleProps> = ({
       </div>
       <div style={{ width: "100%" }}>
         {posts.map((item: TranslatingPost, index: number) => (
-          <div key={index}>
-            <p style={{ cursor: "pointer" }} onClick={(e) => selectPost(e, item.id)}>
+          <div
+            key={index}
+            style={{ cursor: "pointer" }}
+            onClick={(e) => selectPost(e, item.id)}
+          >
+            <div style={{display: 'flex'}}><p>u/123</p><p>Last modified: 07/12/1999</p></div>
+            <p
+            >
               {item.title}
             </p>
             {index != posts.length - 1 && (
