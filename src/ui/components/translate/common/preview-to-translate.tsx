@@ -46,7 +46,7 @@ const P2T: React.FC<P2TProps> = ({
       rootCommentId,
     };
     updateTrans(comment);
-  }, []);
+  }, [rootCommentId, commentId, postId]);
 
   useEffect(() => {
     let subscribed = true;

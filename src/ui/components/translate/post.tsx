@@ -1,5 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+//@ts-ignore
+import Popover from "react-text-selection-popover";
+//@ts-ignore
+import placeRightBelow from "react-text-selection-popover/lib/placeRightBelow";
+
 import DetailUser from "./common/detail-user";
 import clsx from "clsx";
 import Switch from "@mui/material/Switch";
@@ -8,6 +13,7 @@ import { PostData } from "data/post-manager";
 import ListComment from "./common/list-comment";
 import Loading from "../common/loading";
 import ConfigManager from "data/config";
+import useTranslate from "ui/controller/use-translate";
 
 const commentIcon = require("assets/img/comment_icon.svg").default;
 
@@ -23,8 +29,14 @@ const ClassNames = {
   UIComment: `${Root}__comment`,
 };
 
+
+
 const Post: React.FC<PostProps> = ({ post, isReady }) => {
   const [isFullComment, setIsFullComment] = useState(ConfigManager.getIsFull());
+  const selectionRef = useRef<HTMLDivElement>(null); //ref for highlight functional
+  const popoverRef = useRef<Popover>(null);
+  
+  useTranslate(popoverRef);
 
   const handleComment = () => {
     setIsFullComment(!isFullComment);
@@ -32,9 +44,9 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
   };
 
   return (
-    <div className={Root}>
+    <div ref={selectionRef} className={Root}>
       <div className={ClassNames.Title}>
-        <h6 style = {{fontWeight: "700"}}>{post.subReddit}</h6>
+        <h6 style={{ fontWeight: "700" }}>{post.subReddit}</h6>
         <DetailUser
           user={post.author}
           reward={
@@ -42,7 +54,7 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
             (post.upvotes && post.awards ? " | " : "") +
             (post.awards || "")
           }
-          isBold = {true}
+          isBold={true}
         />
         <P2T
           content={post.title + "\r\n\r\n" + post.text}
@@ -89,6 +101,25 @@ const Post: React.FC<PostProps> = ({ post, isReady }) => {
           <Loading style={{ margin: "50px 0" }} />
         )}
       </div>
+      <Popover
+        selectionRef={selectionRef}
+        isOpen={true}
+        onTextSelect={() => {
+          if (popoverRef.current) popoverRef.current.style.opacity = 1;
+        }}
+        onTextUnselect={() => {
+          if (popoverRef.current) {
+            popoverRef.current.style.opacity = 0;
+            popoverRef.current.innerHTML = "Sẵn sàng dịch";
+          }
+        }}
+        placementStrategy={placeRightBelow}
+        style={{ position: "absolute" }}
+      >
+        <div className="pop-over" id="popover" ref={popoverRef}>
+          Sẵn sàng dịch
+        </div>
+      </Popover>
     </div>
   );
 };

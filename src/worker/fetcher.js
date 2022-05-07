@@ -176,7 +176,7 @@ if ("function" === typeof importScripts) {
       this.root.rootComments = [];
       try {
         if (!this.isDataExist) await this.db.put(this.id, bodyRoot);
-        await this.getCommentsFromJSON(json);
+        await this.getCommentsFromJSON(json, "", true);
       } catch (err) {
         console.log("open error in parse post", err);
       }
@@ -191,7 +191,7 @@ if ("function" === typeof importScripts) {
           console.log("request failed", error.message);
         });
     };
-    fetch = async (more, location, prefix, callback) => {
+    fetch = async (more, location, prefix, callback, isRootComment = false) => {
       callback = callback || null;
       try {
         if (!more) {
@@ -216,7 +216,8 @@ if ("function" === typeof importScripts) {
                   url,
                   this.status,
                   this.json,
-                  (json) => this.getCommentsFromJSON(json, prefix),
+                  (json) =>
+                    this.getCommentsFromJSON(json, prefix, isRootComment),
                   callback,
                 ),
               );
@@ -231,7 +232,7 @@ if ("function" === typeof importScripts) {
         throw e;
       }
     };
-    getCommentsFromJSON = async (json, prefix = "") => {
+    getCommentsFromJSON = async (json, prefix = "", isRootComment = false) => {
       if (json[1].data.children[0]) {
         this.location = json[1].data.children[0].data.permalink;
         this.location = this.location.replace(
@@ -239,28 +240,41 @@ if ("function" === typeof importScripts) {
           "",
         );
       }
-      return await this.getCommentsFromArray(json[1].data.children, prefix);
+      return await this.getCommentsFromArray(
+        json[1].data.children,
+        prefix,
+        isRootComment,
+      );
     };
     //Recursively go through the object tree and compile all the comments
-    getCommentsFromArray = async (arr, prefix) => {
+    getCommentsFromArray = async (arr, prefix, isRootComment = false) => {
       let listMoreFetchPromise = [];
       await Promise.all(
         arr.map(async (item) => {
           if (item.kind == "more") {
             this.moreChild = item.data.children;
-            listMoreFetchPromise.push(this.fetch(true, this.location, prefix));
+            listMoreFetchPromise.push(
+              this.fetch(
+                true,
+                this.location,
+                prefix,
+                undefined,
+                item.data.depth === 0,
+              ),
+            );
           } else if (typeof item !== "undefined") {
             const data = this.helper.parseComment(item, prefix);
             if (data) {
               if (!this.isDataExist) await this.db.put(this.id, data);
-              this.root.rootComments.push({
-                id: data.id,
-                user: data.author,
-                reward:
-                  (data.upvotes || "") +
-                  (data.upvotes && data.awards ? " | " : "") +
-                  (data.awards || ""),
-              });
+              if (isRootComment)
+                this.root.rootComments.push({
+                  id: data.id,
+                  user: data.author,
+                  reward:
+                    (data.upvotes || "") +
+                    (data.upvotes && data.awards ? " | " : "") +
+                    (data.awards || ""),
+                });
               if (
                 typeof item.data.replies !== "undefined" &&
                 item.data.replies !== ""
@@ -288,7 +302,7 @@ if ("function" === typeof importScripts) {
           });
           fetcher
             .fetch()
-            .then(async () => {
+            .then(() => {
               self.postMessage({
                 cmd: "crawl-result",
                 data: JSON.stringify(fetcher.root),

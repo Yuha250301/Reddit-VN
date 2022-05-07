@@ -1,3 +1,16 @@
+.pop-over {
+  font-size: inherit;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 450px;
+  max-height: 250px;
+  background-color: #828792;
+  color: #010001;
+  padding: 0.5em;
+  border: 1px solid #192026;
+  overflow-y: auto;
+}
+
 .rvn-translate {
   min-height: 92vh;
   padding-bottom: 7vh;
