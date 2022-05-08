@@ -39,7 +39,7 @@ const Translate: React.FC = () => {
         }
       }
       //if miss local comment or not crawl yet => crawl
-      if (needFetch) return PostController.crawl(post.link, isSubmit);
+      if (needFetch) return PostController.crawl(post.link, isSubmit ? post.lastModified : undefined, isSubmit);
       else setReady(true);
     }
     return null;

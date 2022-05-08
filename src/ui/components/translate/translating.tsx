@@ -12,8 +12,8 @@ const Translating: React.FC = () => {
   let subreddit: any = null;
   if (posts.length) {
     subreddit = posts.reduce((pre: any, item) => {
-      if (!pre[item.subreddit]) pre[item.subreddit] = [item];
-      else pre[item.subreddit].push(item);
+      if (!pre[item.subReddit]) pre[item.subReddit] = [item];
+      else pre[item.subReddit].push(item);
       return pre;
     }, {});
   }

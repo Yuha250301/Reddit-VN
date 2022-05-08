@@ -33,7 +33,7 @@ class PostController {
     await [TransController.initTime(listPost), PostManager.init(listPost)];
     EventEmitter.emit(PostActions.INIT_AFTER_AUTH); //emit to trigger update, don't send heavy data via event emitter
   }
-  async crawl(url: string, isSubmit: boolean = false) {
+  async crawl(url: string, lastUpdated?: number, isSubmit: boolean = false) {
     if (!url) throw new Error("Url not valid");
     else {
       const id = parseUrlLink(url);
@@ -53,7 +53,10 @@ class PostController {
           };
           await Fetcher.createPost(param);
         }
-        if (!post) await PostManager.addPost(data);
+        if (!post) {
+          if(lastUpdated) data.lastModified = lastUpdated;
+          await PostManager.addPost(data);
+        } else if(lastUpdated) post.lastModified = lastUpdated;
         EventEmitter.emit(PostActions.ADD_POST, data);
         return data;
       }
@@ -62,6 +65,12 @@ class PostController {
 
   async updateLastTime(id: string, timestamp: number) {
     await Fetcher.updatePost(id, { lastUpdated: timestamp.toString() });
+    const post = await PostManager.getPost(id);
+    if(post) {
+      const newPost = { ...post, lastModified: timestamp };
+      await PostManager.updatePost(newPost);
+    }
+    EventEmitter.emit(PostActions.UPDATE_POST, post);
   }
 
   async delete(id: string) {

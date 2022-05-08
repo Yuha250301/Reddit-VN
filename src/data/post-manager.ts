@@ -2,11 +2,7 @@ import PostDb from "database/post-db";
 import PostController, { PostServerData } from "controller/core/post";
 import RedditDB from "database/raw-db";
 
-export interface TranslatingPost {
-  subreddit: string;
-  title: string;
-  id: string;
-}
+export type TranslatingPost = Pick<PostData, "author" | "subReddit" | "title" | "id" | "lastModified">;
 
 export interface BasicComment {
   id: string;
@@ -31,6 +27,7 @@ export interface PostData {
   isImage: boolean;
   link: string;
   rootComments: BasicComment[];
+  lastModified?: number;
 }
 
 export class PostManager {
@@ -46,8 +43,8 @@ export class PostManager {
     await Promise.all(
       shouldFetchList.map(async (item) => {
         const post = await PostDb.getPost(item.rawPostId);
-        if (post) this.postDataMap.set(item.rawPostId, post);
-        if (!post) PostController.crawl(item.url, true);
+        if (post) this.postDataMap.set(item.rawPostId, {...post, lastModified: +item.lastUpdated});
+        if (!post) PostController.crawl(item.url, +item.lastUpdated, true);
       }),
     );
   }
@@ -66,6 +63,10 @@ export class PostManager {
     this.postList.add(data.id);
     this.postDataMap.set(data.id, data);
     await PostDb.addPost(data);
+  }
+  async updatePost(data: PostData) {
+    this.postDataMap.set(data.id, data);
+    //await PostDb.putPost(data);
   }
   async deletePost(postId: string) {
     this.postList.delete(postId);
@@ -99,9 +100,11 @@ export class PostManager {
           const data = await this.getPostData(item);
           if (data) {
             const post: TranslatingPost = {
-              subreddit: data.subReddit,
+              subReddit: data.subReddit,
               title: data.title,
               id: data.id,
+              author: data.author,
+              lastModified: data.lastModified
             };
             return post;
           } else return null;

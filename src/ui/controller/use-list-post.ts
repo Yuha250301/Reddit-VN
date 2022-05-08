@@ -23,14 +23,25 @@ const useListPosts = (): [TranslatingPost[], boolean] => {
       PostActions.ADD_POST,
       (data: PostData) => {
         const newPost: TranslatingPost = {
-          subreddit: data.subReddit,
+          subReddit: data.subReddit,
           title: data.title,
           id: data.id,
+          author: data.author,
+          lastModified: data.lastModified
         };
         setPosts([...posts, newPost]);
       },
     );
     const listener3 = EventEmitter.addListener(
+      PostActions.UPDATE_POST,
+      (data: PostData) => {
+        setPosts(posts.map((post) => {
+          if(post.id === data.id) post.lastModified = data.lastModified;
+          return {...post};
+        }))
+      },
+    );
+    const listener4 = EventEmitter.addListener(
       PostActions.DELETE_POST,
       (id: string) => {
         setPosts(posts.filter((item) => item.id !== id));
@@ -40,6 +51,7 @@ const useListPosts = (): [TranslatingPost[], boolean] => {
       listener.remove();
       listener2.remove();
       listener3.remove();
+      listener4.remove();
     };
   }, []);
   return [posts, isFetch];
