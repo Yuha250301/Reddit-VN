@@ -46,7 +46,7 @@ const PreviewPostTitle: React.FC<PreviewPostTitleProps> = ({
             style={{ cursor: "pointer" }}
             onClick={(e) => selectPost(e, item.id)}
           >
-            <div style={{display: 'flex'}}><p>u/123</p><p>Last modified: 07/12/1999</p></div>
+            {/*<div style={{display: 'flex'}}><p>u/123</p><p>Last modified: 07/12/1999</p></div>*/}
             <p
             >
               {item.title}
