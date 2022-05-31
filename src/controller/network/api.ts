@@ -16,9 +16,10 @@ export class ClientAPI {
     //get new token from refresh token
     try {
       const account: UserData = await this._refreshToken();
-      if(account?.username === AuthManager.getUsername()) {
-        ModalManager.addModal(ModalType.ERROR_MODAL, "Có lỗi xảy ra, bạn vui lòng thử lại nhé"); //force user manual retry
-      } else throw new Error("DataAcceptedButNotMatch");
+      if(account?.username !== AuthManager.getUsername()) {
+        ModalManager.addModal(ModalType.ERROR_MODAL, "Có lỗi xảy ra, bạn vui lòng thử lại nhé"); //force user manual retry login
+        throw new Error("DataAcceptedButNotMatch");
+      } 
     }
     catch(err) {
       //if still error => throw err => logout;
