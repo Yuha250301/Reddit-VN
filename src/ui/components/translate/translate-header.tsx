@@ -53,8 +53,11 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
   };
 
   const crawl = (e: any) => {
+    const regex = new RegExp(".*reddit.com");
     if (e) e.preventDefault();
-    if (!isCrawl) {
+    if (!regex.test(url)) {
+      ModalManager.addModal(ModalType.ERROR_MODAL, "This is not a valid URL");
+    } else if (!isCrawl) {
       PostController.crawl(getPathFromUrl(url))
         .then(setPost)
         .catch((err) => {
@@ -126,6 +129,8 @@ const TranslateHeader: React.FC<TranslateHeaderProps> = ({
             }}
             disabled={!!post}
             value={url}
+            pattern=".*reddit\.com"
+            title="This is not a URL from reddit.com"
             onChange={updateUrl}
           />
           <ToolCus
